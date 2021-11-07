@@ -7,5 +7,4 @@ public class testRps {
 		RockScissorsPaper rps=new RockScissorsPaper();
 		rps.rpsStart();
 	}
-
 }
