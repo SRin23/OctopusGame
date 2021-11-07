@@ -1,10 +1,13 @@
 package GamePackage;
 
-public class testRps {
+public class TestMain {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		RockScissorsPaper rps=new RockScissorsPaper();
 		rps.rpsStart();
+		
+		//beadingGame bg = new beadingGame();
+		//bg.gameStart(true, 3);
 	}
+
 }
