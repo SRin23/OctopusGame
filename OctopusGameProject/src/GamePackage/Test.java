@@ -7,5 +7,6 @@ public class Test {
 		System.out.println("한번더 push합니다.");
 		System.out.println("헬ㄹ로");
 		System.out.println("살려주세요");
+		System.out.println("testt");
 	}
 }
