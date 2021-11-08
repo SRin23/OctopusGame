@@ -8,7 +8,7 @@ public class RockScissorsPaper {
 		Random rand = new Random();
  
 		 int ran;  
-		 String rpsList[]= {"°¡À§","¹ÙÀ§","º¸","°¡À§","¹ÙÀ§","º¸","°¡À§","¹ÙÀ§","º¸","°¡À§","¹ÙÀ§","º¸"};
+		 String rpsList[]= {"ê°€ìœ„","ë°”ìœ„","ë³´","ê°€ìœ„","ë°”ìœ„","ë³´","ê°€ìœ„","ë°”ìœ„","ë³´","ê°€ìœ„","ë°”ìœ„","ë³´"};
 		 String user_sel="";
 		 String com_sel;
 		 int turn=0;
@@ -16,57 +16,57 @@ public class RockScissorsPaper {
 		 while(turn<3) {
 			 turn++;
 			 ran = rand.nextInt(12);  
-			 System.out.println("°¡À§ ¹ÙÀ§ º¸ Áß ÇÏ³ª¸¦ °ñ¶óÁÖ¼¼¿ä.");
-			 System.out.println("exit¸¦ ÀûÀ¸¸é Á¾·á");
+			 System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½.");
+			 System.out.println("exitï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			 user_sel=sc.next();
 			 com_sel=rpsList[ran];
 			 if(user_sel.equals("exit")) break;
-			 System.out.println("ÄÄÀÌ °í¸¥ °Å : "+com_sel);
-			 if(user_sel.equals("°¡À§")) {
+			 System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ : "+com_sel);
+			 if(user_sel.equals("ï¿½ï¿½ï¿½ï¿½")) {
 				 if(user_sel.equals(com_sel)) {
-					 System.out.println("ºñ°å½À´Ï´Ù.");
+					 System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 					 
 				 }
-				 else if(com_sel.equals("º¸")){
-					 System.out.println("ÀÌ°å½À´Ï´Ù.");
+				 else if(com_sel.equals("ï¿½ï¿½")){
+					 System.out.println("ï¿½Ì°ï¿½ï¿½ï¿½Ï´ï¿½.");
 				 }
 				 else {
-					 System.out.println("Á³½À´Ï´Ù.");
+					 System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 					 lose_cnt++;
 					 if(lose_cnt==2) {
-						 System.out.println("Á×¾úÀ½");
+						 System.out.println("ï¿½×¾ï¿½ï¿½ï¿½");
 						 return false;
 					 } 
 				 }
 			 }
-			 else if(user_sel.equals("¹ÙÀ§")) {
+			 else if(user_sel.equals("ï¿½ï¿½ï¿½ï¿½")) {
 				 if(user_sel.equals(com_sel)) {
-					 System.out.println("ºñ°å½À´Ï´Ù.");
+					 System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 				 }
-				 else if(com_sel.equals("°¡À§")){
-					 System.out.println("ÀÌ°å½À´Ï´Ù.");
+				 else if(com_sel.equals("ï¿½ï¿½ï¿½ï¿½")){
+					 System.out.println("ï¿½Ì°ï¿½ï¿½ï¿½Ï´ï¿½.");
 				 }
 				 else {
-					 System.out.println("Á³½À´Ï´Ù.");
+					 System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 					 lose_cnt++;
 					 if(lose_cnt==2) {
-						 System.out.println("Á×¾úÀ½");
+						 System.out.println("ï¿½×¾ï¿½ï¿½ï¿½");
 						 return false;
 					 } 
 				 }
 			 }
-			 else if(user_sel.equals("º¸")) {
+			 else if(user_sel.equals("ï¿½ï¿½")) {
 				 if(user_sel.equals(com_sel)) {
-					 System.out.println("ºñ°å½À´Ï´Ù.");
+					 System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 				 }
-				 else if(com_sel.equals("¹ÙÀ§")){
-					 System.out.println("ÀÌ°å½À´Ï´Ù.");
+				 else if(com_sel.equals("ï¿½ï¿½ï¿½ï¿½")){
+					 System.out.println("ï¿½Ì°ï¿½ï¿½ï¿½Ï´ï¿½.");
 				 }
 				 else {
-					 System.out.println("Á³½À´Ï´Ù.");
+					 System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 					 lose_cnt++;
 					 if(lose_cnt==2) {
-						 System.out.println("Á×¾úÀ½");
+						 System.out.println("ï¿½×¾ï¿½ï¿½ï¿½");
 						 return false;
 					 } 
 				 }
@@ -74,7 +74,7 @@ public class RockScissorsPaper {
 			 System.out.println();
 		 }
 		 System.out.println();
-		 System.out.println("Åë°ú");
+		 System.out.println("ï¿½ï¿½ï¿½");
 		 return true;
 	}
 
