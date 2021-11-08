@@ -1,71 +1,143 @@
 package GamePackage;
 
+import java.util.Random;
 import java.util.Scanner;
 public class beadingGame {
 	final int odd = 1;
 	final int even = 0;
 	
-	//false¸é ÄÄÇ»ÅÍºÎÅÍ, true¸é »ç¿ëÀÚºÎÅÍ ±¸½½À» Áã´Â ¼öºñ
-	int gameStart(boolean start, int heart) {
+	//startê°€ falseë©´ ì»´í“¨í„°ë¶€í„°, trueë©´ ì‚¬ìš©ìë¶€í„° êµ¬ìŠ¬ì„ ì¥”ë‹¤.
+	int gameStart(boolean start, int heart, int userNumber) {
 		Scanner sc = new Scanner(System.in);
+		Random rand = new Random();
 		
-		//»ç¿ë ±¸½½ÀÇ °³¼ö ¹¯±â
-		System.out.print("¸î°³ÀÇ ±¸½½À» »ç¿ëÇÏ½ÃÙ½À´Ï±î?");
-		int marble = sc.nextInt();
+		int marble;	//ì‚¬ìš©í•  êµ¬ìŠ¬ì˜ ê°œìˆ˜
 		
+		int computerScore;	//ì»´í“¨í„°ì˜ êµ¬ìŠ¬ì˜ ê°œìˆ˜
+		int userScore;	//ì‚¬ìš©ìì˜ êµ¬ìŠ¬ì˜ ê°œìˆ˜
 		
-		//ÄÄÇ»ÅÍ°¡ ±¸½½À» Áå´Ù.
-		if(start==false) {
-			//ÄÄÇ»ÅÍ°¡ ·£´ıÀ¸·Î ±¸½½ÀÇ °³¼ö Á¤ÇÔ(0~marble)
-			int rand = (int)(Math.random()*marble);
-			
-			//»ç¿ëÀÚ°¡ È¦Â¦ Á¤ÇÔ(ÀÌÈÄ, È¦Â¦ ¼±ÅÃ¹Ù ¸¸µé±â)
-			System.out.println("ÄÄÇ»ÅÍ°¡ ±¸½½À» Áã¾ú½À´Ï´Ù.");
-			System.out.print("È¦Â¦À» ¼±ÅÃÇØ ÁÖ½Ê½Ã¿À.(È¦ : 1, Â¦ : 0)");
-			System.out.print("(È¦ : 1, Â¦ : 0)");
-			int user_oddeven = sc.nextInt();
-			
-			String user_str;
-			if(user_oddeven==0) {
-				user_str = "Â¦";
-			}else if(user_oddeven==1) {
-				user_str = "È¦";
-			}else {
-				System.out.println("Àß¸ø ÀÔ·ÂÇÏ¼Ì½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇØ ÁÖ½Ê½Ã¿À");
-				return heart;
+		//ì‚¬ìš© êµ¬ìŠ¬ì˜ ê°œìˆ˜ ë¬»ê¸°(ìµœëŒ€ êµ¬ìŠ¬ ì‚¬ìš© ê°œìˆ˜ 50ê°œ)
+		while(true) {
+			System.out.print("ëª‡ê°œì˜ êµ¬ìŠ¬ì„ ì‚¬ìš©í•˜ì‹œê² ìŠµë‹ˆê¹Œ?(ìµœëŒ€ êµ¬ìŠ¬ ê°œìˆ˜ : 50ê°œ) -> ");
+			marble = sc.nextInt();
+			if(marble>50) {
+				System.out.println("ìµœëŒ€ êµ¬ìŠ¬ ì‚¬ìš© ê°œìˆ˜ë¥¼ ë„˜ì—ˆìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•´ ì£¼ì‹­ì‹œì˜¤.");
+				System.out.println();
+				continue;
 			}
-			
-			if(rand%2==user_oddeven) {
-				System.out.println( user_str + "À» ¸ÂÃè½À´Ï´Ù.");
-				System.out.println("ÄÄÇ»ÅÍ : " + rand + "  »ç¿ëÀÚ : " + user_str);
-			}else {
-				System.out.println(rand + "°³·Î Æ²·È½À´Ï´Ù.");
-				return heart--;
-			}
-			
-		}else {
-			System.out.println("0~" + marble + "Áß ¼ıÀÚ ÇÏ³ª¸¦ ¼±ÅÃÇØ ÁÖ¼¼¿ä.");
-			int user_num = sc.nextInt();
-			
-			int rand = (int)(Math.random()*2)+1;
-			
-			String comp_str;
-			if(rand==0) {
-				comp_str = "Â¦";
-			}else {
-				comp_str = "È¦";
-			}
-			
-			
-			if(user_num%2==rand) {
-				System.out.println( comp_str + "À» ¸ÂÃè½À´Ï´Ù.");
-				System.out.println("ÄÄÇ»ÅÍ : " + comp_str + "  »ç¿ëÀÚ : " + user_num);
-			}else {
-				System.out.println(rand + "°³·Î ´ç½ÅÀÌ ÀÌ°å½À´Ï´Ù.");
-				return heart;
-			}
+			break;
 		}
+		
+		//ì‚¬ìš©ì&ì»´í“¨í„° ì ìˆ˜ reset
+		computerScore = marble;
+		userScore = marble;
+		
+		
+		//ê²Œì„ ì‹œì‘(ì„ ,í›„ê³µì€ ì´ˆê¸°ì— ì •í•œ í›„, ë²ˆ
+		while(userScore>0&&computerScore>0) {
+			//ì»´í“¨í„°ê°€ êµ¬ìŠ¬ì„ ì¥”ë‹¤.
+			if(start==false) {
+				
+				//System.out.println("----------í›„ê³µ----------");
+				
+				//ì»´í“¨í„°ê°€ ëœë¤ìœ¼ë¡œ êµ¬ìŠ¬ì˜ ê°œìˆ˜ë¥¼ ì •í•˜ëŠ” ì½”ë“œ
+				int computerSelect = rand.nextInt(marble)+1;
+				
+				//ì‚¬ìš©ìê°€
+				System.out.println("457ë²ˆì´ êµ¬ìŠ¬ì„ ì¥ì—ˆìŠµë‹ˆë‹¤.");
+				System.out.print("í™€ì§ì„ ì„ íƒí•´ ì£¼ì‹­ì‹œì˜¤ -> ");
+				
+				//ì‚¬ìš©ìê°€ í™€ì§ì„ ì…ë ¥
+				String user_oddeven = sc.next();
+				
+				if((computerSelect%2==0&&user_oddeven.equals("ì§"))||(computerSelect%2==1&&user_oddeven.equals("í™€"))) {
+					System.out.println("457ë²ˆì˜ êµ¬ìŠ¬ ê°œìˆ˜ : " + computerSelect);
+					System.out.println(user_oddeven + "ì„ ë§ì·„ìŠµë‹ˆë‹¤.");
+					System.out.println("ë‹¹ì‹ ì˜ êµ¬ìŠ¬ì´ " + computerSelect + "ë§Œí¼ ì¦ê°€ë©ë‹ˆë‹¤.");
+					userScore+=computerSelect;
+					computerScore-=computerSelect;
+				}else {
+					System.out.println("457ë²ˆì˜ êµ¬ìŠ¬ ê°œìˆ˜ : " + computerSelect);
+					System.out.println("ë‹¹ì‹ ì˜ êµ¬ìŠ¬ì´ " + computerSelect + "ë§Œí¼ ì°¨ê°ë©ë‹ˆë‹¤.");
+					userScore-=computerSelect;
+					computerScore+=computerSelect;
+				}
+				
+				if(userScore<0) {
+					userScore = 0;
+				}else if(computerScore<0) {
+					computerScore = 0;
+				}
+				System.out.println("í˜„ì¬ êµ¬ìŠ¬ì˜ ê°œìˆ˜  | " + userNumber + " : " + userScore + " | 457 : " + computerScore);
+				start=true;
+			}
+			
+			
+			if(start==true) {
+				//System.out.println("----------ì„ ê³µ----------");
+				int userSelect;
+				
+				while(true) {
+					System.out.println("0~" + userScore + "ì¤‘ ì†ì— ì¥˜ êµ¬ìŠ¬ì˜ ê°œìˆ˜ë¥¼ ì…ë ¥í•˜ì‹­ì‹œì˜¤ -> ");
+					userSelect = sc.nextInt();
+					if(userSelect > userScore) {
+						System.out.println(userSelect + "ë§Œí¼ì˜ êµ¬ìŠ¬ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+						System.out.println("ë‹¤ìŒ í„´ìœ¼ë¡œ ëŒì•„ê°‘ë‹ˆë‹¤.");
+						start = false;
+						break;
+					}
+				}
+				
+				
+				int computerOddEven = rand.nextInt(2);
+				
+				String rand_str;
+				if(computerOddEven==0) {
+					rand_str = "ì§";
+				}else {
+					rand_str = "í™€";
+				}
+				
+				
+				if((userSelect%2==0&&rand_str.equals("ì§"))||(userSelect%2==1&&rand_str.equals("í™€"))) {
+					System.out.println("ë‹¹ì‹ ì˜ êµ¬ìŠ¬ ê°œìˆ˜ : " + userSelect);
+					System.out.println("457ë²ˆì´ " + rand_str + "ì„ ë§ì·„ìŠµë‹ˆë‹¤.");
+					System.out.println("ë‹¹ì‹ ì˜ êµ¬ìŠ¬ì´ " + userSelect + "ë§Œí¼ ì°¨ê°ë©ë‹ˆë‹¤.");
+					userScore-=userSelect;
+					computerScore+=userSelect;
+				}else {
+					System.out.println("ë‹¹ì‹ ì˜ êµ¬ìŠ¬ ê°œìˆ˜ : " + userSelect);
+					System.out.println("457ë²ˆì´ " + rand_str + "ë¡œ, í‹€ë ¸ìŠµë‹ˆë‹¤.");
+					System.out.println("ë‹¹ì‹ ì˜ êµ¬ìŠ¬ì´ " + userSelect + "ë§Œí¼ ì¦ê°€ë©ë‹ˆë‹¤.");
+					userScore+=userSelect;
+					computerScore-=userSelect;
+				}
+				
+				if(userScore<0) {
+					userScore = 0;
+				}else if(computerScore<0) {
+					computerScore = 0;
+				}
+				
+				System.out.println("í˜„ì¬ êµ¬ìŠ¬ì˜ ê°œìˆ˜  | " + userNumber + " : " + userScore + " | 457 : " + computerScore );
+				start=false;
+			}
+			
+		}
+		
+		if(userScore<=0) {
+			System.out.println("ë‹¹ì‹ ì˜ êµ¬ìŠ¬ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+			System.out.println("ëª©ìˆ¨ì´ í•˜ë‚˜ ì‚¬ë¼ì§‘ë‹ˆë‹¤.");
+			heart--;
+		}
+		else if(computerScore<=0) {
+			System.out.println("457ë²ˆì˜ êµ¬ìŠ¬ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+			System.out.println("ë‹¹ì‹ ì´ ì´ê²¼ìŠµë‹ˆë‹¤.");
+			System.out.println("ë¬´ì‚¬íˆ ë‹¤ìŒ ê²Œì„ìœ¼ë¡œ ë„˜ì–´ê°‘ë‹ˆë‹¤.");
+		}
+		
 		return heart;
+		
 	}
 	
 }

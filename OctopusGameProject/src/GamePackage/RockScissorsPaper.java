@@ -6,7 +6,7 @@ public class RockScissorsPaper {
 	boolean rpsStart() {
 		Scanner sc=new Scanner(System.in);
 		Random rand = new Random();
- 
+		System.out.println("세판 중 두판을 이기거나 비기면 선공, 두판을 지면 후공입니다.");
 		 int ran;  
 		 String rpsList[]= {"가위","바위","보","가위","바위","보","가위","바위","보","가위","바위","보"};
 		 String user_sel="";
@@ -16,7 +16,7 @@ public class RockScissorsPaper {
 		 while(turn<3) {
 			 turn++;
 			 ran = rand.nextInt(12);  
-			 System.out.println("세판 중 두판을 이기거나 비기면 선공, 두판을 지면 후공입니다.");
+			 
 			 System.out.println("가위 바위 보 중 하나를 골라주세요");
 			 
 			 user_sel=sc.next();
