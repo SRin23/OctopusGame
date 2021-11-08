@@ -16,7 +16,7 @@ public class RockScissorsPaper {
 		 while(turn<3) {
 			 turn++;
 			 ran = rand.nextInt(12);  
-			 System.out.println("���� ���� �� �� �ϳ��� ����ּ���.");
+			 System.out.println("가위 바위 보 중 하나를 골라주세요");
 			 System.out.println("exit�� ������ ����");
 			 user_sel=sc.next();
 			 com_sel=rpsList[ran];
