@@ -5,28 +5,28 @@ import javax.swing.JFrame;
 
 public class mainMenu extends JFrame{
 	public mainMenu(){
-		//------ÇÁ·¹ÀÓ ¼³Á¤
-		JFrame jf = new JFrame("ÂŞ²Ù¹Ì ³îÀÌ - by ¿¬¿ì, ¼¼¸°");
+		//------í”„ë ˆì„ ì„¤ì •
+		JFrame jf = new JFrame("ï¿½Ş²Ù¹ï¿½ ï¿½ï¿½ï¿½ï¿½ - by ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½");
 		
-		//Ã¢ ´İÀ» ½Ã Á¾·á
+		//ì°½ ë‹«ì„ ì‹œ ì¢…ë£Œ
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		//ÇÁ·¹ÀÓÀ» È­¸é °¡¿îµ¥ ¹èÄ¡
+		//í”„ë ˆì„ì„ í™”ë©´ ê°€ìš´ë° ë°°ì¹˜
 		//jf.setLocationRelativeTo(null);
-		//ÇÁ·¹ÀÓ »çÀÌÁî - ÀüÃ¼È­¸é Ã¢¸ğµå
+		//í”„ë ˆì„ ì‚¬ì´ì¦ˆ - ì „ì²´í™”ë©´ ì°½ëª¨ë“œ
 		jf.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		jf.setVisible(true);
 		
-		//-----¹öÆ° ¼³Á¤
-		JButton b1 = new JButton("°ÔÀÓ½ÃÀÛ");
-		JButton b2 = new JButton("µµ¿ò¸»");
+		//-----ë²„íŠ¼ ì„¤ì •
+		JButton b1 = new JButton("ï¿½ï¿½ï¿½Ó½ï¿½ï¿½ï¿½");
+		JButton b2 = new JButton("ï¿½ï¿½ï¿½ï¿½");
 			
-		//¹öÆ° À§Ä¡ ¹× Å©±â 
+		//ë²„íŠ¼ í¬ê¸° ë° ìœ„ì¹˜
 		//x,y,w,h
 		b1.setBounds(30, 170, 122, 30);
 		b2.setBounds(182, 170, 122, 30);
 			
-		//ÇÁ·¹ÀÓ¿¡ ¹öÆ° Ãß°¡
+		//í”„ë ˆì„ì— ë²„íŠ¼ ì¶”ê°€
 		jf.getContentPane().add(b1);
 		jf.getContentPane().add(b2);
 	}

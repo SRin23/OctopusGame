@@ -35,10 +35,13 @@ public class beadingGame {
 		
 		//게임 시작(선,후공은 초기에 정한 후, 번
 		while(userScore>0&&computerScore>0) {
+			System.out.println();
+			
 			//컴퓨터가 구슬을 쥔다.
 			if(start==false) {
 				
 				//System.out.println("----------후공----------");
+				System.out.println("----------수비----------");
 				
 				//컴퓨터가 랜덤으로 구슬의 개수를 정하는 코드
 				int computerSelect = rand.nextInt(marble)+1;
@@ -68,24 +71,33 @@ public class beadingGame {
 				}else if(computerScore<0) {
 					computerScore = 0;
 				}
-				System.out.println("현재 구슬의 개수  | " + userNumber + " : " + userScore + " | 457 : " + computerScore);
+				System.out.println("\n| 현재 구슬의 개수  | " + userNumber + "번 : " + userScore + "개 | 457번 : " + computerScore + "개 | ");
 				start=true;
 			}
 			
-			
+			System.out.println();
 			if(start==true) {
 				//System.out.println("----------선공----------");
+				System.out.println("----------공격----------");
 				int userSelect;
 				
+				int marbleCheck = 0;
 				while(true) {
-					System.out.println("0~" + userScore + "중 손에 쥘 구슬의 개수를 입력하십시오 -> ");
+					System.out.print("0~" + userScore + "중 손에 쥘 구슬의 개수를 입력하십시오 -> ");
 					userSelect = sc.nextInt();
-					if(userSelect > userScore) {
-						System.out.println(userSelect + "만큼의 구슬이 존재하지 않습니다.");
+					marbleCheck++;
+					if(marbleCheck>=3) {
+						System.out.println("범위를 3번 잘못 입력하셨습니다.");
 						System.out.println("다음 턴으로 돌아갑니다.");
 						start = false;
 						break;
 					}
+					if(userSelect > userScore) {
+						System.out.println(userSelect + "만큼의 구슬이 존재하지 않습니다.");
+						System.out.println("다시 선택해 주십시오");
+						continue;
+					}
+					break;
 				}
 				
 				
@@ -119,18 +131,22 @@ public class beadingGame {
 					computerScore = 0;
 				}
 				
-				System.out.println("현재 구슬의 개수  | " + userNumber + " : " + userScore + " | 457 : " + computerScore );
+				System.out.println("\n| 현재 구슬의 개수  | " + userNumber + "번 : " + userScore + "개 | 457번 : " + computerScore + "개 | ");
 				start=false;
 			}
 			
 		}
 		
 		if(userScore<=0) {
+			System.out.println("\n");
+			System.out.println("----------결과----------");
 			System.out.println("당신의 구슬이 존재하지 않습니다.");
 			System.out.println("목숨이 하나 사라집니다.");
 			heart--;
 		}
 		else if(computerScore<=0) {
+			System.out.println();
+			System.out.println("----------결과----------");
 			System.out.println("457번의 구슬이 존재하지 않습니다.");
 			System.out.println("당신이 이겼습니다.");
 			System.out.println("무사히 다음 게임으로 넘어갑니다.");
