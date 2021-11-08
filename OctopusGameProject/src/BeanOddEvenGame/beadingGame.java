@@ -1,4 +1,4 @@
-package GamePackage;
+package BeanOddEvenGame;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -7,7 +7,7 @@ public class beadingGame {
 	final int even = 0;
 	
 	//start가 false면 컴퓨터부터, true면 사용자부터 구슬을 쥔다.
-	int gameStart(boolean start, int heart, int userNumber) {
+	public int gameStart(boolean start, int heart, int userNumber) {
 		Scanner sc = new Scanner(System.in);
 		Random rand = new Random();
 		
