@@ -9,41 +9,41 @@ import java.sql.Statement;
 public class DataBaseMysqlExam {
 	public static void main(String[] args) {
 		try {
-			// Class.forName("org.git.mm.mysql.Driver");// 1. jdbc µå¶óÀÌºê ¿¬°á
-			Class.forName("com.mysql.cj.jdbc.Driver"); // ·Î º¯°æÀÌ µÊ
-			System.out.println("µå¶óÀÌºê ¿¬°áÀÌ ÀßµÊ");
+			// Class.forName("org.git.mm.mysql.Driver");// 1. jdbc ë“œë¼ì´ë¸Œ ì˜ì—­
+			Class.forName("com.mysql.cj.jdbc.Driver"); // ë¡œ ë³€ê²½ì´ ë¨
+			System.out.println("ë“œë¼ì´ë¸Œ ì—°ê²°ì´ ì˜ ë¨");
 		} catch(ClassNotFoundException ee) {
-			System.out.println("DB ¿¬°á µå¶óÀÌºê°¡ ¾øÀ½");
+			System.out.println("DB ì—°ê²° ë“œë¼ì´ë¸Œê°€ ì—†ìŒ");
 		}
 		
 		Connection conn = null;
 		String url = "jdbc:mysql://localhost:3306/OctopusGame";
 		String id = "root";
-		String pw = "#";
+		String pw = "#";	//ë¹„ë°€ë²ˆí˜¸ ë°”ê¾¸ê¸°
 		
 		try {
-			conn = DriverManager.getConnection(url, id, pw);// 2. µ¥ÀÌÅÍº£ÀÌ½º ¿¬°á
+			conn = DriverManager.getConnection(url, id, pw);// 2. ë°ì´í„°ë² ì´ìŠ¤ ì—°ê²°
 		} catch(SQLException ee) {
-			System.out.println("DB ¿¬°á½ÇÆĞ");
+			System.out.println("DB ì—°ê²° ì‹¤íŒ¨");
 		}
 		
-		Statement stmt = null; // 3. ¸í·É¾î Ã³¸® °´Ã¼ »ı¼º
+		Statement stmt = null; // 3. ëª…ë ¹ì–´ ì²˜ë¦¬ ê°ì²´ ìƒì„±
 		try {
 			stmt = conn.createStatement();
 		} catch(SQLException ee) {
-			System.out.println("ÀÛ¾÷ Ã³¸® °´Ã¼ »ı¼º ½ÇÆĞ");
+			System.out.println("ì‘ì—… ì²˜ë¦¬ ê°ì²´ ìƒì„± ì‹¤íŒ¨");
 		}
 		
 		ResultSet rs = null;
 		try {
-			rs = stmt.executeQuery("select * from rank");// 4. °á°úº¸±â
+			rs = stmt.executeQuery("select * from rank");// 4. ê²°ê³¼ë³´ê¸°
 			while(rs.next()) {
 				System.out.println(rs.getString("ranking")+"-" + 
 						rs.getString("name")+"-"+
 						rs.getString("score"));
 			}
 		} catch(SQLException ee) {
-			System.out.println("¸í·É¾î Àü¼Û ½ÇÆĞ"+ee.toString());
+			System.out.println("ëª…ë ¹ì–´ ì „ì†¡ ì‹¤íŒ¨ "+ee.toString());
 		}
 		
 		try {
@@ -51,7 +51,7 @@ public class DataBaseMysqlExam {
 			stmt.close();
 			conn.close();
 		} catch(SQLException ee) {
-			System.out.println("Á¢¼Ó Á¾·á ½ÇÆĞ"+ee.toString());
+			System.out.println("ì ‘ì† ì¢…ë£Œ ì‹¤íŒ¨ "+ee.toString());
 		}
 	}
 }
