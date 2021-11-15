@@ -19,9 +19,6 @@ public class rpsGame {
 	
 	static int win_cnt=0;
 	static int turn=0; //삼세판으로 진행
-	
-	static String userNo;
-	static String masterNo;
 
 	static void resetBtn() { //클릭 이벤트 후 세팅 초기화
 		user_sissors.setEnabled(true);

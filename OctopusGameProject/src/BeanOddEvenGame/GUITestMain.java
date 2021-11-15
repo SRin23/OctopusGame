@@ -1,6 +1,7 @@
 package BeanOddEvenGame;
 
-import RPS.rps_gui;
+//import RPS.rpsGame;
+//현재 리턴이 따로 있지 않아서 주석 처리
 
 public class GUITestMain {
 
