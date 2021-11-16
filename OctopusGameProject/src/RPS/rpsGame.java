@@ -17,6 +17,8 @@ public class rpsGame {
 	
 	static JButton master_rps;
 	
+	static JLabel first;
+	
 	static int win_cnt=0;
 	static int turn=0; //삼세판으로 진행
 
@@ -158,8 +160,14 @@ public class rpsGame {
 					user_rock.setEnabled(false);
 					user_sissors.setEnabled(false);
 					
-					if(win_cnt > 2) System.out.println("선공");
-					else System.out.println("후공");
+					if(win_cnt > 2) {
+						first.setVisible(true);
+						first.setText("선공");
+					}
+					else {
+						first.setVisible(true);
+						first.setText("후공");
+					}
 					
 					return ;
 				}
@@ -188,8 +196,14 @@ public class rpsGame {
 					user_rock.setEnabled(false);
 					user_sissors.setEnabled(false);
 					
-					if(win_cnt > 2) System.out.println("선공");
-					else System.out.println("후공");
+					if(win_cnt > 2) {
+						first.setVisible(true);
+						first.setText("선공");
+					}
+					else {
+						first.setVisible(true);
+						first.setText("후공");
+					}
 					return ;
 				}
 
@@ -217,8 +231,14 @@ public class rpsGame {
 					user_rock.setEnabled(false);
 					user_sissors.setEnabled(false);
 					
-					if(win_cnt > 2) System.out.println("선공");
-					else System.out.println("후공");
+					if(win_cnt > 2) {
+						first.setVisible(true);
+						first.setText("선공");
+					}
+					else {
+						first.setVisible(true);
+						first.setText("후공");
+					}
 					return ;
 					
 				}
@@ -239,15 +259,16 @@ public class rpsGame {
 				//프레임(위에 x 있는 거) 보이게 설정
 				jf.setVisible(true);
 
+
 				//텍스트 설정
 				user_paper = new JButton("보");
 				user_rock = new JButton("바위");
 				user_sissors = new JButton("가위");
 				
 				//x y w h 설정
-				user_sissors.setBounds(200, 630, 150, 150);
-				user_rock.setBounds(500, 630, 150, 150);
-				user_paper.setBounds(800, 630, 150, 150);
+				user_sissors.setBounds(215, 630, 150, 150);
+				user_rock.setBounds(515, 630, 150, 150);
+				user_paper.setBounds(815, 630, 150, 150);
 				
 				//배경색 지정
 				user_rock.setBackground(Color.WHITE);
@@ -263,7 +284,7 @@ public class rpsGame {
 				master_rps=new JButton("");
 
 				//x y w h
-				master_rps.setBounds(500, 200, 150, 150);
+				master_rps.setBounds(515, 200, 150, 150);
 
 				//배경색 지정
 				master_rps.setBackground(Color.WHITE);
@@ -278,5 +299,12 @@ public class rpsGame {
 				vsLabel.setFont(vsLabel.getFont ().deriveFont (30.0f));
 				
 				jf.getContentPane().add(vsLabel);		
+				
+				//선후공 
+				first = new JLabel();
+				first.setFont(vsLabel.getFont ().deriveFont (70.0f));
+				first.setHorizontalAlignment(JLabel.CENTER);
+				first.setVisible(false);
+				jf.getContentPane().add(first);
 	}
 }
