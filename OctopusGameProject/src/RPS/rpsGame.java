@@ -18,9 +18,9 @@ public class rpsGame {
 	static JButton master_rps;
 	
 	static int win_cnt=0;
-	static int turn=0; //»ï¼¼ÆÇÀ¸·Î ÁøÇà
+	static int turn=0; //ì‚¼ì„¸íŒìœ¼ë¡œ ì§„í–‰
 
-	static void resetBtn() { //Å¬¸¯ ÀÌº¥Æ® ÈÄ ¼¼ÆÃ ÃÊ±âÈ­
+	static void resetBtn() { //í´ë¦­ ì´ë²¤íŠ¸ í›„ ì„¸íŒ… ì´ˆê¸°í™”
 		user_sissors.setEnabled(true);
 		user_rock.setEnabled(true);
 		user_paper.setEnabled(true);
@@ -38,19 +38,19 @@ public class rpsGame {
 
 	}
 	
-	static boolean startGame() { //°ÔÀÓ ½ÇÇà
+	static boolean startGame() { //ê²Œì„ ì‹¤í–‰
 		Random rand = new Random();
 		 
 		int ran;  
-		String rpsList[]= {"°¡À§","¹ÙÀ§","º¸"};
-		 //À¯Àú°¡ °í¸¥ °Í(¹öÆ° ÀÔ·Â)
-		String master_sel=""; //ÄÄÀÌ °í¸¥ °Í(·£´ı)
+		String rpsList[]= {"ê°€ìœ„","ë°”ìœ„","ë³´"};
+		 //ìœ ì €ê°€ ê³ ë¥¸ ê²ƒ(ë²„íŠ¼ ì…ë ¥)
+		String master_sel=""; //ì»´ì´ ê³ ë¥¸ ê²ƒ(ëœë¤)
 		
 		ran = rand.nextInt(3);
 		master_sel=rpsList[ran];
 		master_rps.setText(master_sel);
 				
-		//ºñ±ä °æ¿ì
+		//ë¹„ê¸´ ê²½ìš°
 		if(user_sel.equals(master_sel)) {
 			master_rps.setBackground(Color.YELLOW);
 
@@ -65,11 +65,11 @@ public class rpsGame {
 			master_rps.setForeground(Color.BLACK);
 
 		}
-		//À¯Àú-°¡À§
-		else if(user_sel.equals("°¡À§")) {
+		//ìœ ì €-ê°€ìœ„
+		else if(user_sel.equals("ê°€ìœ„")) {
 			System.out.println(user_sel+"  zzz");
-			//ÀÌ±ä °æ¿ì
-			if(master_sel.equals("º¸")) {
+			//ì´ê¸´ ê²½ìš°
+			if(master_sel.equals("ë³´")) {
 				master_rps.setBackground(Color.GREEN);
 				
 				user_paper.setBackground(Color.GREEN);
@@ -78,8 +78,8 @@ public class rpsGame {
 				
 				return true;
 			}
-			//Áø °æ¿ì
-			else if(master_sel.equals("¹ÙÀ§")) {
+			//ì§„ ê²½ìš°
+			else if(master_sel.equals("ë°”ìœ„")) {
 				master_rps.setBackground(Color.RED);
 				
 				user_paper.setBackground(Color.RED);
@@ -90,11 +90,11 @@ public class rpsGame {
 			}
 		}
 		
-		//À¯Àú-¹ÙÀ§
-		else if(user_sel.equals("¹ÙÀ§")) {
+		//ìœ ì €-ë°”ìœ„
+		else if(user_sel.equals("ë°”ìœ„")) {
 			System.out.println(user_sel+"  zzz");
-			//ÀÌ±ä °æ¿ì
-			if(master_sel.equals("°¡À§")) {
+			//ì´ê¸´ ê²½ìš°
+			if(master_sel.equals("ê°€ìœ„")) {
 				master_rps.setBackground(Color.GREEN);
 				
 				user_paper.setBackground(Color.GREEN);
@@ -103,8 +103,8 @@ public class rpsGame {
 				
 				return true;
 			}
-			//Áø °æ¿ì
-			else if(master_sel.equals("º¸")) {
+			//ì§„ ê²½ìš°
+			else if(master_sel.equals("ë³´")) {
 				master_rps.setBackground(Color.RED);
 				
 				user_paper.setBackground(Color.RED);
@@ -112,11 +112,11 @@ public class rpsGame {
 				user_sissors.setBackground(Color.RED);
 			}
 		}
-		//À¯Àú-º¸
-		else if(user_sel.equals("º¸")) {
+		//ìœ ì €-ë³´
+		else if(user_sel.equals("ë³´")) {
 			System.out.println(user_sel+"  zzz");
-			//ÀÌ±ä °æ¿ì
-			if(master_sel.equals("¹ÙÀ§")) {
+			//ì´ê¸´ ê²½ìš°
+			if(master_sel.equals("ë°”ìœ„")) {
 				master_rps.setBackground(Color.GREEN);
 				
 				user_paper.setBackground(Color.GREEN);
@@ -125,8 +125,8 @@ public class rpsGame {
 				
 				return true;
 			}
-			//Áø °æ¿ì
-			else if(master_sel.equals("°¡À§")) {
+			//ì§„ ê²½ìš°
+			else if(master_sel.equals("ê°€ìœ„")) {
 				master_rps.setBackground(Color.RED);
 				
 				user_paper.setBackground(Color.RED);
@@ -144,7 +144,7 @@ public class rpsGame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				user_sel="¹ÙÀ§";
+				user_sel="ë°”ìœ„";
 				if(turn >= 2) {
 					master_rps.setBackground(Color.BLACK);
 					
@@ -158,8 +158,8 @@ public class rpsGame {
 					user_rock.setEnabled(false);
 					user_sissors.setEnabled(false);
 					
-					if(win_cnt > 2) System.out.println("¼±°ø");
-					else System.out.println("ÈÄ°ø");
+					if(win_cnt > 2) System.out.println("ì„ ê³µ");
+					else System.out.println("í›„ê³µ");
 					
 					return ;
 				}
@@ -174,7 +174,7 @@ public class rpsGame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				user_sel="º¸";
+				user_sel="ë³´";
 				if(turn >= 2) {
 					master_rps.setBackground(Color.BLACK);
 					
@@ -188,8 +188,8 @@ public class rpsGame {
 					user_rock.setEnabled(false);
 					user_sissors.setEnabled(false);
 					
-					if(win_cnt > 2) System.out.println("¼±°ø");
-					else System.out.println("ÈÄ°ø");
+					if(win_cnt > 2) System.out.println("ì„ ê³µ");
+					else System.out.println("í›„ê³µ");
 					return ;
 				}
 
@@ -203,7 +203,7 @@ public class rpsGame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				user_sel="°¡À§";
+				user_sel="ê°€ìœ„";
 				if(turn >= 2) {
 					master_rps.setBackground(Color.BLACK);
 					
@@ -217,8 +217,8 @@ public class rpsGame {
 					user_rock.setEnabled(false);
 					user_sissors.setEnabled(false);
 					
-					if(win_cnt > 2) System.out.println("¼±°ø");
-					else System.out.println("ÈÄ°ø");
+					if(win_cnt > 2) System.out.println("ì„ ê³µ");
+					else System.out.println("í›„ê³µ");
 					return ;
 					
 				}
@@ -230,51 +230,51 @@ public class rpsGame {
 
 	}
 	public rpsGame(String userNo, String masterNo) {
-		//ÇÁ·¹ÀÓ »ı¼º
-				JFrame jf = new JFrame("¼±ÈÄ°ø Á¤ÇÏ±â - °¡À§¹ÙÀ§º¸");
-				//Ã¢À» ´İÀ» ½Ã ÇÁ·Î±×·¥ Á¾·á
+		//í”„ë ˆì„ ìƒì„±
+				JFrame jf = new JFrame("ì„ í›„ê³µ ì •í•˜ê¸° - ê°€ìœ„ë°”ìœ„ë³´");
+				//ì°½ì„ ë‹«ì„ ì‹œ í”„ë¡œê·¸ë¨ ì¢…ë£Œ
 				jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 				jf.setSize(1200,900);
-				//ÇÁ·¹ÀÓ(À§¿¡ x ÀÖ´Â °Å) º¸ÀÌ°Ô ¼³Á¤
+				//í”„ë ˆì„(ìœ„ì— x ìˆëŠ” ê±°) ë³´ì´ê²Œ ì„¤ì •
 				jf.setVisible(true);
 
-				//ÅØ½ºÆ® ¼³Á¤
-				user_paper = new JButton("º¸");
-				user_rock = new JButton("¹ÙÀ§");
-				user_sissors = new JButton("°¡À§");
+				//í…ìŠ¤íŠ¸ ì„¤ì •
+				user_paper = new JButton("ë³´");
+				user_rock = new JButton("ë°”ìœ„");
+				user_sissors = new JButton("ê°€ìœ„");
 				
-				//x y w h ¼³Á¤
+				//x y w h ì„¤ì •
 				user_sissors.setBounds(200, 630, 150, 150);
 				user_rock.setBounds(500, 630, 150, 150);
 				user_paper.setBounds(800, 630, 150, 150);
 				
-				//¹è°æ»ö ÁöÁ¤
+				//ë°°ê²½ìƒ‰ ì§€ì •
 				user_rock.setBackground(Color.WHITE);
 				user_paper.setBackground(Color.WHITE);
 				user_sissors.setBackground(Color.WHITE);
 				
-				//ÇÁ·¹ÀÓ¿¡ ºÙÀÌ±â
+				//í”„ë ˆì„ì— ë¶™ì´ê¸°
 				jf.getContentPane().add(user_rock);
 				jf.getContentPane().add(user_sissors);
 				jf.getContentPane().add(user_paper);
 				
-				//ÅØ½ºÆ® ¼³Á¤
+				//í…ìŠ¤íŠ¸ ì„¤ì •
 				master_rps=new JButton("");
 
 				//x y w h
 				master_rps.setBounds(500, 200, 150, 150);
 
-				//¹è°æ»ö ÁöÁ¤
+				//ë°°ê²½ìƒ‰ ì§€ì •
 				master_rps.setBackground(Color.WHITE);
 				
-				//ÇÁ·¹ÀÓ¿¡ ºÙÀÌ±â
+				//í”„ë ˆì„ì— ë¶™ì´ê¸°
 				jf.getContentPane().add(master_rps);
 				
-				//¹®ÀÚ¿­ Ãß°¡
+				//ë¬¸ìì—´ ì¶”ê°€
 				JLabel vsLabel = new JLabel(userNo+" vs "+masterNo); 
 				vsLabel.setBounds(10, 10,200,30);
-				//label ±ÛÀÚ Å©±â Á¶Àı
+				//label ê¸€ì í¬ê¸° ì¡°ì ˆ
 				vsLabel.setFont(vsLabel.getFont ().deriveFont (30.0f));
 				
 				jf.getContentPane().add(vsLabel);		
