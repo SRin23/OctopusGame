@@ -1,5 +1,5 @@
 package BeanOddEvenGame;
-
+//АјАн
 import java.awt.Container;
 import java.awt.FlowLayout;
 
