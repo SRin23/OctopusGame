@@ -9,6 +9,7 @@ import java.util.TimerTask;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 
 public class fcp_gui {
 	public static final int BTN_CNT = 32; //각 줄의 버튼 수
@@ -19,7 +20,7 @@ public class fcp_gui {
 	String nowColor[]=new String[BTN_CNT]; //판의 색을 저장
 	JButton pan[]=new JButton[BTN_CNT]; //판
 	JFrame jf; 
-	
+	JLabel timeJl; //남은 시간을 알려줌
 	public static int redCnt = 0; //player의 판 수(red)
 	public static int blueCnt = 0; //master의 판 수(blue)
 	
@@ -29,9 +30,14 @@ public class fcp_gui {
 		//창을 닫을 시 프로그램 종료
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		
 		jf.setSize(1200,900);
 		//프레임(위에 x 있는 거) 보이게 설정
 		jf.setVisible(true);
+		
+		timeJl=new JLabel("남은 시간 : 20");
+		timeJl.setBounds(1200, 20, 200, 30);
+		//jf.getContentPane().add(timeJl);
 		
 		int i,a;        
 		int pan_y = 100;
@@ -41,6 +47,7 @@ public class fcp_gui {
 			
 			//시작하기 전까지  비활성화
 			pan[i].setEnabled(false);
+			
 			//버튼 줄바꿈을 위한 코드
 			if(i == 8 || i == 16 || i == 24 ||i == 32) {
 				pan_y += 170;
@@ -76,6 +83,7 @@ public class fcp_gui {
 			if(zeroCnt == 16) break;
 				arr[i]= ran;
 		}
+		//나머지 파란색으로 채우기
 		for(int j=i; j<arr.length; j++) {
 			arr[j]=1;
 		}   
@@ -114,7 +122,28 @@ public class fcp_gui {
 		}
 		return true;
 	}
-
+	
+	//자동으로 판 뒤집기
+	private void com() {
+		Random random = new Random();
+		int t = random.nextInt(3000)+200;
+		
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			
+			@Override
+			public void run() {
+				//랜덤 - 시간, 바꿀 배열의 방
+				int ran = random.nextInt(32);
+				if(nowColor[ran].equals("red")) {
+					nowColor[ran] ="blue";
+					pan[ran].setBackground(Color.BLUE);
+				}
+			}
+		};
+		timer.schedule(task, t , 1000);
+	}
+	
 	//판 뒤집기 게임 시작
 	public int startGame(int heart) {
 
@@ -127,8 +156,9 @@ public class fcp_gui {
 
 			@Override
 			public void run() {
+				com();
 				if(count<=20) {
-					System.out.println("남은 시간 : "+(20-count));
+					System.out.println("남은시간 : "+(20-count));
 					count++;
 				}
 				else {
