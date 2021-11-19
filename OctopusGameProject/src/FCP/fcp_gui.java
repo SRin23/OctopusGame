@@ -12,17 +12,20 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class fcp_gui {
-	public static final int BTN_CNT = 32; //각 줄의 버튼 수
-	public static final int PAN_WIDTH = 100; //판의 가로
-	public static final int PAN_HEIGHT = 100; //판의 세로
+	final int BTN_CNT = 32; //각 줄의 버튼 수
+	final int PAN_WIDTH = 100; //판의 가로
+	final int PAN_HEIGHT = 100; //판의 세로
 	static int count = 1;
 	
 	String nowColor[]=new String[BTN_CNT]; //판의 색을 저장
 	JButton pan[]=new JButton[BTN_CNT]; //판
 	JFrame jf; 
 	JLabel timeJl; //남은 시간을 알려줌
-	public static int redCnt = 0; //player의 판 수(red)
-	public static int blueCnt = 0; //master의 판 수(blue)
+	int redCnt = 0; //player의 판 수(red)
+	int blueCnt = 0; //master의 판 수(blue)
+	
+	String playerColor = "red"; //사용자의 판 색
+	String masterColor = "blue"; //컴퓨터의 판 색
 	
 	//프레임 생성
 	fcp_gui(){
@@ -30,7 +33,6 @@ public class fcp_gui {
 		//창을 닫을 시 프로그램 종료
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		
 		jf.setSize(1200,900);
 		//프레임(위에 x 있는 거) 보이게 설정
 		jf.setVisible(true);
@@ -54,7 +56,7 @@ public class fcp_gui {
 				a = 0;
 			}
 			pan[i].setBounds(50+(a*140), pan_y, PAN_WIDTH, PAN_HEIGHT);
-			if(nowColor[i] =="red") pan[i].setBackground(Color.RED);
+			if(nowColor[i].equals(playerColor)) pan[i].setBackground(Color.RED);
 			else pan[i].setBackground(Color.BLUE);
 			
 			final int tmp = i; //이벤트 리스너 안에서 쓰기 위한 상수
@@ -89,19 +91,19 @@ public class fcp_gui {
 		}   
 		
 		for(i=0; i<BTN_CNT; i++) {
-			if(arr[i] == 0) nowColor[i]="red";
-			else nowColor[i]="blue";
+			if(arr[i] == 0) nowColor[i] = playerColor;
+			else nowColor[i] = masterColor;
 		}	
 	}
 	
 	//nowColor에 따른 버튼 색 바뀜
 	private void setColorBtn(int tmp) {
-		if(nowColor[tmp] == "red") {
-			nowColor[tmp]="blue";
+		if(nowColor[tmp].equals(playerColor)) {
+			nowColor[tmp] = masterColor;
 			pan[tmp].setBackground(Color.BLUE);
 		}
 		else {
-			nowColor[tmp]="red";
+			nowColor[tmp] = playerColor;
 			pan[tmp].setBackground(Color.RED);
 		}
 	}
@@ -109,7 +111,7 @@ public class fcp_gui {
 	//게임이 마무리된 후 판의 갯수를 셈
 	private boolean countPan() {
 		for(int i=0; i<BTN_CNT; i++) {
-			if(nowColor[i] =="red") redCnt++;
+			if(nowColor[i].equals(playerColor)) redCnt++;
 			else blueCnt++;
 		}
 		if(redCnt>blueCnt) {
@@ -135,8 +137,8 @@ public class fcp_gui {
 			public void run() {
 				if(count <= 20) {
 					int ran = random.nextInt(32);
-					if(nowColor[ran].equals("red")) {
-						nowColor[ran] ="blue";
+					if(nowColor[ran].equals(playerColor)) {
+						nowColor[ran] = masterColor;
 						pan[ran].setBackground(Color.BLUE);
 					}
 				}
@@ -167,10 +169,10 @@ public class fcp_gui {
 				else {
 					timer.cancel();
 					if(!countPan()) {
-						System.out.println("red : "+redCnt+", blue : "+blueCnt);
+						System.out.println(playerColor+" : "+redCnt+", "+ masterColor + " : "+blueCnt);
 					}
 					else {
-						System.out.println("red : "+redCnt+", blue : "+blueCnt);
+						System.out.println(playerColor+" : "+redCnt+", "+ masterColor + " : "+blueCnt);
 					}
 					System.out.println("게임 끝");
 					for(int i=0; i<BTN_CNT; i++) {

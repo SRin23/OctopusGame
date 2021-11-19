@@ -94,7 +94,6 @@ public class rpsGame {
 		
 		//유저-바위
 		else if(user_sel.equals("바위")) {
-			System.out.println(user_sel+"  zzz");
 			//이긴 경우
 			if(master_sel.equals("가위")) {
 				master_rps.setBackground(Color.GREEN);
