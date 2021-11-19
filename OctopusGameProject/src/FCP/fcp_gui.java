@@ -13,17 +13,18 @@ import javax.swing.JFrame;
 
 public class fcp_gui {
 	public static final int BTN_CNT = 32; //각 줄의 버튼 수
-	public static final int PAN_WIDTH = 100;
-	public static final int PAN_HEIGHT = 100;
-	static int count=1;
+	public static final int PAN_WIDTH = 100; //판의 가로
+	public static final int PAN_HEIGHT = 100; //판의 세로
+	static int count = 1;
 	
-	String nowColor[]=new String[BTN_CNT];
-	JButton pan[]=new JButton[BTN_CNT];
-	JFrame jf;
-	public static int redCnt = 0;
-	public static int blueCnt = 0;
+	String nowColor[]=new String[BTN_CNT]; //판의 색을 저장
+	JButton pan[]=new JButton[BTN_CNT]; //판
+	JFrame jf; 
 	
-	 //프레임 생성
+	public static int redCnt = 0; //player의 판 수(red)
+	public static int blueCnt = 0; //master의 판 수(blue)
+	
+	//프레임 생성
 	fcp_gui(){
 		jf = new JFrame("판 뒤집기");
 		//창을 닫을 시 프로그램 종료

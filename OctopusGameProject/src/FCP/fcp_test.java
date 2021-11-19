@@ -4,7 +4,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class fcp_test {
-	static int countDown = 1;
+	static int countDown = 0;
 	
 	public static void main(String[] args) {
 		int heart=3;
@@ -16,8 +16,8 @@ public class fcp_test {
 			
 			@Override
 			public void run() {
-				if(countDown<=3) {
-					System.out.println(countDown+"...");
+				if(countDown<3) {
+					System.out.println(3-countDown+"...");
 					countDown++;
 				}
 				else {
