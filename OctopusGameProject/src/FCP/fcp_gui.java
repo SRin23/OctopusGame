@@ -13,8 +13,8 @@ import javax.swing.JLabel;
 
 public class fcp_gui {
 	final int BTN_CNT = 32; //각 줄의 버튼 수
-	final int PAN_WIDTH = 100; //판의 가로
-	final int PAN_HEIGHT = 100; //판의 세로
+	final int BTN_WIDTH = 100; //판의 가로
+	final int BTN_HEIGHT = 100; //판의 세로
 	static int count = 1;
 	
 	String nowColor[]=new String[BTN_CNT]; //판의 색을 저장
@@ -59,7 +59,7 @@ public class fcp_gui {
 				pan_y += 140;
 				a = 0;
 			}
-			pan[i].setBounds(50+(a*140), pan_y, PAN_WIDTH, PAN_HEIGHT);
+			pan[i].setBounds(50+(a*140), pan_y, BTN_WIDTH, BTN_HEIGHT);
 			if(nowColor[i].equals(playerColor)) pan[i].setBackground(Color.RED);
 			else pan[i].setBackground(Color.BLUE);
 			
