@@ -43,7 +43,7 @@ public class fcp_gui {
 		timeJl=new JLabel("남은 시간 : 20");
 		timeJl.setBounds(10, 10, 200, 30);
 		timeJl.setFont(timeJl.getFont().deriveFont(20.0f));
-		jf.getContentPane().add(timeJl);
+		//jf.getContentPane().add(timeJl);
 		
 		int i,a;        
 		int pan_y = 160;
@@ -167,6 +167,7 @@ public class fcp_gui {
 			public void run() {
 				com();
 				if(count<=20) {
+					System.out.println("남은 시간 : "+(20-count));
 					timeJl.setText("남은 시간 : "+(20-count));
 					count++;
 				}
