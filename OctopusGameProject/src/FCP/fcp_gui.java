@@ -126,22 +126,25 @@ public class fcp_gui {
 	//자동으로 판 뒤집기
 	private void com() {
 		Random random = new Random();
-		int t = random.nextInt(3000)+200;
+		int t = random.nextInt(3000)+1000;
 		
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
 			
 			@Override
 			public void run() {
-				//랜덤 - 시간, 바꿀 배열의 방
-				int ran = random.nextInt(32);
-				if(nowColor[ran].equals("red")) {
-					nowColor[ran] ="blue";
-					pan[ran].setBackground(Color.BLUE);
+				if(count <= 20) {
+					int ran = random.nextInt(32);
+					if(nowColor[ran].equals("red")) {
+						nowColor[ran] ="blue";
+						pan[ran].setBackground(Color.BLUE);
+					}
 				}
+				else timer.cancel();
+				//랜덤 - 시간, 바꿀 배열의 방
 			}
 		};
-		timer.schedule(task, t , 1000);
+		timer.schedule(task, 0 , t);
 	}
 	
 	//판 뒤집기 게임 시작
