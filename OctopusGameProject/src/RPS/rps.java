@@ -24,8 +24,31 @@ public class rps {
 	String r = "바위";
 	String p = "보";
 	String s = "가위";
-	int chkWin;
+	int chkWin = 0;
 	int count = 0;
+
+	//3초 세고 컴이 고른거 보여줌
+	private void timer() {
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			
+			@Override
+			public void run() {
+				if(count<3) {
+					System.out.println(3-count+"...");
+					count++;
+				}
+				else {
+					timer.cancel();
+					//master_rps.setText(master_sel);
+					System.out.println(master_sel);
+					count = 0;
+					user_sel="";
+				}
+			}	
+		};
+		timer.schedule(task, 0, 1000);
+	}
 	
 	//버튼이 클릭되면 다른 버튼은 기본색으로 돌아감
 	private void chkColor(int index) {
@@ -111,6 +134,9 @@ public class rps {
 		//프레임(위에 x 있는 거) 보이게 설정
 		jf.setVisible(true);
 		
+		chkMasterSel();
+		timer();
+		
 		for(int i=0; i<BTN_CNT; i++) {
 			user_rps[i]=new JButton("");
 			switch (i) {
@@ -128,12 +154,14 @@ public class rps {
 			user_rps[i].setLocation(215+(i*300), 630);
 			user_rps[i].setBackground(Color.WHITE);
 			user_rps[i].setFont(user_rps[i].getFont().deriveFont(35.0f));
+		
 			
 			final int index = i;
 			user_rps[i].addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					timer();
 					switch(index) {
 						case 0:
 							user_sel = s;
@@ -148,26 +176,6 @@ public class rps {
 					chkMasterSel();
 					user_rps[index].setBackground(Color.GREEN);
 					chkColor(index);
-					
-					Timer timer = new Timer();
-					TimerTask task = new TimerTask() {
-						
-						@Override
-						public void run() {
-							if(count<3) {
-								
-								System.out.println(3-count+"...");
-								count++;
-							}
-							else {
-								timer.cancel();
-								//master_rps.setText(master_sel);
-								System.out.println(master_sel);
-								count =0;
-							}
-						}	
-					};
-					timer.schedule(task, 0, 1000);
 				}
 			});
 
@@ -184,7 +192,5 @@ public class rps {
 		master_rps.setForeground(Color.BLACK);
 		
 		jf.getContentPane().add(master_rps);
-		
-				
 	}
 }
