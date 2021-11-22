@@ -35,15 +35,17 @@ public class fcp_gui {
 		//프레임 창 고정
 		jf.setResizable(false);
 		//화면 가운데 배치
-		jf.setLocationRelativeTo(null);
+		//jf.setLocationRelativeTo(null);
 		jf.setSize(1200,900);
 		//프레임(위에 x 있는 거) 보이게 설정
 		jf.setVisible(true);
 		
 		timeJl=new JLabel("남은 시간 : 20");
-		timeJl.setBounds(10, 10, 200, 30);
+		//timeJl.setBounds(0, 0, 200, 30);
+		timeJl.setLocation(0,0);
+		timeJl.setSize(200,30);
 		timeJl.setFont(timeJl.getFont().deriveFont(20.0f));
-		//jf.getContentPane().add(timeJl);
+		jf.getContentPane().add(timeJl);
 		
 		int i,a;        
 		int pan_y = 160;
@@ -168,7 +170,8 @@ public class fcp_gui {
 				com();
 				if(count<=20) {
 					System.out.println("남은 시간 : "+(20-count));
-					timeJl.setText("남은 시간 : "+(20-count));
+					//timeJl.setText("남은 시간 : "+(20-count));
+					
 					count++;
 				}
 				else {
