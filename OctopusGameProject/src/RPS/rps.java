@@ -7,42 +7,59 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+
+import BeanOddEvenGame.MarbleGame;
 
 public class rps {
 	JFrame jf; //프레임
 	final int BTN_CNT = 3; //가위바위보 버튼의 수
 	JButton user_rps[] = new JButton[BTN_CNT];
 	JButton master_rps;
+	JLabel timerCnt = new JLabel();
 	final int BTN_WIDTH = 150;
 	final int BTN_HEIGHT = 150;
 
 	String user_sel=""; //유저가 고른 거
-	String master_sel="";
+	String master_sel=""; //com이 고른거
 	String r = "바위";
 	String p = "보";
 	String s = "가위";
-	int chkWin = 0;
-	int count = 0;
-
+	int chkWin = 0; //가위바위보 이긴 횟수
+	int count = 0; //3초 카운트
+	int turn = 0; //턴 수 세기
+	boolean timering=false; //timer가 실행 중인지 체크
+	
+	ImageIcon rock = new ImageIcon(MarbleGame.class.getResource("../img/rock.png"));
+	ImageIcon scissors = new ImageIcon(MarbleGame.class.getResource("../img/scissors.png"));
+	ImageIcon paper = new ImageIcon(MarbleGame.class.getResource("../img/paper.png"));
+	
 	//3초 세고 컴이 고른거 보여줌
 	private void timer() {
+		turn++;
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
 			
 			@Override
 			public void run() {
-				if(count<3) {
+				if(count < 3) {
+					timering=true;
 					System.out.println(3-count+"...");
+					timerCnt.setText(3-count+"...");
 					count++;
 				}
 				else {
+					if(user_sel.equals("")) System.out.println("안 고름"); 
+					timering = false;
 					timer.cancel();
 					//master_rps.setText(master_sel);
-					System.out.println(master_sel);
+					System.out.println(master_sel+"m");
+					System.out.println(user_sel+"u");
 					count = 0;
+					chkUserMasterRps();
 					user_sel="";
 				}
 			}	
@@ -81,45 +98,59 @@ public class rps {
 	}
 	
 	//컴과 유저의 선택을 비교
-	private boolean chkUserMasterRps() {
+	private void chkUserMasterRps() {
 		if(user_sel.equals(master_sel)) { //비긴 경우
 			System.out.println("비김");
+			for(int i=0; i<BTN_CNT; i++) 
+				user_rps[i].setBackground(Color.YELLOW);
+			master_rps.setBackground(Color.YELLOW);
 		}
 		
 		else if(master_sel.equals(s)) {//컴이 가위
 			if(user_sel.equals(p)) {//유저가 보
 				System.out.println("졌음");	
-				return false;
+				for(int i=0; i<BTN_CNT; i++) 
+					user_rps[i].setBackground(Color.RED);
+				master_rps.setBackground(Color.RED);
 			}
 			if(user_sel.equals(r)) {//유저가 주먹
 				System.out.println("이겼음");
 				chkWin++;
-				return true;
+				for(int i=0; i<BTN_CNT; i++) 
+					user_rps[i].setBackground(Color.GREEN);
+				master_rps.setBackground(Color.GREEN);
 			} 
 		} 
 		else if(master_sel.equals(r)) {//컴이 바위
 			if(user_sel.equals(p)) {//유저가 보
 				System.out.println("졌음");
-				return false;
+				for(int i=0; i<BTN_CNT; i++) 
+					user_rps[i].setBackground(Color.RED);
+				master_rps.setBackground(Color.RED);
 			}
 			if(user_sel.equals(r)) {//유저가 바위
 				System.out.println("이겼음");
 				chkWin++;
-				return true;
+				for(int i=0; i<BTN_CNT; i++) 
+					user_rps[i].setBackground(Color.GREEN);
+				master_rps.setBackground(Color.GREEN);
 			} 
 		}  
 		else if(master_sel.equals(p)) {//컴이 보
 			if(user_sel.equals(r)) {//유저가 바위
 				System.out.println("졌음");
-				return false;
+				for(int i=0; i<BTN_CNT; i++) 
+					user_rps[i].setBackground(Color.RED);
+				master_rps.setBackground(Color.RED);
 			}
 			if(user_sel.equals(s)) {//유저가 바위
 				System.out.println("이겼음");
+				for(int i=0; i<BTN_CNT; i++) 
+					user_rps[i].setBackground(Color.GREEN);
+				master_rps.setBackground(Color.GREEN);
 				chkWin++;
-				return true;
 			} 
 		}
-		return true;
 	}
 	
 	rps(){
@@ -137,16 +168,25 @@ public class rps {
 		chkMasterSel();
 		timer();
 		
+		//timerCnt = new JLabel();
+		timerCnt.setSize(100, 50);
+		timerCnt.setLocation(0, 0);
+		
+		
+		//jf.getContentPane().add(timerCnt);
+		
 		for(int i=0; i<BTN_CNT; i++) {
-			user_rps[i]=new JButton("");
 			switch (i) {
 			case 0: //가위
+				user_rps[i]=new JButton(scissors);
 				user_rps[i].setText(s);
 				break;
 			case 1: //바위
+				user_rps[i]=new JButton(rock);
 				user_rps[i].setText(r);
 				break;
 			case 2: //보
+				user_rps[i]=new JButton(paper);
 				user_rps[i].setText(p);
 				break;
 			}
@@ -155,13 +195,17 @@ public class rps {
 			user_rps[i].setBackground(Color.WHITE);
 			user_rps[i].setFont(user_rps[i].getFont().deriveFont(35.0f));
 		
+			//user_rps[i].setBorderPainted(false);
+			user_rps[i].setContentAreaFilled(false);
+			user_rps[i].setFocusPainted(false);
 			
 			final int index = i;
 			user_rps[i].addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					timer();
+					master_rps.setBackground(Color.WHITE);
+					if(!timering) timer();
 					switch(index) {
 						case 0:
 							user_sel = s;
@@ -173,8 +217,8 @@ public class rps {
 							user_sel = p;
 							break;
 					}
-					chkMasterSel();
-					user_rps[index].setBackground(Color.GREEN);
+
+					user_rps[index].setBackground(Color.BLUE);
 					chkColor(index);
 				}
 			});
