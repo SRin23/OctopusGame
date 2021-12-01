@@ -27,7 +27,7 @@ public class fcp_test {
 				}
 			}
 		};
-		t.schedule(tt, 1000,1000);
+		t.scheduleAtFixedRate(tt, 1000,1000);
 	}
 	
 }
