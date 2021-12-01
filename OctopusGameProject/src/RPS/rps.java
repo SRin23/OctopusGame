@@ -12,7 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import BeanOddEvenGame.MarbleGame;
+import marbleOddEven.MarbleGameMain;
 
 public class rps {
 	JFrame jf; //프레임
@@ -33,9 +33,9 @@ public class rps {
 	int turn = 0; //턴 수 세기
 	boolean timering=false; //timer가 실행 중인지 체크
 	
-	ImageIcon rock = new ImageIcon(MarbleGame.class.getResource("../img/rock.png"));
-	ImageIcon scissors = new ImageIcon(MarbleGame.class.getResource("../img/scissors.png"));
-	ImageIcon paper = new ImageIcon(MarbleGame.class.getResource("../img/paper.png"));
+	ImageIcon rock = new ImageIcon(MarbleGameMain.class.getResource("../img/rock.png"));
+	ImageIcon scissors = new ImageIcon(MarbleGameMain.class.getResource("../img/scissors.png"));
+	ImageIcon paper = new ImageIcon(MarbleGameMain.class.getResource("../img/paper.png"));
 	
 	
 	//3초 세고 컴이 고른거 보여줌
