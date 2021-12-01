@@ -1,15 +1,14 @@
-package BeanOddEvenGame;
+package marbleOddEven;
 
-public class MarbleGame {
+public class MarbleGameMain {
 
 	public static void main(String[] args) {
+		boolean order = true;
 		int heart = 3;
 		int userNumber = 123;
-		int marbleCount = 30;
 		
-		//marbleDefence mDefence = new marbleDefence(false, heart, userNumber);
-		//marbleAttact mAttact = new marbleAttact(false, heart, userNumber, marbleCount);
-		FirstMarbleGame Firstmg = new FirstMarbleGame(true, heart, userNumber);
+		MarbleGameGUI Firstmg = new MarbleGameGUI(order, heart, userNumber);
+		System.out.println("main화면입니다.");
 	}
 
 }
