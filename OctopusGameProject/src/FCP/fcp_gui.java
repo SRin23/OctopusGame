@@ -15,7 +15,7 @@ public class fcp_gui {
 	final int BTN_CNT = 32; //각 줄의 버튼 수
 	final int BTN_WIDTH = 100; //판의 가로
 	final int BTN_HEIGHT = 100; //판의 세로
-	static int count = 1;
+	static int count = 1; //타이머를 위한 전역변수
 	
 	String nowColor[]=new String[BTN_CNT]; //판의 색을 저장
 	JButton pan[]=new JButton[BTN_CNT]; //판
@@ -45,7 +45,7 @@ public class fcp_gui {
 		timeJl.setLocation(0,0);
 		timeJl.setSize(200,30);
 		timeJl.setFont(timeJl.getFont().deriveFont(20.0f));
-		jf.getContentPane().add(timeJl);
+		//jf.getContentPane().add(timeJl);
 		
 		int i,a;        
 		int pan_y = 160;
@@ -62,11 +62,10 @@ public class fcp_gui {
 				a = 0;
 			}
 			pan[i].setBounds(50+(a*140), pan_y, BTN_WIDTH, BTN_HEIGHT);
-			if(nowColor[i].equals(playerColor)) pan[i].setBackground(Color.RED);
-			else pan[i].setBackground(Color.BLUE);
+			pan[i].setBackground(Color.BLACK); //시작 전에 모두 검은색
 			
 			final int tmp = i; //이벤트 리스너 안에서 쓰기 위한 상수
-			//버튼들에 클릭 이벤트 부여
+			//버튼에 클릭 이벤트 부여
 			pan[i].addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -158,8 +157,10 @@ public class fcp_gui {
 	//판 뒤집기 게임 시작
 	public int startGame(int heart) {
 
-		for(int j=0; j<BTN_CNT; j++) {
-			pan[j].setEnabled(true);
+		for(int i=0; i<BTN_CNT; i++) {
+			pan[i].setEnabled(true);
+			if(nowColor[i].equals(playerColor)) pan[i].setBackground(Color.RED);
+			else pan[i].setBackground(Color.BLUE);
 		}
 		
 		Timer timer = new Timer();
