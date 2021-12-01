@@ -37,30 +37,41 @@ public class rps {
 	ImageIcon scissors = new ImageIcon(MarbleGame.class.getResource("../img/scissors.png"));
 	ImageIcon paper = new ImageIcon(MarbleGame.class.getResource("../img/paper.png"));
 	
+	
 	//3초 세고 컴이 고른거 보여줌
 	private void timer() {
 		turn++;
+
 		Timer timer = new Timer();
 		TimerTask task = new TimerTask() {
 			
 			@Override
 			public void run() {
+
 				if(count < 3) {
 					timering=true;
 					System.out.println(3-count+"...");
 					timerCnt.setText(3-count+"...");
 					count++;
+					
 				}
 				else {
 					if(user_sel.equals("")) System.out.println("안 고름"); 
 					timering = false;
 					timer.cancel();
-					//master_rps.setText(master_sel);
-					System.out.println(master_sel+"m");
-					System.out.println(user_sel+"u");
 					count = 0;
 					chkUserMasterRps();
 					user_sel="";
+					
+					//3판을 할 수 있음
+					if(turn>=3) {
+						if(chkWin>=2) System.out.println("선공");
+						else System.out.println("후공");
+						for(int i=0; i<BTN_CNT; i++)
+							user_rps[i].setEnabled(false);
+						master_rps.setEnabled(false);
+						return;
+					}
 				}
 			}	
 		};
@@ -70,17 +81,19 @@ public class rps {
 	//버튼이 클릭되면 다른 버튼은 기본색으로 돌아감
 	private void chkColor(int index) {
 
-		if(index == 0) {
+		switch (index) {
+		case 0:
 			user_rps[1].setBackground(Color.WHITE);
 			user_rps[2].setBackground(Color.WHITE);
-		}
-		else if(index == 1) {
+			break;
+		case 1:
 			user_rps[0].setBackground(Color.WHITE);
 			user_rps[2].setBackground(Color.WHITE);
-		} 
-		if(index == 2) {
+			break;
+		case 2:
 			user_rps[0].setBackground(Color.WHITE);
 			user_rps[1].setBackground(Color.WHITE);
+			break;
 		}
 	}
 	
@@ -90,9 +103,6 @@ public class rps {
 		 
 		int ran;  
 		String rpsList[]= {"가위","바위","보"};
-		 //유저가 고른 것(버튼 입력)
-		 //컴이 고른 것(랜덤)
-		
 		ran = rand.nextInt(3);
 		master_sel=rpsList[ran];
 	}
@@ -159,8 +169,6 @@ public class rps {
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//프레임 창 고정
 		jf.setResizable(false);
-		//화면 가운데 배치
-		//jf.setLocationRelativeTo(null);
 		jf.setSize(1200,900);
 		//프레임(위에 x 있는 거) 보이게 설정
 		jf.setVisible(true);
@@ -169,25 +177,20 @@ public class rps {
 		timer();
 		
 		//timerCnt = new JLabel();
-		timerCnt.setSize(100, 50);
-		timerCnt.setLocation(0, 0);
-		
-		
+		//timerCnt.setSize(100, 50);
+		//timerCnt.setLocation(0, 0);
 		//jf.getContentPane().add(timerCnt);
 		
 		for(int i=0; i<BTN_CNT; i++) {
 			switch (i) {
 			case 0: //가위
 				user_rps[i]=new JButton(scissors);
-				user_rps[i].setText(s);
 				break;
 			case 1: //바위
 				user_rps[i]=new JButton(rock);
-				user_rps[i].setText(r);
 				break;
 			case 2: //보
 				user_rps[i]=new JButton(paper);
-				user_rps[i].setText(p);
 				break;
 			}
 			user_rps[i].setSize(150,150);
@@ -195,7 +198,6 @@ public class rps {
 			user_rps[i].setBackground(Color.WHITE);
 			user_rps[i].setFont(user_rps[i].getFont().deriveFont(35.0f));
 		
-			//user_rps[i].setBorderPainted(false);
 			user_rps[i].setContentAreaFilled(false);
 			user_rps[i].setFocusPainted(false);
 			
@@ -227,12 +229,11 @@ public class rps {
 		}
 		
 		//컴 선택 버튼 세팅
-		master_rps = new JButton("?");
+		master_rps = new JButton();
 		master_rps.setSize(150,150);
 		master_rps.setLocation(515, 200);
 		master_rps.setBackground(Color.WHITE);
 		master_rps.setFont(master_rps.getFont().deriveFont(35.0f));
-		//master_rps.setEnabled(false);
 		master_rps.setForeground(Color.BLACK);
 		
 		jf.getContentPane().add(master_rps);
