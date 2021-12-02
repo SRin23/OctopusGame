@@ -8,7 +8,7 @@ public class fcp_test {
 	
 	public static void main(String[] args) {
 		int heart=3;
-		fcp_gui fg = new fcp_gui();
+		fcp fg = new fcp();
 
 		//3초 뒤 게임 시작
 		Timer t = new Timer();

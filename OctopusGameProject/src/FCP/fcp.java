@@ -12,7 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class fcp_gui extends JFrame{
+public class fcp extends JFrame{
 		final int BTN_CNT = 32; //각 줄의 버튼 수
 		final int BTN_WIDTH = 100; //판의 가로
 		final int BTN_HEIGHT = 100; //판의 세로
@@ -31,7 +31,7 @@ public class fcp_gui extends JFrame{
 		String masterColor = "blue"; //컴퓨터의 판 색
 		
 		//프레임 생성
-		fcp_gui(){
+		fcp(){
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setTitle("홀짝게임");
 			c1.setLayout(null);
