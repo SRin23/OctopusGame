@@ -2,7 +2,6 @@ package RPS;
 
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
@@ -165,6 +164,7 @@ public class rps extends JFrame{
 	}
 	
 	rps(){
+		
 		setTitle("가위바위보");
 		//창을 닫을 시 프로그램 종료
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -236,5 +236,6 @@ public class rps extends JFrame{
 		master_rps.setForeground(Color.BLACK);
 		
 		c1.add(master_rps);
+
 	}
 }
