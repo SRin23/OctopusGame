@@ -2,6 +2,7 @@ package FCP;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
@@ -12,7 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class fcp_gui extends JFrame{
+public class fcp extends JFrame{
 		final int BTN_CNT = 32; //각 줄의 버튼 수
 		final int BTN_WIDTH = 100; //판의 가로
 		final int BTN_HEIGHT = 100; //판의 세로
@@ -30,8 +31,9 @@ public class fcp_gui extends JFrame{
 		String playerColor = "red"; //사용자의 판 색
 		String masterColor = "blue"; //컴퓨터의 판 색
 		
+		static boolean win; //게임 이겼는지 여부
 		//프레임 생성
-		fcp_gui(){
+		fcp(){
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setTitle("홀짝게임");
 			c1.setLayout(null);
@@ -42,16 +44,16 @@ public class fcp_gui extends JFrame{
 			setVisible(true);
 			
 			timeJl=new JLabel("남은 시간 : 20");
-			timeJl.setLocation(0,0);
+			timeJl.setLocation(500,10);
 			timeJl.setSize(200,30);
-			timeJl.setFont(timeJl.getFont().deriveFont(20.0f));
+			timeJl.setFont(timeJl.getFont().deriveFont(30.0f));
 			timeJl.setVisible(true);
 			c1.add(timeJl);
 			
 			panCnt = new JLabel();
-			panCnt.setLocation(0,0);
+			panCnt.setLocation(500,10);
 			panCnt.setSize(200,30);
-			panCnt.setFont(panCnt.getFont().deriveFont(20.0f));
+			panCnt.setFont(panCnt.getFont().deriveFont(30.0f));
 			panCnt.setVisible(false);
 			c1.add(panCnt);
 			
@@ -122,7 +124,7 @@ public class fcp_gui extends JFrame{
 		}
 		
 		//게임이 마무리된 후 판의 갯수를 셈
-		private void countPan() {
+		private boolean countPan() {
 			for(int i=0; i<BTN_CNT; i++) {
 				if(nowColor[i].equals(playerColor)) redCnt++;
 				else blueCnt++;
@@ -130,20 +132,20 @@ public class fcp_gui extends JFrame{
 			if(redCnt>blueCnt) {
 				for(int i=0; i<BTN_CNT; i++)
 					pan[i].setBackground(Color.RED);
-				
-				
+				return true;
 			} 
 			else if(blueCnt>=redCnt ) {
 				for(int i=0; i<BTN_CNT; i++)
 					pan[i].setBackground(Color.BLUE);
+				return false;
 			}
-
+			return true;
 		}
 		
 		//자동으로 판 뒤집기
 		private void com() {
 			Random random = new Random();
-			int t = random.nextInt(3000)+1000;
+			int t = random.nextInt(2800)+1100; //판을 뒤집는 시간
 			
 			Timer timer = new Timer();
 			TimerTask task = new TimerTask() {
@@ -158,15 +160,14 @@ public class fcp_gui extends JFrame{
 						}
 					}
 					else timer.cancel();
-					//랜덤 - 시간, 바꿀 배열의 방
 				}
 			};
 			timer.schedule(task, 0 , t);
 		}
 		
 		//판 뒤집기 게임 시작
-		public int startGame(int heart) {
-
+		public boolean startGame() {
+			
 			for(int i=0; i<BTN_CNT; i++) {
 				pan[i].setEnabled(true);
 				if(nowColor[i].equals(playerColor)) pan[i].setBackground(Color.RED);
@@ -180,7 +181,6 @@ public class fcp_gui extends JFrame{
 				public void run() {
 					com();
 					if(count<=20) {
-						System.out.println("남은 시간 : "+(20-count));
 						timeJl.setText("남은 시간 : "+(20-count));
 						
 						count++;
@@ -188,7 +188,7 @@ public class fcp_gui extends JFrame{
 					else {
 						timeJl.setVisible(false);
 						timer.cancel();
-						countPan();
+						win = countPan();
 						System.out.println("게임 끝");
 						
 						panCnt.setText("red : "+redCnt+", blue : "+blueCnt);
@@ -202,7 +202,7 @@ public class fcp_gui extends JFrame{
 			};
 			timer.scheduleAtFixedRate(task, 1000, 1000);
 			
-			return heart; 
+			return win;
 		}
 	}
 		

@@ -1,6 +1,8 @@
 package RPS;
 
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
@@ -12,14 +14,14 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import marbleOddEven.MarbleGameMain;
 
-public class rps {
-	JFrame jf; //프레임
+public class rps extends JFrame{
 	final int BTN_CNT = 3; //가위바위보 버튼의 수
 	JButton user_rps[] = new JButton[BTN_CNT];
 	JButton master_rps;
 	JLabel timerCnt = new JLabel();
+	Container c1 = getContentPane();
+	
 	final int BTN_WIDTH = 150;
 	final int BTN_HEIGHT = 150;
 
@@ -31,12 +33,11 @@ public class rps {
 	int chkWin = 0; //가위바위보 이긴 횟수
 	int count = 0; //3초 카운트
 	int turn = 0; //턴 수 세기
-	boolean timering=false; //timer가 실행 중인지 체크
+	boolean timering = false; //timer가 실행 중인지 체크
 	
-	ImageIcon rock = new ImageIcon(MarbleGameMain.class.getResource("../img/rock.png"));
-	ImageIcon scissors = new ImageIcon(MarbleGameMain.class.getResource("../img/scissors.png"));
-	ImageIcon paper = new ImageIcon(MarbleGameMain.class.getResource("../img/paper.png"));
-	
+	ImageIcon rock = new ImageIcon(rps_test.class.getResource("../img/rock.png"));
+	ImageIcon scissors = new ImageIcon(rps_test.class.getResource("../img/scissors.png"));
+	ImageIcon paper = new ImageIcon(rps_test.class.getResource("../img/paper.png"));
 	
 	//3초 세고 컴이 고른거 보여줌
 	private void timer() {
@@ -53,8 +54,8 @@ public class rps {
 					System.out.println(3-count+"...");
 					timerCnt.setText(3-count+"...");
 					count++;
-					
 				}
+				
 				else {
 					if(user_sel.equals("")) System.out.println("안 고름"); 
 					timering = false;
@@ -75,7 +76,7 @@ public class rps {
 				}
 			}	
 		};
-		timer.schedule(task, 0, 1000);
+		timer.scheduleAtFixedRate(task, 0, 1000);
 	}
 	
 	//버튼이 클릭되면 다른 버튼은 기본색으로 돌아감
@@ -164,22 +165,18 @@ public class rps {
 	}
 	
 	rps(){
-		jf = new JFrame("가위바위보");
+		setTitle("가위바위보");
 		//창을 닫을 시 프로그램 종료
-		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		//프레임 창 고정
-		jf.setResizable(false);
-		jf.setSize(1200,900);
+		setResizable(false);
+		setSize(1200,900);
 		//프레임(위에 x 있는 거) 보이게 설정
-		jf.setVisible(true);
+		setVisible(true);
 		
 		chkMasterSel();
 		timer();
 		
-		//timerCnt = new JLabel();
-		//timerCnt.setSize(100, 50);
-		//timerCnt.setLocation(0, 0);
-		//jf.getContentPane().add(timerCnt);
 		
 		for(int i=0; i<BTN_CNT; i++) {
 			switch (i) {
@@ -225,7 +222,9 @@ public class rps {
 				}
 			});
 
-			jf.getContentPane().add(user_rps[i]);
+			timerCnt.setLocation(0, 0);
+			c1.add(timerCnt);
+			c1.add(user_rps[i]);
 		}
 		
 		//컴 선택 버튼 세팅
@@ -236,6 +235,6 @@ public class rps {
 		master_rps.setFont(master_rps.getFont().deriveFont(35.0f));
 		master_rps.setForeground(Color.BLACK);
 		
-		jf.getContentPane().add(master_rps);
+		c1.add(master_rps);
 	}
 }
