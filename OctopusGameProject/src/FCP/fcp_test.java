@@ -8,7 +8,7 @@ public class fcp_test {
 	static boolean win;
 	public static void main(String[] args) {
 		int heart=3;
-		fcp fg = new fcp(123);
+		fcp fg = new fcp("123");
 
 		//3초 뒤 게임 시작
 		Timer t = new Timer();
