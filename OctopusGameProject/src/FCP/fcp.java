@@ -2,7 +2,6 @@ package FCP;
 
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
@@ -38,7 +37,6 @@ public class fcp extends JFrame{
 			setTitle("È¦Â¦°ÔÀÓ");
 			c1.setLayout(null);
 			setResizable(false);	
-			setLocationRelativeTo(null);
 			setSize(1200, 900);
 			c1.setBackground(Color.white);
 			setVisible(true);
@@ -51,8 +49,8 @@ public class fcp extends JFrame{
 			c1.add(timeJl);
 			
 			panCnt = new JLabel();
-			panCnt.setLocation(500,10);
-			panCnt.setSize(200,30);
+			panCnt.setLocation(450,10);
+			panCnt.setSize(400,30);
 			panCnt.setFont(panCnt.getFont().deriveFont(30.0f));
 			panCnt.setVisible(false);
 			c1.add(panCnt);
@@ -180,7 +178,7 @@ public class fcp extends JFrame{
 				@Override
 				public void run() {
 					com();
-					if(count<=20) {
+					if(count<=2) {
 						timeJl.setText("³²Àº ½Ã°£ : "+(20-count));
 						
 						count++;
