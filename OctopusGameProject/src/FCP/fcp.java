@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -15,7 +16,7 @@ import javax.swing.JLabel;
 public class fcp extends JFrame{
 		final int BTN_CNT = 32; //각 줄의 버튼 수
 		final int BTN_WIDTH = 100; //판의 가로
-		final int BTN_HEIGHT = 100; //판의 세로
+		final int BTN_HEIGHT = 140; //판의 세로
 		static int count = 1; //타이머를 위한 전역변수
 		
 		String nowColor[]=new String[BTN_CNT]; //판의 색을 저장
@@ -23,35 +24,58 @@ public class fcp extends JFrame{
 		Container c1 = getContentPane();
 		JLabel timeJl; //남은 시간을 알려줌
 		JLabel panCnt; //판의 수를 알려줌
+		JLabel playerNo;
+		JLabel masterNo;
+		int playerCnt = 0; //player의 판 수(white)
+		int masterCnt = 0; //master의 판 수(black)
 		
-		int redCnt = 0; //player의 판 수(red)
-		int blueCnt = 0; //master의 판 수(blue)
-		
-		String playerColor = "red"; //사용자의 판 색
-		String masterColor = "blue"; //컴퓨터의 판 색
+		String playerColor = "white"; //사용자의 판 색
+		String masterColor = "black"; //컴퓨터의 판 색
 		
 		static boolean win; //게임 이겼는지 여부
+		ImageIcon whitePan = new ImageIcon(fcp.class.getResource("../img/whitePan.png"));
+		ImageIcon blackPan = new ImageIcon(fcp.class.getResource("../img/blackPan.png"));
+		ImageIcon background = new ImageIcon(fcp.class.getResource("../img/background.png"));
+
+
+		String playerNum;
 		//프레임 생성
-		fcp(){
+		fcp(String pNum){
+			playerNum=pNum;
+			Color soil = new Color(217, 171, 130);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setTitle("홀짝게임");
-			c1.setLayout(null);
+			setLayout(null);
 			setResizable(false);	
 			setSize(1200, 900);
-			c1.setBackground(Color.white);
+			c1.setBackground(soil);
 			setVisible(true);
 			
-			timeJl=new JLabel("남은 시간 : 20");
-			timeJl.setLocation(500,10);
-			timeJl.setSize(200,30);
-			timeJl.setFont(timeJl.getFont().deriveFont(30.0f));
+			//player 번호 및 색을 알려주는 라벨
+			playerNo = new JLabel(playerNum+" : "+playerColor);
+			playerNo.setBounds(0,20,150,30);
+			playerNo.setFont(playerNo.getFont().deriveFont(25.0f));
+			playerNo.setVisible(true);
+			c1.add(playerNo);
+
+			//master 번호 및 색을 알려주는 라벨
+			masterNo = new JLabel("457 : "+masterColor);
+			masterNo.setBounds(1050,20,150,30);
+			masterNo.setFont(masterNo.getFont().deriveFont(25.0f));
+			masterNo.setVisible(true);
+			c1.add(masterNo);
+
+			//남은 시간 보여주는 라벨
+			timeJl = new JLabel();
+			timeJl.setBounds(470,30,400,60);
+			timeJl.setFont(timeJl.getFont().deriveFont(40.0f));
 			timeJl.setVisible(true);
 			c1.add(timeJl);
 			
+			//게임이 끝난 후 판의 개수를 보여주는 라벨
 			panCnt = new JLabel();
-			panCnt.setLocation(450,10);
-			panCnt.setSize(400,30);
-			panCnt.setFont(panCnt.getFont().deriveFont(30.0f));
+			panCnt.setBounds(410,400,800,100);
+			panCnt.setFont(panCnt.getFont().deriveFont(50.0f));
 			panCnt.setVisible(false);
 			c1.add(panCnt);
 			
@@ -62,15 +86,14 @@ public class fcp extends JFrame{
 				pan[i] = new JButton();
 				
 				//시작하기 전까지  비활성화
-				pan[i].setEnabled(false);
+				pan[i].setVisible(false);
 				
 				//버튼 줄바꿈을 위한 코드
 				if(i == 8 || i == 16 || i == 24 ||i == 32) {
-					pan_y += 140;
+					pan_y += 160;
 					a = 0;
 				}
 				pan[i].setBounds(50+(a*140), pan_y, BTN_WIDTH, BTN_HEIGHT);
-				pan[i].setBackground(Color.BLACK); //시작 전에 모두 검은색
 				
 				final int tmp = i; //이벤트 리스너 안에서 쓰기 위한 상수
 				//버튼에 클릭 이벤트 부여
@@ -113,28 +136,28 @@ public class fcp extends JFrame{
 		private void setColorBtn(int tmp) {
 			if(nowColor[tmp].equals(playerColor)) {
 				nowColor[tmp] = masterColor;
-				pan[tmp].setBackground(Color.BLUE);
+				pan[tmp].setIcon(blackPan);
 			}
 			else {
 				nowColor[tmp] = playerColor;
-				pan[tmp].setBackground(Color.RED);
+				pan[tmp].setIcon(whitePan);
 			}
 		}
 		
 		//게임이 마무리된 후 판의 갯수를 셈
 		private boolean countPan() {
 			for(int i=0; i<BTN_CNT; i++) {
-				if(nowColor[i].equals(playerColor)) redCnt++;
-				else blueCnt++;
+				if(nowColor[i].equals(playerColor)) playerCnt++;
+				else masterCnt++;
 			}
-			if(redCnt>blueCnt) {
+			if(playerCnt>masterCnt) {
 				for(int i=0; i<BTN_CNT; i++)
-					pan[i].setBackground(Color.RED);
+					pan[i].setIcon(whitePan);
 				return true;
 			} 
-			else if(blueCnt>=redCnt ) {
+			else if(masterCnt>=playerCnt ) {
 				for(int i=0; i<BTN_CNT; i++)
-					pan[i].setBackground(Color.BLUE);
+					pan[i].setIcon(blackPan);
 				return false;
 			}
 			return true;
@@ -154,7 +177,7 @@ public class fcp extends JFrame{
 						int ran = random.nextInt(32);
 						if(nowColor[ran].equals(playerColor)) {
 							nowColor[ran] = masterColor;
-							pan[ran].setBackground(Color.BLUE);
+							pan[ran].setIcon(blackPan);
 						}
 					}
 					else timer.cancel();
@@ -167,9 +190,9 @@ public class fcp extends JFrame{
 		public boolean startGame() {
 			
 			for(int i=0; i<BTN_CNT; i++) {
-				pan[i].setEnabled(true);
-				if(nowColor[i].equals(playerColor)) pan[i].setBackground(Color.RED);
-				else pan[i].setBackground(Color.BLUE);
+				pan[i].setVisible(true);
+				if(nowColor[i].equals(playerColor)) pan[i].setIcon(whitePan);
+				else pan[i].setIcon(blackPan);
 			}
 			
 			Timer timer = new Timer();
@@ -189,11 +212,11 @@ public class fcp extends JFrame{
 						win = countPan();
 						System.out.println("게임 끝");
 						
-						panCnt.setText("red : "+redCnt+", blue : "+blueCnt);
+						panCnt.setText(playerNum+" : "+playerCnt+", 457 : "+masterCnt);
 						panCnt.setVisible(true);
 						
 						for(int i=0; i<BTN_CNT; i++) {
-							pan[i].setEnabled(false);
+							pan[i].setVisible(false);
 						}
 					}
 				}
