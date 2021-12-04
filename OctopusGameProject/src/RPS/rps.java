@@ -34,9 +34,9 @@ public class rps extends JFrame{
 	int turn = 0; //턴 수 세기
 	boolean timering = false; //timer가 실행 중인지 체크
 	
-	ImageIcon rock = new ImageIcon(rps_test.class.getResource("../img/rock.png"));
-	ImageIcon scissors = new ImageIcon(rps_test.class.getResource("../img/scissors.png"));
-	ImageIcon paper = new ImageIcon(rps_test.class.getResource("../img/paper.png"));
+	ImageIcon rock = new ImageIcon(rpsMain.class.getResource("../img/rock.png"));
+	ImageIcon scissors = new ImageIcon(rpsMain.class.getResource("../img/scissors.png"));
+	ImageIcon paper = new ImageIcon(rpsMain.class.getResource("../img/paper.png"));
 	
 	//3초 세고 컴이 고른거 보여줌
 	private void timer() {
@@ -78,24 +78,6 @@ public class rps extends JFrame{
 		timer.scheduleAtFixedRate(task, 0, 1000);
 	}
 	
-	//버튼이 클릭되면 다른 버튼은 기본색으로 돌아감
-	private void chkColor(int index) {
-
-		switch (index) {
-		case 0:
-			user_rps[1].setBackground(Color.WHITE);
-			user_rps[2].setBackground(Color.WHITE);
-			break;
-		case 1:
-			user_rps[0].setBackground(Color.WHITE);
-			user_rps[2].setBackground(Color.WHITE);
-			break;
-		case 2:
-			user_rps[0].setBackground(Color.WHITE);
-			user_rps[1].setBackground(Color.WHITE);
-			break;
-		}
-	}
 	
 	//컴이 랜덤으로 하나 고름
 	private void chkMasterSel() {
@@ -111,60 +93,45 @@ public class rps extends JFrame{
 	private void chkUserMasterRps() {
 		if(user_sel.equals(master_sel)) { //비긴 경우
 			System.out.println("비김");
-			for(int i=0; i<BTN_CNT; i++) 
-				user_rps[i].setBackground(Color.YELLOW);
 			master_rps.setBackground(Color.YELLOW);
 		}
 		
 		else if(master_sel.equals(s)) {//컴이 가위
 			if(user_sel.equals(p)) {//유저가 보
 				System.out.println("졌음");	
-				for(int i=0; i<BTN_CNT; i++) 
-					user_rps[i].setBackground(Color.RED);
 				master_rps.setBackground(Color.RED);
 			}
 			if(user_sel.equals(r)) {//유저가 주먹
 				System.out.println("이겼음");
 				chkWin++;
-				for(int i=0; i<BTN_CNT; i++) 
-					user_rps[i].setBackground(Color.GREEN);
 				master_rps.setBackground(Color.GREEN);
 			} 
 		} 
 		else if(master_sel.equals(r)) {//컴이 바위
 			if(user_sel.equals(p)) {//유저가 보
 				System.out.println("졌음");
-				for(int i=0; i<BTN_CNT; i++) 
-					user_rps[i].setBackground(Color.RED);
 				master_rps.setBackground(Color.RED);
 			}
 			if(user_sel.equals(r)) {//유저가 바위
 				System.out.println("이겼음");
 				chkWin++;
-				for(int i=0; i<BTN_CNT; i++) 
-					user_rps[i].setBackground(Color.GREEN);
 				master_rps.setBackground(Color.GREEN);
 			} 
 		}  
 		else if(master_sel.equals(p)) {//컴이 보
 			if(user_sel.equals(r)) {//유저가 바위
 				System.out.println("졌음");
-				for(int i=0; i<BTN_CNT; i++) 
-					user_rps[i].setBackground(Color.RED);
 				master_rps.setBackground(Color.RED);
 			}
 			if(user_sel.equals(s)) {//유저가 바위
 				System.out.println("이겼음");
-				for(int i=0; i<BTN_CNT; i++) 
-					user_rps[i].setBackground(Color.GREEN);
 				master_rps.setBackground(Color.GREEN);
 				chkWin++;
 			} 
 		}
 	}
 	
-	rps(){
-		
+	public rps(){
 		setTitle("가위바위보");
 		//창을 닫을 시 프로그램 종료
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -176,7 +143,11 @@ public class rps extends JFrame{
 		
 		chkMasterSel();
 		timer();
-		
+
+		timerCnt.setBounds(0,20,150,30);
+		timerCnt.setFont(timerCnt.getFont().deriveFont(25.0f));
+		timerCnt.setVisible(true);
+		c1.add(timerCnt);
 		
 		for(int i=0; i<BTN_CNT; i++) {
 			switch (i) {
@@ -192,7 +163,6 @@ public class rps extends JFrame{
 			}
 			user_rps[i].setSize(150,150);
 			user_rps[i].setLocation(215+(i*300), 630);
-			user_rps[i].setBackground(Color.WHITE);
 			user_rps[i].setFont(user_rps[i].getFont().deriveFont(35.0f));
 		
 			user_rps[i].setContentAreaFilled(false);
@@ -203,7 +173,6 @@ public class rps extends JFrame{
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					master_rps.setBackground(Color.WHITE);
 					if(!timering) timer();
 					switch(index) {
 						case 0:
@@ -217,13 +186,8 @@ public class rps extends JFrame{
 							break;
 					}
 
-					user_rps[index].setBackground(Color.BLUE);
-					chkColor(index);
 				}
 			});
-
-			timerCnt.setLocation(0, 0);
-			c1.add(timerCnt);
 			c1.add(user_rps[i]);
 		}
 		
@@ -236,6 +200,5 @@ public class rps extends JFrame{
 		master_rps.setForeground(Color.BLACK);
 		
 		c1.add(master_rps);
-
 	}
 }
