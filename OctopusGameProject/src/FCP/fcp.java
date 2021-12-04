@@ -40,7 +40,7 @@ public class fcp extends JFrame{
 
 		String playerNum;
 		//프레임 생성
-		fcp(String pNum){
+		public fcp(String pNum){
 			playerNum=pNum;
 			Color soil = new Color(217, 171, 130);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -185,10 +185,7 @@ public class fcp extends JFrame{
 			};
 			timer.schedule(task, 0 , t);
 		}
-		
-		//판 뒤집기 게임 시작
-		public boolean startGame() {
-			
+		void game(){
 			for(int i=0; i<BTN_CNT; i++) {
 				pan[i].setVisible(true);
 				if(nowColor[i].equals(playerColor)) pan[i].setIcon(whitePan);
@@ -201,7 +198,7 @@ public class fcp extends JFrame{
 				@Override
 				public void run() {
 					com();
-					if(count<=2) {
+					if(count<=20) {
 						timeJl.setText("남은 시간 : "+(20-count));
 						
 						count++;
@@ -222,8 +219,31 @@ public class fcp extends JFrame{
 				}
 			};
 			timer.scheduleAtFixedRate(task, 1000, 1000);
-			
-			return win;
+		}
+		static int countDown=1;
+
+		//판 뒤집기 게임 시작
+		public boolean startGame() {
+			Timer t = new Timer();
+			TimerTask tt = new TimerTask() {
+
+			@Override
+			public void run() {
+				if(countDown<3) {
+					System.out.println(3-countDown+"...");
+					countDown++;
+				}
+				else {
+					t.cancel();
+					System.out.println("게임 스타트");
+					game();
+				}
+			}
+		};
+		t.scheduleAtFixedRate(tt, 1000,1000);
+
+		return win;
+
 		}
 	}
 		
