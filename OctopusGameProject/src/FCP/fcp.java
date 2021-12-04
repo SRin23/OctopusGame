@@ -24,9 +24,12 @@ public class fcp extends JFrame{
 		Container c1 = getContentPane();
 		JLabel timeJl; //남은 시간을 알려줌
 		JLabel panCnt; //판의 수를 알려줌
-		JLabel playerNo;
-		JLabel masterNo;
-		JLabel cnt;
+		JLabel playerNo; //플레이어 번호
+		JLabel masterNo; //master의 번호
+		JLabel cnt; //3..2..1..
+		JLabel gameOver; //gameOver
+		JLabel score; //결과
+
 		int playerCnt = 0; //player의 판 수(white)
 		int masterCnt = 0; //master의 판 수(black)
 		
@@ -38,8 +41,8 @@ public class fcp extends JFrame{
 		ImageIcon blackPan = new ImageIcon(fcp.class.getResource("../img/blackPan.png"));
 		ImageIcon background = new ImageIcon(fcp.class.getResource("../img/background.png"));
 
-
 		String playerNum;
+		
 		//프레임 생성
 		public fcp(String pNum){
 			playerNum=pNum;
@@ -56,7 +59,7 @@ public class fcp extends JFrame{
 			cnt = new JLabel("3");
 			cnt.setBounds(510,250,300,300);
 			cnt.setFont(cnt.getFont().deriveFont(300.0f));
-			cnt.setForeground(Color.RED);
+			cnt.setForeground(Color.BLACK);
 			cnt.setVisible(true);
 			c1.add(cnt);
 			
@@ -85,6 +88,7 @@ public class fcp extends JFrame{
 			panCnt = new JLabel();
 			panCnt.setBounds(410,400,800,100);
 			panCnt.setFont(panCnt.getFont().deriveFont(50.0f));
+			panCnt.setForeground(Color.BLACK);
 			panCnt.setVisible(false);
 			c1.add(panCnt);
 			
@@ -113,9 +117,23 @@ public class fcp extends JFrame{
 						setColorBtn(tmp);
 					}
 				});
-				
 				c1.add(pan[i]);
 			}
+
+			gameOver = new JLabel();
+			gameOver.setText("GAME OVER");
+			gameOver.setBounds(300,300,800,100);
+			gameOver.setForeground(Color.BLACK);
+			gameOver.setFont(gameOver.getFont().deriveFont(100.0f));
+			gameOver.setVisible(false);
+			c1.add(gameOver);
+	
+			score = new JLabel();
+			score.setBounds(520,500,300,80);
+			score.setFont(score.getFont().deriveFont(50.0f));
+			score.setForeground(Color.BLACK);
+			score.setVisible(false);
+			c1.add(score);
 		}
 		
 		//초기 색 설정을 위한 함수
@@ -128,12 +146,11 @@ public class fcp extends JFrame{
 				int ran = random.nextInt(2);
 				if(ran == 0) zeroCnt++;
 				if(zeroCnt == 16) break;
-					arr[i]= ran;
+				arr[i]= ran;
 			}
-			//나머지 파란색으로 채우기
-			for(int j=i; j<arr.length; j++) {
+			//나머지 채우기
+			for(int j=i; j<arr.length; j++) 
 				arr[j]=1;
-			}   
 			
 			for(i=0; i<BTN_CNT; i++) {
 				if(arr[i] == 0) nowColor[i] = playerColor;
@@ -220,7 +237,12 @@ public class fcp extends JFrame{
 						timeJl.setVisible(false);
 						timer.cancel();
 						win = countPan();
-						System.out.println("게임 끝");
+						
+						if(win) score.setText(playerNum+" 이김");
+						else score.setText("457 이김");
+
+						gameOver.setVisible(true);
+						score.setVisible(true);
 						
 						panCnt.setText(playerNum+" : "+playerCnt+", 457 : "+masterCnt);
 						panCnt.setVisible(true);

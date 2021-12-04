@@ -111,7 +111,7 @@ public class rps extends JFrame{
 		gameOver.setVisible(false);
 		c1.add(gameOver);
 
-		score = new JLabel("¼±°ø");
+		score = new JLabel();
 		score.setBounds(560,450,200,80);
 		score.setFont(score.getFont().deriveFont(50.0f));
 		score.setForeground(Color.WHITE);
@@ -167,7 +167,6 @@ public class rps extends JFrame{
 
 	public boolean startGame(){
 		timer();
-		System.out.println(win);
 		return win;
 	}
 
