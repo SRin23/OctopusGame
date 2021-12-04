@@ -21,6 +21,8 @@ public class rps extends JFrame{
 	JButton user_rps[] = new JButton[BTN_CNT];
 	JButton master_rps;
 	JLabel timerCnt;
+	JLabel gameOver;
+	JLabel score;
 	Container c1 = getContentPane();
 
 	String user_sel=""; //유저가 고른 거
@@ -32,7 +34,8 @@ public class rps extends JFrame{
 	int count = 0; //3초 카운트
 	int turn = 0; //턴 수 세기
 	boolean timering = false; //timer가 실행 중인지 체크
-	
+	boolean win;
+
 	ImageIcon rock = new ImageIcon(rpsMain.class.getResource("../img/rock.png"));
 	ImageIcon scissors = new ImageIcon(rpsMain.class.getResource("../img/scissors.png"));
 	ImageIcon paper = new ImageIcon(rpsMain.class.getResource("../img/paper.png"));
@@ -56,13 +59,11 @@ public class rps extends JFrame{
 		c1.add(master_rps);
 
 		timerCnt = new JLabel("3");
-		timerCnt.setBounds(600,300,150,30);
-		timerCnt.setFont(timerCnt.getFont().deriveFont(40.0f));
+		timerCnt.setBounds(600,350,150,50);
+		timerCnt.setFont(timerCnt.getFont().deriveFont(50.0f));
 		timerCnt.setVisible(true);
 		timerCnt.setForeground(Color.WHITE);
 		c1.add(timerCnt);
-
-
 
 		for(int i=0; i<BTN_CNT; i++) {
 			switch (i) {
@@ -102,15 +103,29 @@ public class rps extends JFrame{
 			});
 			c1.add(user_rps[i]);
 		}
+		gameOver = new JLabel();
+		gameOver.setText("GAME OVER");
+		gameOver.setBounds(300,300,800,100);
+		gameOver.setForeground(Color.WHITE);
+		gameOver.setFont(gameOver.getFont().deriveFont(100.0f));
+		gameOver.setVisible(false);
+		c1.add(gameOver);
 
+		score = new JLabel("선공");
+		score.setBounds(560,450,200,80);
+		score.setFont(score.getFont().deriveFont(50.0f));
+		score.setForeground(Color.WHITE);
+		score.setVisible(false);
+		c1.add(score);
+
+		JLabel jl  = new JLabel();
+		c1.add(jl);
 	}
 
 	//컴이 랜덤으로 하나 고름
 	private void chkMasterSel() {
-		Random rand = new Random();
-		 
 		String rpsList[]= {"가위","바위","보"};
-		master_sel=rpsList[rand.nextInt(3)];
+		master_sel=rpsList[new Random().nextInt(3)];
 	}
 	
 	//컴과 유저의 선택을 비교
@@ -150,8 +165,10 @@ public class rps extends JFrame{
 		}
 	}
 
-	public void startGame(){
+	public boolean startGame(){
 		timer();
+		System.out.println(win);
+		return win;
 	}
 
 	//3초 세고 컴이 고른거 보여줌
@@ -194,11 +211,21 @@ public class rps extends JFrame{
 
 					//3판을 할 수 있음
 					if(turn>=3) {
-						if(chkWin>1) System.out.println("선공");
-						else System.out.println("후공");
+						if(chkWin>1) {
+							score.setText("선공");
+							win=true;
+						}
+						else{
+							score.setText("후공");
+							win=false;
+						}
 						for(int i=0; i<BTN_CNT; i++)
-							user_rps[i].setEnabled(false);
-						master_rps.setEnabled(false);
+							user_rps[i].setVisible(false);
+						master_rps.setVisible(false);
+
+						gameOver.setVisible(true);
+						score.setVisible(true);
+
 						return;
 					}
 				}
