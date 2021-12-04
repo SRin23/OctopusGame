@@ -3,7 +3,7 @@ package FCP;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class fcp_test {
+public class fcpMain {
 	static int countDown = 0;
 	static boolean win;
 	public static void main(String[] args) {
