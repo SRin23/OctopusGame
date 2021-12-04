@@ -1,0 +1,197 @@
+package TestPack;
+
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+
+
+public class rps extends JFrame{
+	final int BTN_CNT = 3; //가위바위보 버튼의 수
+	JButton user_rps[] = new JButton[BTN_CNT];
+	JButton master_rps;
+	JLabel timerCnt = new JLabel();
+	Container c1 = getContentPane();
+	
+	final int BTN_WIDTH = 150;
+	final int BTN_HEIGHT = 150;
+
+	String user_sel=""; //유저가 고른 거
+	String master_sel=""; //com이 고른거
+	String r = "바위";
+	String p = "보";
+	String s = "가위";
+	int chkWin = 0; //가위바위보 이긴 횟수
+	int count = 0; //3초 카운트
+	int turn = 0; //턴 수 세기
+	boolean timering = false; //timer가 실행 중인지 체크
+	
+	ImageIcon rock = new ImageIcon(rps_test.class.getResource("../img/rock.png"));
+	ImageIcon scissors = new ImageIcon(rps_test.class.getResource("../img/scissors.png"));
+	ImageIcon paper = new ImageIcon(rps_test.class.getResource("../img/paper.png"));
+	
+	//3초 세고 컴이 고른거 보여줌
+	private void timer() {
+		turn++;
+
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
+			
+			@Override
+			public void run() {
+				if(count < 3) {
+					timering=true;
+					System.out.println(3-count+"...");
+					timerCnt.setText(3-count+"...");
+					count++;
+				}
+				
+				else {
+					if(user_sel.equals("")) System.out.println("안 고름"); 
+					timering = false;
+					timer.cancel();
+					count = 0;
+					chkUserMasterRps();
+					user_sel="";
+					
+					//3판을 할 수 있음
+					if(turn>=3) {
+						if(chkWin>=2) System.out.println("선공");
+						else System.out.println("후공");
+						for(int i=0; i<BTN_CNT; i++)
+							user_rps[i].setEnabled(false);
+						master_rps.setEnabled(false);
+						return;
+					}
+				}
+			}	
+		};
+		timer.scheduleAtFixedRate(task, 0, 1000);
+	}
+	
+	//컴이 랜덤으로 하나 고름
+	private void chkMasterSel() {
+		Random rand = new Random();
+		 
+		int ran;  
+		String rpsList[]= {"가위","바위","보"};
+		ran = rand.nextInt(3);
+		master_sel=rpsList[ran];
+		
+	}
+	
+	//컴과 유저의 선택을 비교
+	private void chkUserMasterRps() {
+		if(user_sel.equals(master_sel)) { //비긴 경우
+			System.out.println("비김");
+		}
+		
+		else if(master_sel.equals(s)) {//컴이 가위
+			if(user_sel.equals(p)) {//유저가 보
+				System.out.println("졌음");
+			}
+			if(user_sel.equals(r)) {//유저가 주먹
+				System.out.println("이겼음");
+				chkWin++;
+			} 
+		} 
+		else if(master_sel.equals(r)) {//컴이 바위
+			if(user_sel.equals(p)) {//유저가 보
+				System.out.println("졌음");
+			}
+			if(user_sel.equals(r)) {//유저가 바위
+				System.out.println("이겼음");
+				chkWin++;
+			} 
+		}  
+		else if(master_sel.equals(p)) {//컴이 보
+			if(user_sel.equals(r)) {//유저가 바위
+				System.out.println("졌음");
+			}
+			if(user_sel.equals(s)) {//유저가 바위
+				System.out.println("이겼음");
+				chkWin++;
+			} 
+		}
+	}
+	
+	rps(){
+		setTitle("가위바위보");
+		//창을 닫을 시 프로그램 종료
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		//프레임 창 고정
+		setResizable(false);
+		setSize(1200,900);
+		//프레임(위에 x 있는 거) 보이게 설정
+		setVisible(true);
+		
+		chkMasterSel();
+		timer();
+		
+		
+		for(int i=0; i<BTN_CNT; i++) {
+			switch (i) {
+			case 0: //가위
+				user_rps[i]=new JButton(scissors);
+				break;
+			case 1: //바위
+				user_rps[i]=new JButton(rock);
+				break;
+			case 2: //보
+				user_rps[i]=new JButton(paper);
+				break;
+			}
+			user_rps[i].setSize(150,150);
+			user_rps[i].setLocation(215+(i*300), 630);
+			user_rps[i].setBackground(Color.WHITE);
+			user_rps[i].setFont(user_rps[i].getFont().deriveFont(35.0f));
+		
+			user_rps[i].setBorderPainted(false);
+			user_rps[i].setContentAreaFilled(false);
+			user_rps[i].setFocusPainted(false);
+			
+			final int index = i;
+			user_rps[i].addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					master_rps.setBackground(Color.WHITE);
+					if(!timering) timer();
+					switch(index) {
+						case 0:
+							user_sel = s;
+							break;
+						case 1:
+							user_sel = r;
+							break;
+						case 2:
+							user_sel = p;
+							break;
+					}
+				}
+			});
+
+			timerCnt.setLocation(0, 0);
+			c1.add(timerCnt);
+			c1.add(user_rps[i]);
+		}
+		
+		//컴 선택 버튼 세팅
+		master_rps = new JButton();
+		master_rps.setSize(150,150);
+		master_rps.setLocation(515, 200);
+		master_rps.setBackground(Color.WHITE);
+		master_rps.setFont(master_rps.getFont().deriveFont(35.0f));
+		master_rps.setForeground(Color.BLACK);
+		
+		c1.add(master_rps);
+	}
+}
