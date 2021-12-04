@@ -51,7 +51,7 @@ public class panStory extends JFrame{
 		}
     }
 
-    panStory(String s,String playerNo){
+    public panStory(String s,String playerNo){
         setTitle("말말");
 		//창을 닫을 시 프로그램 종료
 		setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -40,7 +40,7 @@ public class fcp extends JFrame{
 
 		String playerNum;
 		//프레임 생성
-		fcp(String pNum){
+		public fcp(String pNum){
 			playerNum=pNum;
 			Color soil = new Color(217, 171, 130);
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
