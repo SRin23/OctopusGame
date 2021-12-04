@@ -26,6 +26,7 @@ public class fcp extends JFrame{
 		JLabel panCnt; //판의 수를 알려줌
 		JLabel playerNo;
 		JLabel masterNo;
+		JLabel cnt;
 		int playerCnt = 0; //player의 판 수(white)
 		int masterCnt = 0; //master의 판 수(black)
 		
@@ -50,26 +51,34 @@ public class fcp extends JFrame{
 			setSize(1200, 900);
 			c1.setBackground(soil);
 			setVisible(true);
+
+			//3..2..1..보여주는 라벨
+			cnt = new JLabel("3");
+			cnt.setBounds(510,250,300,300);
+			cnt.setFont(cnt.getFont().deriveFont(300.0f));
+			cnt.setForeground(Color.RED);
+			cnt.setVisible(true);
+			c1.add(cnt);
 			
 			//player 번호 및 색을 알려주는 라벨
 			playerNo = new JLabel(playerNum+" : "+playerColor);
 			playerNo.setBounds(0,20,150,30);
 			playerNo.setFont(playerNo.getFont().deriveFont(25.0f));
-			playerNo.setVisible(true);
+			playerNo.setVisible(false);
 			c1.add(playerNo);
 
 			//master 번호 및 색을 알려주는 라벨
 			masterNo = new JLabel("457 : "+masterColor);
 			masterNo.setBounds(1050,20,150,30);
 			masterNo.setFont(masterNo.getFont().deriveFont(25.0f));
-			masterNo.setVisible(true);
+			masterNo.setVisible(false);
 			c1.add(masterNo);
 
 			//남은 시간 보여주는 라벨
-			timeJl = new JLabel();
+			timeJl = new JLabel("남은 시간 : 20");
 			timeJl.setBounds(470,30,400,60);
 			timeJl.setFont(timeJl.getFont().deriveFont(40.0f));
-			timeJl.setVisible(true);
+			timeJl.setVisible(false);
 			c1.add(timeJl);
 			
 			//게임이 끝난 후 판의 개수를 보여주는 라벨
@@ -186,6 +195,10 @@ public class fcp extends JFrame{
 			timer.schedule(task, 0 , t);
 		}
 		void game(){
+			playerNo.setVisible(true);
+			masterNo.setVisible(true);
+			timeJl.setVisible(true);
+
 			for(int i=0; i<BTN_CNT; i++) {
 				pan[i].setVisible(true);
 				if(nowColor[i].equals(playerColor)) pan[i].setIcon(whitePan);
@@ -230,11 +243,12 @@ public class fcp extends JFrame{
 			@Override
 			public void run() {
 				if(countDown<3) {
-					System.out.println(3-countDown+"...");
+					cnt.setText(""+(3-countDown));
 					countDown++;
 				}
 				else {
 					t.cancel();
+					cnt.setVisible(false);
 					System.out.println("게임 스타트");
 					game();
 				}
