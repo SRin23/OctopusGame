@@ -5,16 +5,18 @@ import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Random;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JTextField;
 
-import miniGame.panStory;
-
+import miniGame.connectAll;
 public class GameMainGUI extends JFrame{
+	Random rand = new Random();
 	//텍스트 필드를 통해 얻은 string값
 	String userNo;
 	JTextField userNoTf;
@@ -23,6 +25,7 @@ public class GameMainGUI extends JFrame{
 	private Image screenImage;
 	private Graphics screenGraphic;
 
+	public String userNumber;
 	
 	Container c1 = getContentPane();
 	
@@ -71,7 +74,8 @@ public class GameMainGUI extends JFrame{
 			//버튼을 마우스가 누를때
 			@Override
 			public void mousePressed(MouseEvent e) {
-				panStory PS = new panStory("안녕하세요", "반갑습니다.", "123");
+				userNumber = Integer.toString(rand.nextInt(456)+1);
+				connectAll mg = new connectAll(userNumber);
 				setVisible(false);
 			}
 		});
