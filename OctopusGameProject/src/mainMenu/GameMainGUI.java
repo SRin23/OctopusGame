@@ -3,6 +3,7 @@ package mainMenu;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
@@ -33,10 +34,11 @@ public class GameMainGUI extends JFrame{
 	private JButton ranking;
 	
 	public GameMainGUI(){
+
 		int userNumber = (int)(Math.random()*456+1);
 		System.out.println(userNumber);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("메인 화면");
+		setTitle("硫붿씤 �솕硫�");
 		c1.setLayout(null);
 		setResizable(false);	
 		setSize(1200, 900);
@@ -57,7 +59,7 @@ public class GameMainGUI extends JFrame{
 				gameStart.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				gameStart.setIcon(gameStartEntered);
 			}
-			//湲곕낯
+			//疫꿸퀡�궚
 			@Override
 			public void mouseExited(MouseEvent e) {
 				gameStart.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));

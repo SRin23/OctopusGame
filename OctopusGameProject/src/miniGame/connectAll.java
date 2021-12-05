@@ -16,6 +16,8 @@ import javax.swing.JLabel;
 
 import FCP.panGame;
 import RSP.rspGame;
+import mainMenu.GameEnding_fail;
+import mainMenu.GameEnding_success;
 import marbleOddEven.MarbleGameGUI;
 
 public class connectAll {
@@ -36,16 +38,11 @@ public class connectAll {
     boolean chkEnter = false;
     boolean start;
     public static int heart = 2;
+    
     public connectAll(String pNum){
-<<<<<<< HEAD
 
-    	if(heart<=0) {
+    	Font font = new Font("서울남산 장체B",Font.PLAIN,20);
 
-    	}
-    	Font font = new Font("Gugi",Font.PLAIN,20);
-
-=======
->>>>>>> refs/remotes/origin/main
         panJf = new JFrame();
         rspJf = new JFrame();
         marbleJf = new JFrame();
@@ -106,8 +103,7 @@ public class connectAll {
                     if(chkEnter) {
                         panJf.dispose();
                         new panGame(pNum).startGame();
-                        System.out.println(heart);
-                        chkEnter =false;
+                        chkEnter = false;
                     }
                 }
             }
@@ -121,8 +117,8 @@ public class connectAll {
                     if(chkEnter) {
                         marbleJf.dispose();
                        new MarbleGameGUI(pNum).startGame(start);
-                        System.out.println(heart);
                         chkEnter =false;
+                    	
                     }
                 }
             }
@@ -136,8 +132,8 @@ public class connectAll {
                     if(chkEnter) {
                         catchMoleJf.dispose();
                         new catchMole.CatchMoleGUI(pNum).startGame();
-                        System.out.println(heart);
                         chkEnter = false;
+                        
                     }
                 }
             }
@@ -159,22 +155,22 @@ public class connectAll {
 
         talk[0] = new JLabel("<html>참가번호 "+pNum+", 일어나시기 바랍니다.<br>"
         		+ "현재 당신은 쭈꾸미 놀이에 참가했습니다.<br> "
-        		+ "최선을 다해 게임을 참가하여 우승 상금을 받아가시기 바랍니다.<br>" 
+        		+ "최선을 다해 게임을 참가하여 우승 상금을 받아가시기 바랍니다.<br><br>" 
         		+"첫번째 게임은 판 뒤집기 입니다.<br>"
         		+ "판 뒤집기는 본인에게 주어진 색의 판을 더 많이 뒤집은 사람이 이기는 게임입니다.<br>"  
         		+"판을 뒤집기 위해선 마우스로 클릭을 하면 됩니다.<br>"
         		+ "주어진 시간이 끝난 후 본인의 색이 더 많이 보이면 이길 수 있습니다.<br><br>"  
         		+"그럼 무운을 빕니다.</html>" );
         talk[1] = new JLabel("<html>다음 게임은 두더지 잡기입니다.<br>"
-        		+ "게임은 매우 간단합니다.<br>눈에 보이는 두더지를 열심히 클릭하여 <br>점수를 얻으면 됩니다.<br><br>"
+        		+ "게임은 매우 간단합니다.<br>눈에 보이는 두더지를 열심히 클릭하여 점수를 얻으면 됩니다.<br><br>"
         		+ "그럼 무운을 빕니다.</html>");
         talk[2] = new JLabel("<html>지금까진 살아있는 당신은<br>"
-        		+ "매우 운이 좋거나 실력이 좋은 편입니다.<br>"+
+        		+ "매우 운이 좋거나 실력이 좋은 편입니다.<br><br>"+
         		"마지막 게임은 홀짝 게임입니다.<br>"
         		+ "홀짝 게임의 공수를 정하기 위해 가위바위보를 진행합니다.<br>"
         		+"가위바위보는 자신이 낼 포지션을 고르면 됩니다.<br>"+
         		"이기면 초록색, 지면 빨간색, 비기면 노란색입니다.<br>"+
-        		"총 삼세판 중 두 게임을 이기면 됩니다.<br>"+
+        		"총 삼세판 중 두 게임을 이기면 됩니다.<br><br>"+
         		"그럼 무운을 빕니다.</html>");
         talk[3] = new JLabel("<html>홀짝 게임은 턴마다 공수가 변경됩니다.<br>" + 
         		"먼저 공격은 손에 쥘 갯수를 선택합니다.<br>" + 
@@ -187,11 +183,10 @@ public class connectAll {
         		+ "그럼 무운을 빕니다.</html>");
         
         for(int i=0; i<FRAME_CNT; i++){
-        	talk[i].setFont(font);
+        	talk[i].setFont(font.deriveFont(30.0f));
             talk[i].setBounds(350,400,800,420);
             talk[i].setOpaque(true); //라벨의 배경은 기본적으로 투명이기 때문에 배경색이 안먹힘
             talk[i].setBackground(Color.WHITE);
-            talk[i].setFont(talk[i].getFont().deriveFont(30.0f));
             talk[i].setBorder(BorderFactory.createEmptyBorder(0,50,0,0));
             talk[i].setForeground(Color.BLACK);
         }
@@ -220,10 +215,10 @@ public class connectAll {
         //story 넘기기
         for(int i=0; i<FRAME_CNT; i++){
             nextBtn[i] = new JButton("ENTER 또는 이곳을 누르면 넘어갑니다.");
-            nextBtn[i].setBounds(700, 30, 500, 30);
+            nextBtn[i].setBounds(800, 30, 400, 30);
             nextBtn[i].setBorderPainted(false);
             nextBtn[i].setContentAreaFilled(false);
-            nextBtn[i].setFont(nextBtn[i].getFont().deriveFont(20.0f));
+            nextBtn[i].setFont(font.deriveFont(20.0f));
             nextBtn[i].setForeground(Color.WHITE);
             nextBtn[i].setFocusPainted(false);
 
@@ -249,7 +244,6 @@ public class connectAll {
                         public void actionPerformed(ActionEvent e) {
                         	catchMoleJf.dispose();
                         	new catchMole.CatchMoleGUI(pNum).startGame();
-                            System.out.println(heart);
                         }
                     });
                     c2.add(nextBtn[i]);
@@ -262,7 +256,6 @@ public class connectAll {
                         public void actionPerformed(ActionEvent e) {
                             rspJf.dispose();
                             start = new rspGame(pNum).startGame();
-                            System.out.println(heart);
                         }
                     });
                     c3.add(nextBtn[i]);
@@ -275,6 +268,7 @@ public class connectAll {
                     public void actionPerformed(ActionEvent e) {
                         marbleJf.dispose();
                         new MarbleGameGUI(pNum).startGame(start);
+
                         System.out.println(heart);
                     }
                 });

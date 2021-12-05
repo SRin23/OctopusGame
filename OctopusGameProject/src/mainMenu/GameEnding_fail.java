@@ -14,8 +14,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 
-public class GameEnding_fail extends JFrame{
-	Container c1 = getContentPane();
+
+public class GameEnding_fail {
+	JFrame jf;
+	Container c1;
 	
 	private ImageIcon mainDefault = new ImageIcon(GameMain.class.getResource("../img/mainDefault.png"));
 	private ImageIcon mainEntered = new ImageIcon(GameMain.class.getResource("../img/mainEntered.png"));
@@ -26,13 +28,16 @@ public class GameEnding_fail extends JFrame{
 	
 	private Image failBackground = new ImageIcon(GameEnding_fail.class.getResource("../img/endingFail.png")).getImage();
 	
-	GameEnding_fail(){
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("실패");
-		setResizable(false);	
-		setSize(1200, 900);
+	public GameEnding_fail(){
+
+		jf = new JFrame();
+		c1 = jf.getContentPane();
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jf.setTitle("실패");
+		jf.setResizable(false);	
+		jf.setSize(1200, 900);
 		c1.setLayout(null);
-		setLocationRelativeTo(null);
+		jf.setLocationRelativeTo(null);
 		
 		main = new JButton(mainDefault);
 		main.setBounds(300, 400, 200, 80);
@@ -60,7 +65,7 @@ public class GameEnding_fail extends JFrame{
 			@Override
 			public void mousePressed(MouseEvent e) {
 				GameMainGUI GG = new GameMainGUI();
-				setVisible(false);
+				jf.setVisible(false);
 			}
 		});
 		
@@ -92,13 +97,13 @@ public class GameEnding_fail extends JFrame{
 			@Override
 			public void mousePressed(MouseEvent e) {
 				RankingGUI RK = new RankingGUI();
-				setVisible(false);
+				jf.setVisible(false);
 			}
 		});
-		add(ranking);
-		add(main);
+		jf.add(ranking);
+		jf.add(main);
 		
-		setVisible(true);
+		jf.setVisible(true);
 	}
 	
 	public void paint(Graphics g){

@@ -3,6 +3,7 @@ package marbleOddEven;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -22,6 +23,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
+import mainMenu.GameEnding_fail;
+import mainMenu.GameEnding_success;
 import miniGame.connectAll;
 
 public class MarbleGameGUI extends connectAll {
@@ -56,11 +59,11 @@ public class MarbleGameGUI extends connectAll {
 
 	private boolean win;
 
-	private ImageIcon evenButtonDefault = new ImageIcon(MarbleGameMain.class.getResource("../img/evenButton.png"));
+	private ImageIcon evenButtonDefault = new ImageIcon(MarbleGameGUI.class.getResource("../img/evenButton.png"));
 	private ImageIcon evenButtonEntered = new ImageIcon(
-			MarbleGameMain.class.getResource("../img/evenButtonEntered.png"));
-	private ImageIcon oddButtonDefault = new ImageIcon(MarbleGameMain.class.getResource("../img/oddButton.png"));
-	private ImageIcon oddButtonEntered = new ImageIcon(MarbleGameMain.class.getResource("../img/oddButtonEntered.png"));
+			MarbleGameGUI.class.getResource("../img/evenButtonEntered.png"));
+	private ImageIcon oddButtonDefault = new ImageIcon(MarbleGameGUI.class.getResource("../img/oddButton.png"));
+	private ImageIcon oddButtonEntered = new ImageIcon(MarbleGameGUI.class.getResource("../img/oddButtonEntered.png"));
 	private JLabel ComputerSelectUI;
 	private JButton evenButton;
 	private JButton oddButton;
@@ -69,15 +72,10 @@ public class MarbleGameGUI extends connectAll {
 
 	Container c1;
 
-<<<<<<< HEAD
+
 	public MarbleGameGUI(String pNum) {
 		super(pNum);
-=======
-	public MarbleGameGUI() {
-<<<<<<< HEAD
->>>>>>> branch 'main' of https://github.com/SRin23/OctopusGame.git
-=======
->>>>>>> refs/remotes/origin/main
+    	Font font = new Font("서울남산 장체B",Font.PLAIN,20);
 
 		this.userNumber = pNum;
 
@@ -98,26 +96,30 @@ public class MarbleGameGUI extends connectAll {
 		scoreLabelUser.setLocation(10, 10);
 		scoreLabelUser.setSize(200, 20);
 		scoreLabelUser.setFont(scoreLabelUser.getFont().deriveFont(20.0f));
+		scoreLabelUser.setFont(font);
 
 		// 컴퓨터 점수
 		scoreLabelComp = new JLabel("457번 : " + computerScore + "개");
 		scoreLabelComp.setLocation(10, 30);
 		scoreLabelComp.setFont(scoreLabelComp.getFont().deriveFont(20.0f));
 		scoreLabelComp.setSize(200, 20);
-
+		scoreLabelComp.setFont(font);
+		
 		// 목숨
 		JLabel heartLabel = new JLabel("목숨 : " + heart + "개");
 		heartLabel.setLocation(1080, 10);
 		heartLabel.setFont(heartLabel.getFont().deriveFont(20.0f));
 		heartLabel.setSize(120, 20);
-
+		heartLabel.setFont(font);
+		
 		// 3..2..1..보여주는 라벨
 		cnt = new JLabel("3");
 		cnt.setBounds(510, 250, 300, 300);
 		cnt.setFont(cnt.getFont().deriveFont(300.0f));
 		cnt.setForeground(Color.black);
 		cnt.setVisible(true);
-
+		cnt.setFont(font);
+		
 		HowmanyMarble = new JLabel("몇개의 구슬을 사용하시겠습니까?");
 		HowmanyMarble.setLocation(350, 200);
 		HowmanyMarble.setFont(HowmanyMarble.getFont().deriveFont(30.0f));
@@ -125,13 +127,15 @@ public class MarbleGameGUI extends connectAll {
 		HowmanyMarble.setHorizontalAlignment(JLabel.CENTER);
 		HowmanyMarble.setBackground(Color.black);
 		HowmanyMarble.setVisible(false);
-
+		HowmanyMarble.setFont(font);
+		
 		MaxMarble = new JLabel("(최대 구슬 개수 : 50개)");
 		MaxMarble.setLocation(500, 250);
 		MaxMarble.setFont(MaxMarble.getFont().deriveFont(18.0f));
 		MaxMarble.setSize(200, 50);
 		MaxMarble.setVisible(false);
-
+		MaxMarble.setFont(font);
+		
 		marbleAmountUser = new JTextField(5);
 		TitledBorder oneTb = new TitledBorder(new LineBorder(Color.black), "입력");
 		marbleAmountUser.setLocation(500, 500);
@@ -141,7 +145,8 @@ public class MarbleGameGUI extends connectAll {
 		marbleAmountUser.setBackground(Color.white);
 		marbleAmountUser.setBorder(oneTb);
 		marbleAmountUser.setVisible(false);
-
+		marbleAmountUser.setFont(font);
+		
 		// 컨테이너에 추가(기본)
 		c1.add(scoreLabelUser);
 		c1.add(scoreLabelComp);
@@ -534,13 +539,22 @@ public class MarbleGameGUI extends connectAll {
 			resultText.setText("졌습니다.");
 			win = false;
 			heart--;
+			if(heart<=0) {
+				jf.dispose();
+				new GameEnding_fail();
+				return;
+			} 
 			System.out.println("win : " + win);
 
 		} else {
 			resultText.setText("이겼습니다.");
 			win = true;
 			System.out.println("win : " + win);
-
+			if(heart >= 0) {
+				jf.dispose();
+				new GameEnding_success(userNumber);
+				return;
+			}
 		}
 		try {
 			Thread.sleep(2000);

@@ -43,14 +43,14 @@ public class GameEnding_success extends JFrame{
 	
     private Connection conn; //DB 커넥션 연결 객체
     private static final String USERNAME = "root";//DBMS접속 시 아이디
-    private static final String PASSWORD = "mirim";//DBMS접속 시 비밀번호
+    private static final String PASSWORD = "yeanwoo0619";//DBMS접속 시 비밀번호
     private static final String URL = "jdbc:mysql://localhost:3306/OctopusGame";//DBMS접속할 db명
     
     private String name;
     private int userNumber;
 	private int score;
     
-	GameEnding_success(String userNumber){
+	public GameEnding_success(String userNumber){
 		//this.userNumber = Integer.parseInt(userNumber);
 		this.userNumber= 123;
 		this.score = (int)(Math.random()*346)+101;

@@ -2,6 +2,7 @@ package FCP;
 import miniGame.connectAll;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -55,6 +56,8 @@ public class panGame extends connectAll{
 		//프레임 생성
 		public panGame(String pNum){
 			super(pNum);
+	    	Font font = new Font("서울남산 장체B",Font.PLAIN,20);
+	    	
 			panJf.dispose();
 			jf = new JFrame();
 			Container c1 = jf.getContentPane();
@@ -72,40 +75,41 @@ public class panGame extends connectAll{
 			//3..2..1..보여주는 라벨
 			cnt = new JLabel("3");
 			cnt.setBounds(510,250,300,300);
-			cnt.setFont(cnt.getFont().deriveFont(300.0f));
 			cnt.setForeground(Color.BLACK);
 			cnt.setVisible(true);
+			cnt.setFont(font.deriveFont(300.0f)); 
+			
 			c1.add(cnt);
 			
 			//player 번호 및 색을 알려주는 라벨
 			info = new JLabel();
 			info.setText("<html>"+playerNum+" : "+playerColor+"<br> 457 : black");
-			info.setBounds(0,20,500,60);
-			info.setFont(info.getFont().deriveFont(25.0f));
+			info.setBounds(0,10,500,60);
 			info.setVisible(false);
+			info.setFont(font.deriveFont(25.0f));
 			c1.add(info);
 			
 			// 목숨
 			heartLabel	= new JLabel("목숨 : " + heart + "개");
 			heartLabel.setLocation(1080, 10);
-			heartLabel.setFont(heartLabel.getFont().deriveFont(20.0f));
 			heartLabel.setSize(120, 20);
 			heartLabel.setVisible(false);
+			heartLabel.setFont(font.deriveFont(20.0f));
 			c1.add(heartLabel);
 			
 			//남은 시간 보여주는 라벨
 			timeJl = new JLabel("남은 시간 : 20");
 			timeJl.setBounds(470,30,400,60);
-			timeJl.setFont(timeJl.getFont().deriveFont(40.0f));
 			timeJl.setVisible(false);
+			timeJl.setFont(font.deriveFont(40.0f));
 			c1.add(timeJl);
 			
 			//게임이 끝난 후 판의 개수를 보여주는 라벨
 			panCnt = new JLabel();
 			panCnt.setBounds(410,400,800,100);
-			panCnt.setFont(panCnt.getFont().deriveFont(50.0f));
 			panCnt.setForeground(Color.BLACK);
 			panCnt.setVisible(false);
+			panCnt.setFont(font.deriveFont(50.0f));
 			c1.add(panCnt);
 			
 			int i,a;        
@@ -140,15 +144,15 @@ public class panGame extends connectAll{
 			gameOver.setText("GAME OVER");
 			gameOver.setBounds(300,300,800,100);
 			gameOver.setForeground(Color.BLACK);
-			gameOver.setFont(gameOver.getFont().deriveFont(100.0f));
 			gameOver.setVisible(false);
+			gameOver.setFont(font.deriveFont(100.0f));
 			c1.add(gameOver);
 	
 			score = new JLabel();
 			score.setBounds(520,500,300,80);
-			score.setFont(score.getFont().deriveFont(50.0f));
 			score.setForeground(Color.BLACK);
 			score.setVisible(false);
+			score.setFont(font.deriveFont(50.0f));
 			c1.add(score);
 		}
 		

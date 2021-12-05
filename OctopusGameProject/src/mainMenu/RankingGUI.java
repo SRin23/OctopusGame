@@ -95,7 +95,7 @@ public class RankingGUI extends JFrame{
     		
     		String url = "jdbc:mysql://localhost:3306/OctopusGame";
     		String id = "root";
-    		String pw = "mirim";	
+    		String pw = "yeanwoo0619";	
     		
     		try {
     			conn = DriverManager.getConnection(url, id, pw);

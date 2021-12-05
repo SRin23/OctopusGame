@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import mainMenu.GameEnding_fail;
 import miniGame.connectAll;
 
 public class CatchMoleGUI extends connectAll {
@@ -345,6 +346,11 @@ public class CatchMoleGUI extends connectAll {
 				if (userScore < 150) {
 					resultText.setText("졌습니다.");
 					heart--;
+					if(heart<=0) {
+						jf.dispose();
+						new GameEnding_fail();
+						return;
+					} 
 				} else {
 
 					resultText.setText("이겼습니다.");
