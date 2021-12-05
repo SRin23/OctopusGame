@@ -14,7 +14,7 @@ import javax.swing.*;
 
 import miniGame.panStory;
 
-public class main_gui extends JFrame{
+public class GameMainGUI extends JFrame{
 	//텍스트 필드를 통해 얻은 string값
 	String userNo;
 	JTextField userNoTf;
@@ -36,16 +36,15 @@ public class main_gui extends JFrame{
 	private JButton gameStart;
 	private JButton gameHelp;
 	private JButton ranking;
-	private panStory PS;
 	
-	main_gui(){
+	public GameMainGUI(){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("쭈꾸미게임");
 		c1.setLayout(null);
 		setResizable(false);	
-		setLocationRelativeTo(null);
 		setSize(1200, 900);
 		setVisible(true);
+		setLocationRelativeTo(null);
 		c1.setBackground(Color.black);
 	
 		
@@ -72,8 +71,7 @@ public class main_gui extends JFrame{
 			//버튼을 마우스가 누를때
 			@Override
 			public void mousePressed(MouseEvent e) {
-				
-				PS = new panStory("적을 말이 현재 들어가는건가요?","123");
+				panStory PS = new panStory("안녕하세요", "반갑습니다.", "123");
 				setVisible(false);
 			}
 		});
@@ -102,7 +100,8 @@ public class main_gui extends JFrame{
 			//버튼을 마우스가 누를때
 			@Override
 			public void mousePressed(MouseEvent e) {
-				
+				HelpGUI HG = new HelpGUI();
+				setVisible(false);
 			}
 		});
 		
@@ -130,7 +129,8 @@ public class main_gui extends JFrame{
 			//버튼을 마우스가 누를때
 			@Override
 			public void mousePressed(MouseEvent e) {
-				
+				RankingGUI RK = new RankingGUI();
+				setVisible(false);
 			}
 		});
 	
