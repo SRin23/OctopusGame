@@ -11,7 +11,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import miniGame.connectAll;
-import miniGame.panStory;
 
 public class HelpGUI extends JFrame{
 	//bubble buffer를 위해서 설정한 변수
