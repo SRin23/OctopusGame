@@ -2,177 +2,62 @@ package DatabaseExam;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DataBaseMysqlExam {
-	static Connection conn = null;
-	static Statement stmt = null; 
-    String table;
- 
+	 
+    private Connection conn; //DB 커넥션 연결 객체
+    private static final String USERNAME = "root";//DBMS접속 시 아이디
+    private static final String PASSWORD = "mirim";//DBMS접속 시 비밀번호
+    private static final String URL = "jdbc:mysql://localhost:3306/OctopusGame";//DBMS접속할 db명
+    
     public DataBaseMysqlExam() {
-        this.table = "OctopusGame";
         try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			System.out.println("드라이브 연결이 잘 됨");
-		} catch(ClassNotFoundException ee) {
-			System.out.println("DB 연결 드라이브가 없음");
-		}
-		
-		String url = "jdbc:mysql://localhost:3306/OctopusGame";
-		String id = "root";
-		String pw = "mirim";	
-		
-		try {
-			conn = DriverManager.getConnection(url, id, pw);
-		} catch(SQLException ee) {
-			System.out.println("DB 연결 실패");
-		}
-		
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            System.out.println("드라이버 로딩 성공");
+        } catch (Exception e) {
+            System.out.println("드라이버 로딩 실패 ");
+            try {
+                conn.close();
+            } catch (SQLException e1) {    }
+        }
         
-        try {
-            this.stmt = conn.createStatement();
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        
     }
- 
-    // 삽입
-    public void insert(String name, int number, int score) {
-        StringBuilder sb = new StringBuilder();
-        String sql = sb.append("insert into OctopusGame (name, number, score) values(")
-                .append("'" + name + "',")
-                .append(number + ",")
-                .append(score)
-                .append(");")
-                .toString();
+    
+    public void insert(String name, int number, int score){
+        //쿼리문 준비
+        String sql = "insert into ranking (name, number, score) values(?,?,?)";
+        
+        PreparedStatement pstmt = null;
         try {
-            stmt.executeUpdate(sql);
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
-
-
-	public void delete(int id) {
-        StringBuilder sb = new StringBuilder();
-        String sql = sb.append("delete from OctopusGame where id = ")
-                .append(id)
-                .append(";")
-                .toString();
-        try {
-            stmt.executeUpdate(sql);
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
- 
-    // 수정
-    public void update(int id, String name, int score, int number) {
-        StringBuilder sb = new StringBuilder();
-        String sql = sb.append("update OctopusGame set")
-                .append(" name = ")
-                .append("'" + name + "',")
-                .append(" number = ")
-                .append(number)
-                .append(" score = ")
-                .append(score)
-                .append(" where id = ")
-                .append(id)
-                .append(";").toString();
-        try {
-            stmt.executeUpdate(sql);
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
- 
-    // 모든 검색
-    public void selectAll() {
-        StringBuilder sb = new StringBuilder();
-        String sql = sb.append("select * from OctopusGame")
-                .append(";").toString();
-        try {
-            ResultSet rs = stmt.executeQuery(sql);
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, name);
+            pstmt.setInt(2, number);
+            pstmt.setInt(3, score);
             
-            System.out.print("id");
-            System.out.print("\t");
-            System.out.print("name");
-            System.out.print("\t");
-            System.out.print("number");
-            System.out.print("\t");
-            System.out.print("score");
-            System.out.print("\t");
-            System.out.print("date");
-            System.out.print("\n");
-            System.out.println("────────────────────────────────────────────────");
+            int result = pstmt.executeUpdate();
+            if(result==1) {
+                System.out.println("데이터 삽입 성공!");
+                
+            }
             
-              while(rs.next()){
-                     System.out.print(rs.getInt("id"));
-                     System.out.print("\t");
-                     System.out.print(rs.getString("name"));
-                     System.out.print("\t");
-                     System.out.print(rs.getInt("number"));
-                     System.out.print("\t");
-                     System.out.print(rs.getInt("score"));
-                     System.out.print("\t");
-                     System.out.print(rs.getDate("date"));
-                     System.out.print("\n");
+        } catch (Exception e) {
+            System.out.println("데이터 삽입 실패!");
+        }    finally {
+            try {
+                if(pstmt!=null && !pstmt.isClosed()) {
+                    pstmt.close();
                 }
-            
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
- 
-    // 검색
-    public void select(int id) {
-        StringBuilder sb = new StringBuilder();
-        String sql = sb.append("select * from OctopusGame where")
-                .append(" id = ")
-                .append(id)
-                .append(";").toString();
-        try {
-            ResultSet rs = stmt.executeQuery(sql);
-            
-
-            System.out.print("id");
-            System.out.print("\t");
-            System.out.print("name");
-            System.out.print("\t");
-            System.out.print("number");
-            System.out.print("\t");
-            System.out.print("score");
-            System.out.print("\t");
-            System.out.print("date");
-            System.out.print("\n");
-            System.out.println("────────────────────────────────────────────────");
-            
-            while(rs.next()){
-                System.out.print(rs.getInt("id"));
-                System.out.print("\t");
-                System.out.print(rs.getString("name"));
-                System.out.print("\t");
-                System.out.print(rs.getInt("number"));
-                System.out.print("\t");
-                System.out.print(rs.getInt("score"));
-                System.out.print("\t");
-                System.out.print(rs.getDate("date"));
-                System.out.print("\n");
-           }
-            
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
+            } catch (Exception e2) {}
+        }        
+    }    
     public static void main(String args[]) {
-    	DataBaseMysqlExam sql = new DataBaseMysqlExam();
+    	DataBaseMysqlExam dm = new DataBaseMysqlExam();
+    	dm.insert("나나나", 123, 345);
     }
 }
