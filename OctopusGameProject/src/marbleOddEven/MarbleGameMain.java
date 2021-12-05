@@ -7,8 +7,9 @@ public class MarbleGameMain {
 		int heart = 3;
 		int userNumber = 123;
 		
-		MarbleGameGUI Firstmg = new MarbleGameGUI(order, heart, userNumber);
+		MarbleGameGUI Firstmg = new MarbleGameGUI();
 		System.out.println("main화면입니다.");
+		Firstmg.startGame(false);
 	}
 
 }
