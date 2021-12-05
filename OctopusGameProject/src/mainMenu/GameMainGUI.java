@@ -25,7 +25,7 @@ public class GameMainGUI extends JFrame{
 	private Image screenImage;
 	private Graphics screenGraphic;
 
-	public String userNumber;
+	public String userNumber = Integer.toString(rand.nextInt(456)+1);
 	
 	Container c1 = getContentPane();
 	
@@ -74,7 +74,7 @@ public class GameMainGUI extends JFrame{
 			//버튼을 마우스가 누를때
 			@Override
 			public void mousePressed(MouseEvent e) {
-				userNumber = Integer.toString(rand.nextInt(456)+1);
+				
 				connectAll mg = new connectAll(userNumber);
 				setVisible(false);
 			}
@@ -104,7 +104,7 @@ public class GameMainGUI extends JFrame{
 			//버튼을 마우스가 누를때
 			@Override
 			public void mousePressed(MouseEvent e) {
-				HelpGUI HG = new HelpGUI();
+				HelpGUI HG = new HelpGUI(userNumber);
 				setVisible(false);
 			}
 		});

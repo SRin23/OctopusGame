@@ -10,12 +10,14 @@ import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+import miniGame.connectAll;
 import miniGame.panStory;
 
 public class HelpGUI extends JFrame{
 	//bubble buffer를 위해서 설정한 변수
 	private Image screenImage;
 	private Graphics screenGraphic;
+	private String userNumber;
 	
 	Container c1 = getContentPane();
 	
@@ -28,7 +30,8 @@ public class HelpGUI extends JFrame{
 	
 	int bgIdx = 0;
 	
-	HelpGUI(){
+	HelpGUI(String userNumber){
+		tihs.userNumber = userNumber;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("게임 방법");
 		c1.setLayout(null);
@@ -77,7 +80,7 @@ public class HelpGUI extends JFrame{
 				case 3: g.drawImage(explain3, 0, 0, null); break;
 				case 4: g.drawImage(explain4, 0, 0, null); break;
 				case 5: g.drawImage(explain5, 0, 0, null); break;
-				default: setVisible(false); panStory PS = new panStory("안녕하세요", "반갑습니다.", "123"); break;
+				default: setVisible(false); connectAll mg = new connectAll(userNumber); break;
 			}
 			this.repaint();	//다시 paint함수를 불러냄(계속해서 화면을 그림)
 		}
