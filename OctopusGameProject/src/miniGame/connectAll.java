@@ -36,7 +36,6 @@ public class connectAll {
     boolean start;
     
     public connectAll(String pNum){
-    	super();
         panJf = new JFrame();
         rspJf = new JFrame();
         marbleJf = new JFrame();

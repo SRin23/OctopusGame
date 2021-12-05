@@ -68,9 +68,6 @@ public class MarbleGameGUI extends JFrame {
 	Container c1 = getContentPane();
 
 	public MarbleGameGUI() {
-		this.start = start;
-		this.heart = heart;
-		this.userNumber = userNumber;
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("È¦Â¦°ÔÀÓ");
