@@ -1,5 +1,6 @@
-# Created by https://www.toptal.com/developers/gitignore/api/java,eclipse,windows,database
-# Edit at https://www.toptal.com/developers/gitignore?templates=java,eclipse,windows,database
+
+# Created by https://www.toptal.com/developers/gitignore/api/database,windows,eclipse,java
+# Edit at https://www.toptal.com/developers/gitignore?templates=database,windows,eclipse,java
 
 ### Database ###
 *.accdb
@@ -126,4 +127,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/java,eclipse,windows,database
+# End of https://www.toptal.com/developers/gitignore/api/database,windows,eclipse,java
