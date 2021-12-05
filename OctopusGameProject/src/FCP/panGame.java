@@ -1,5 +1,5 @@
 package FCP;
-import miniGame.ddddd;
+import miniGame.connectAll;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Graphics;
@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 
 
 
-public class panGame extends ddddd{
+public class panGame extends connectAll{
 	
 		final int BTN_CNT = 32; //각 줄의 버튼 수
 		final int BTN_WIDTH = 100; //판의 가로
@@ -54,8 +54,9 @@ public class panGame extends ddddd{
 
 		//프레임 생성
 		public panGame(String pNum){
+			super(pNum);
 			panJf.dispose();
-			jf= new JFrame();
+			jf = new JFrame();
 			Container c1 = jf.getContentPane();
 			playerNum=pNum;
 			Color soil = new Color(217, 171, 130);
@@ -77,7 +78,7 @@ public class panGame extends ddddd{
 			
 			//player 번호 및 색을 알려주는 라벨
 			playerNo = new JLabel(playerNum+" : "+playerColor);
-			playerNo.setBounds(0,20,150,30);
+			playerNo.setBounds(0,20,500,30);
 			playerNo.setFont(playerNo.getFont().deriveFont(25.0f));
 			playerNo.setVisible(false);
 			c1.add(playerNo);

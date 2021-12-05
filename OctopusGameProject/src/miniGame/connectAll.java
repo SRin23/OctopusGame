@@ -15,8 +15,9 @@ import javax.swing.JLabel;
 
 import FCP.panGame;
 import RSP.rspGame;
+import marbleOddEven.MarbleGameGUI;
 
-public class ddddd {
+public class connectAll {
     final int FRAME_CNT=4;
     public JFrame panJf;
     public JFrame marbleJf;
@@ -27,13 +28,15 @@ public class ddddd {
     JLabel talk[] = new JLabel[FRAME_CNT];
     JLabel img[] = new JLabel[FRAME_CNT];
 
-    ImageIcon sMan = new ImageIcon(panStory.class.getResource("../img/squareManager.png"));
-    ImageIcon tMan = new ImageIcon(panStory.class.getResource("../img/triangleManager.png"));
-    ImageIcon cMan = new ImageIcon(panStory.class.getResource("../img/circleManager.png"));
+    ImageIcon sMan = new ImageIcon(connectAll.class.getResource("../img/squareManager.png"));
+    ImageIcon tMan = new ImageIcon(connectAll.class.getResource("../img/triangleManager.png"));
+    ImageIcon cMan = new ImageIcon(connectAll.class.getResource("../img/circleManager.png"));
 
     boolean chkEnter = false;
-
-    public ddddd(){
+    boolean start;
+    
+    public connectAll(String pNum){
+    	super();
         panJf = new JFrame();
         rspJf = new JFrame();
         marbleJf = new JFrame();
@@ -88,8 +91,14 @@ public class ddddd {
             @Override
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER ||e.getKeyCode() == KeyEvent.VK_SPACE ){
-                    chkEnter=true;
+                	
+                	chkEnter = true;
                     System.out.println(chkEnter);
+                    if(chkEnter) {
+                        panJf.dispose();
+                        new panGame(pNum).startGame();
+                        chkEnter =false;
+                    }
                 }
             }
         });
@@ -98,8 +107,12 @@ public class ddddd {
             @Override
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER ||e.getKeyCode() == KeyEvent.VK_SPACE ){
-                    chkEnter=true;
-                    System.out.println(chkEnter);
+                    chkEnter = true;
+                    if(chkEnter) {
+                        marbleJf.dispose();
+                        new MarbleGameGUI().startGame(start);
+                        chkEnter =false;
+                    }
                 }
             }
         });
@@ -108,8 +121,12 @@ public class ddddd {
             @Override
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER ||e.getKeyCode() == KeyEvent.VK_SPACE ){
-                    chkEnter=true;
-                    System.out.println(chkEnter);
+                    chkEnter = true;
+                    if(chkEnter) {
+                        catchMoleJf.dispose();
+                        new catchMole.CatchMoleGUI(pNum).startGame();
+                        chkEnter = false;
+                    }
                 }
             }
         });
@@ -118,18 +135,45 @@ public class ddddd {
             @Override
             public void keyPressed(KeyEvent e) {
                 if(e.getKeyCode() == KeyEvent.VK_ENTER ||e.getKeyCode() == KeyEvent.VK_SPACE ){
-                    chkEnter=true;
-                    System.out.println(chkEnter);
+                	chkEnter = true;
+                    if(chkEnter) {
+                        rspJf.dispose();
+                        start = new rspGame(pNum).startGame();
+                        chkEnter = false;
+                    }
                 }
             }
         });
 
+        talk[0] = new JLabel("<html>참가번호 "+pNum+", 일어나시기 바랍니다.<br>"
+        		+ "현재 당신은 쭈꾸미 놀이에 참가했습니다.<br> "
+        		+ "최선을 다해 게임을 참가하여 우승 상금을 받아가시기 바랍니다.<br>" 
+        		+"첫번째 게임은 판 뒤집기 입니다.<br>"
+        		+ "판 뒤집기는 본인에게 주어진 색의 판을 더 많이 뒤집은 사람이 이기는 게임입니다.<br>"  
+        		+"판을 뒤집기 위해선 마우스로 클릭을 하면 됩니다.<br>"
+        		+ "주어진 시간이 끝난 후 본인의 색이 더 많이 보이면 이길 수 있습니다.<br><br>"  
+        		+"그럼 무운을 빕니다.</html>" );
+        talk[1] = new JLabel("<html>두번째 게임은 두더지 잡기입니다.<br>"
+        		+ "게임은 매우 간단합니다.<br>눈에 보이는 두더지를 클릭하여 점수를 얻으면 됩니다.<br><br>"
+        		+ "그럼 무운을 빕니다.</html>");
+        talk[2] = new JLabel("<html>지금까진 살아있는 당신은<br>"
+        		+ "매우 운이 좋거나 실력이 좋은 편입니다.<br>"
+        		+ "그럼 마지막 게임을 시작하겠습니다" + 
+        		"마지막 게임은 홀짝 게임입니다.<br>"
+        		+ "홀짝 게임의 공수를 정하기 위해 가위바위보를 진행합니다.<br>" + 
+        		"홀짝 게임은 턴마다 공수가 변경됩니다.<br>"
+        		+ "먼저 공격은 자신의 손에 쥘 갯수를 선택합니다.<br>" + 
+        		"수비는 공격이 쥔 구슬의 수가 홀수인지 짝수인지 맞추게 됩니다.<br>" + 
+        		"이때 수비가 맞출 경우 공격의 구슬은 수비에게 넘어가고,"
+        		+ "<br>맞추지 못할 경우 구슬을 넘겨줍니다.<br>" + 
+        		"최종적으로 구슬이 없어지는 사람은 지게 됩니다.<br>" + 
+        		"그럼 무운을 빕니다.</html>");
+        talk[3] = new JLabel();
+        
         for(int i=0; i<FRAME_CNT; i++){
-            talk[i] = new JLabel();
             talk[i].setBounds(350,400,800,420);
             talk[i].setOpaque(true); //라벨의 배경은 기본적으로 투명이기 때문에 배경색이 안먹힘
             talk[i].setBackground(Color.WHITE);
-            //talk[i].setHorizontalAlignment(SwingConstants.TOP);
             talk[i].setFont(talk[i].getFont().deriveFont(30.0f));
             talk[i].setBorder(BorderFactory.createEmptyBorder(0,50,0,0));
             talk[i].setForeground(Color.BLACK);
@@ -162,50 +206,49 @@ public class ddddd {
             nextBtn[i].setBounds(1030, 30, 150, 30);
             nextBtn[i].setBorderPainted(false);
             nextBtn[i].setContentAreaFilled(false);
-            //nextBtn[i].setBackground(Color.BLACK);
             nextBtn[i].setFont(nextBtn[i].getFont().deriveFont(30.0f));
             nextBtn[i].setForeground(Color.WHITE);
             nextBtn[i].setFocusPainted(false);
 
             switch(i){
                 case 0:        
-                    nextBtn[i].setText("> SKIP1");
+                    nextBtn[i].setText("> SKIP");
                     nextBtn[i].addActionListener(new ActionListener() {
             
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             panJf.dispose();
-                            new panGame("111").startGame();
+                            new panGame(pNum).startGame();
                         }
                     });
                     c1.add(nextBtn[i]);
                     break;
                 case 1:
-                nextBtn[i].setText("> SKIP2");
+                nextBtn[i].setText("> SKIP");
                     nextBtn[i].addActionListener(new ActionListener() {
             
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             catchMoleJf.dispose();
-                            //catchMole.start
+                            new catchMole.CatchMoleGUI(pNum).startGame();
                         }
                     });
                     c2.add(nextBtn[i]);
                     break;
                 case 2:
-                nextBtn[i].setText("> SKIP3");
+                nextBtn[i].setText("> SKIP");
                     nextBtn[i].addActionListener(new ActionListener() {
             
                         @Override
                         public void actionPerformed(ActionEvent e) {
                             rspJf.dispose();
-                            new rspGame().startGame();
+                            new rspGame(pNum).startGame();
                         }
                     });
                     c3.add(nextBtn[i]);
                     break;
                 case 3:
-                nextBtn[i].setText("> SKIP4");
+                nextBtn[i].setText("> SKIP");
                 nextBtn[i].addActionListener(new ActionListener() {
             
                     @Override

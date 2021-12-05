@@ -14,9 +14,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import miniGame.ddddd;
+import miniGame.connectAll;
 
-public class rspGame extends ddddd{
+public class rspGame extends connectAll{
 	final int BTN_WIDTH = 400;
 	final int BTN_HEIGHT = 400;
 	final int BTN_CNT = 3; //가위바위보 버튼의 수
@@ -44,7 +44,8 @@ public class rspGame extends ddddd{
 	ImageIcon scissors = new ImageIcon(rspGame.class.getResource("../img/scissors.png"));
 	ImageIcon paper = new ImageIcon(rspGame.class.getResource("../img/paper.png"));
 	
-	public rspGame(){
+	public rspGame(String playerNo){
+		super(playerNo);
 		panJf.dispose();
 		jf = new JFrame();
 		Container c1 = jf.getContentPane();
@@ -236,7 +237,7 @@ public class rspGame extends ddddd{
 							Thread.sleep(2000);
 							jf.dispose();
 							marbleJf.setVisible(true);
-							talking("안녕하세요", "qkrkdkdkd", 1);
+
 							return;
 						}catch(Exception e) {
 							System.out.println(e);
