@@ -7,5 +7,6 @@ public class CatchMoleMain {
 		int heart = 3;
 		int userNumber = 123;
 		CatchMoleGUI cm = new CatchMoleGUI(heart, userNumber);
+		cm.startGame();
 	}
 }
