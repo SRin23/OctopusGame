@@ -59,6 +59,11 @@ public class rspGame extends connectAll{
 		//프레임(위에 x 있는 거) 보이게 설정
 		jf.setVisible(true);
 		
+		JLabel heartLabel = new JLabel("목숨 : " + heart + "개");
+		heartLabel.setLocation(1080, 10);
+		heartLabel.setFont(heartLabel.getFont().deriveFont(20.0f));
+		heartLabel.setSize(120, 20);
+		c1.add(heartLabel);
 		//컴 선택 버튼 세팅
 		master_rps = new JButton();
 		master_rps.setBounds(500, 50,BTN_WIDTH/2,BTN_HEIGHT/2);

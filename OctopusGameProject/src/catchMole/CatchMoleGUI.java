@@ -30,7 +30,6 @@ public class CatchMoleGUI extends connectAll {
 	private int timeFast = 0;
 	private int timeCount = 0;
 
-	private int heart;
 	private String userNumber;
 	private int moleCount = 8;
 
@@ -40,19 +39,19 @@ public class CatchMoleGUI extends connectAll {
 	private JLabel resultText;
 
 	// image를 담을 변수
-	private Image introBackground = new ImageIcon(CatchMoleMain.class.getResource("../img/backgroundGreen.png"))
+	private Image introBackground = new ImageIcon(CatchMoleGUI.class.getResource("../img/backgroundGreen.png"))
 			.getImage();
 
-	private ImageIcon moleShowDefault = new ImageIcon(CatchMoleMain.class.getResource("../img/showMoleDefault.png"));
-	private ImageIcon moleShowEntered = new ImageIcon(CatchMoleMain.class.getResource("../img/showMoleEntered.png"));
-	private ImageIcon moleHideDefault = new ImageIcon(CatchMoleMain.class.getResource("../img/HideMoleDefault.png"));
-	private ImageIcon moleHideEntered = new ImageIcon(CatchMoleMain.class.getResource("../img/HideMoleEntered.png"));
-	private ImageIcon emptyHoleDefault = new ImageIcon(CatchMoleMain.class.getResource("../img/EmptyHoleDefault.png"));
-	private ImageIcon emptyHoleEntered = new ImageIcon(CatchMoleMain.class.getResource("../img/EmptyHoleEntered.png"));
+	private ImageIcon moleShowDefault = new ImageIcon(CatchMoleGUI.class.getResource("../img/showMoleDefault.png"));
+	private ImageIcon moleShowEntered = new ImageIcon(CatchMoleGUI.class.getResource("../img/showMoleEntered.png"));
+	private ImageIcon moleHideDefault = new ImageIcon(CatchMoleGUI.class.getResource("../img/HideMoleDefault.png"));
+	private ImageIcon moleHideEntered = new ImageIcon(CatchMoleGUI.class.getResource("../img/HideMoleEntered.png"));
+	private ImageIcon emptyHoleDefault = new ImageIcon(CatchMoleGUI.class.getResource("../img/EmptyHoleDefault.png"));
+	private ImageIcon emptyHoleEntered = new ImageIcon(CatchMoleGUI.class.getResource("../img/EmptyHoleEntered.png"));
 	private ImageIcon moleAttackDefault = new ImageIcon(
-			CatchMoleMain.class.getResource("../img/attackMoleDefault.png"));
+			CatchMoleGUI.class.getResource("../img/attackMoleDefault.png"));
 	private ImageIcon moleAttackEntered = new ImageIcon(
-			CatchMoleMain.class.getResource("../img/attackMoleEntered.png"));
+			CatchMoleGUI.class.getResource("../img/attackMoleEntered.png"));
 	JButton[] moleBtn = new JButton[moleCount];
 	private JLabel cnt;
 	private JLabel score;
@@ -65,6 +64,7 @@ public class CatchMoleGUI extends connectAll {
 
 	public CatchMoleGUI(String userNumber) {
 		super(userNumber);
+
 		panJf.dispose();
 		jf = new JFrame();
 		c1 = jf.getContentPane();
@@ -103,8 +103,8 @@ public class CatchMoleGUI extends connectAll {
 
 	static int countDown = 1;
 
-	// 판 뒤집기 게임 시작
-	public boolean startGame() {
+	//게임 시작
+	public int startGame() {
 		Timer t = new Timer();
 		TimerTask tt = new TimerTask() {
 
@@ -123,7 +123,7 @@ public class CatchMoleGUI extends connectAll {
 		};
 		t.scheduleAtFixedRate(tt, 1000, 1000);
 
-		return win;
+		return heart;
 
 	}
 
@@ -343,10 +343,10 @@ public class CatchMoleGUI extends connectAll {
 				c1.add(resultText);
 
 				if (userScore < 150) {
-					win = false;
 					resultText.setText("졌습니다.");
+					heart--;
 				} else {
-					win = true;
+
 					resultText.setText("이겼습니다.");
 				}
 				try {

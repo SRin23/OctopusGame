@@ -22,7 +22,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-public class MarbleGameGUI extends JFrame {
+import miniGame.connectAll;
+
+public class MarbleGameGUI extends connectAll {
 	private static final long serialVersionUID = -7290086117028538892L;
 
 	// 기본 setting
@@ -31,8 +33,7 @@ public class MarbleGameGUI extends JFrame {
 
 	private boolean endCheck = false;
 	private static boolean start;
-	private int heart;
-	private int userNumber;
+	private String userNumber;
 
 	private JLabel gameOver;
 	private JLabel resultText;
@@ -44,6 +45,7 @@ public class MarbleGameGUI extends JFrame {
 	private JLabel scoreLabelUser;
 	private JLabel scoreLabelComp;
 
+	JFrame jf;
 	private JLabel HowmanyMarble;
 	private JLabel MaxMarble;
 	private JTextField marbleAmountUser;
@@ -65,16 +67,28 @@ public class MarbleGameGUI extends JFrame {
 
 	private JLabel cnt;
 
-	Container c1 = getContentPane();
+	Container c1;
 
+<<<<<<< HEAD
+	public MarbleGameGUI(String pNum) {
+		super(pNum);
+=======
 	public MarbleGameGUI() {
+<<<<<<< HEAD
+>>>>>>> branch 'main' of https://github.com/SRin23/OctopusGame.git
+=======
+>>>>>>> refs/remotes/origin/main
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("홀짝게임");
+		this.userNumber = pNum;
+
+		jf = new JFrame();
+		c1 = jf.getContentPane();
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jf.setTitle("홀짝게임");
 		c1.setLayout(null);
-		setResizable(false);
-		setSize(1200, 900);
-		setLocationRelativeTo(null);
+		jf.setResizable(false);
+		jf.setSize(1200, 900);
+		//jf.setLocationRelativeTo(null);
 		c1.setBackground(Color.white);
 
 		// --------------기본 Layout---------------------
@@ -139,13 +153,13 @@ public class MarbleGameGUI extends JFrame {
 		c1.add(MaxMarble);
 		c1.add(marbleAmountUser);
 
-		setVisible(true);
+		jf.setVisible(true);
 	}
 
 	static int countDown = 1;
 
 	// 판 뒤집기 게임 시작
-	public boolean startGame(boolean start) {
+	public int startGame(boolean start) {
 		this.start = start;
 		Timer t = new Timer();
 		TimerTask tt = new TimerTask() {
@@ -166,7 +180,7 @@ public class MarbleGameGUI extends JFrame {
 		};
 		t.scheduleAtFixedRate(tt, 1000, 1000);
 
-		return win;
+		return heart;
 
 	}
 
@@ -478,7 +492,7 @@ public class MarbleGameGUI extends JFrame {
 
 	}
 
-	int end() {
+	void end() {
 		endCheck = true;
 		System.out.println("start : " + start);
 		if (start == false) {
@@ -519,15 +533,23 @@ public class MarbleGameGUI extends JFrame {
 		if (userScore == 0) {
 			resultText.setText("졌습니다.");
 			win = false;
+			heart--;
 			System.out.println("win : " + win);
-			return heart - 1;
+
 		} else {
 			resultText.setText("이겼습니다.");
 			win = true;
 			System.out.println("win : " + win);
-			return heart;
-		}
 
+		}
+		try {
+			Thread.sleep(2000);
+			jf.dispose();
+
+			return ;
+		}catch(Exception e) {
+			System.out.println(e);
+		}
 	}
 
 	void check() {
