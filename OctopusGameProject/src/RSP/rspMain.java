@@ -1,8 +1,9 @@
-package RPS;
+package RSP;
 
-public class rpsMain {
+public class rspMain {
    public static void main(String[] args) {
-	    rps r = new rps();
+        
+	    rspGame r = new rspGame();
         r.startGame();
     }
     

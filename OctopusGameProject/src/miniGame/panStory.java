@@ -13,8 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import FCP.fcp;
-
+import FCP.panGame;
 
 public class panStory extends JFrame{
 
@@ -30,7 +29,7 @@ public class panStory extends JFrame{
 
     private void startPanGame(String playerNo){
         setVisible(false);
-        fcp f = new fcp(playerNo);
+        panGame f = new panGame(playerNo);
         f.startGame();
     }
 
@@ -38,7 +37,7 @@ public class panStory extends JFrame{
     private void talking(String s, String s2){
         String str="";
         try {
-            for(int i=6; i<s.length(); i++){
+            for(int i=5; i<s.length(); i++){
                 if(chkEnter == 2)
                     break;
                 if(chkEnter == 1) 
@@ -130,18 +129,10 @@ public class panStory extends JFrame{
                 }
             }
         });
+        JLabel jl = new JLabel();
+        c1.add(jl);
         talking(s,play);
         startPanGame(playerNo);
-    }
-
-    public static void main(String[] args){
-        String playerNo="123";
-        String firstStory = "<html>참가번호 "+playerNo+"번, 일어나시기 바랍니다.<br> 현재 당신은 쭈꾸미 놀이에 참가했습니다.<br>"+ 
-        "최선을 다해 게임을 참여해 우승을 하여<br>상금을 받아가시길 바랍니다.<br>총 상금은 457억이며, 각 게임에 참가자가<br>"+
-        "탈락할 때마다 채워지는 방식입니다."+"</html>";
-        String howGame = "<html>첫번째 게임은 판 뒤집기 입니다.<br> 판 뒤집기는 본인에게 주어진 색의 판을<br>더 많이 뒤집은 사람이 이기는 게임입니다.<br>"+
-        "판을 뒤집기 위해선 마우스로 클릭을 하면 됩니다.<br> 주어진 시간이 끝난 후 본인의 색이<br>더 많이 보이면 이길 수 있습니다. <br>그럼 무운을 빕니다.</html>";
-        new panStory(firstStory,howGame,playerNo);
     }
 }
 
