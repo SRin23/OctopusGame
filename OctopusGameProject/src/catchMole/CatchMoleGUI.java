@@ -18,17 +18,20 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-public class CatchMoleGUI extends JFrame {
+import miniGame.connectAll;
+
+public class CatchMoleGUI extends connectAll {
 	Scanner sc = new Scanner(System.in);
 	Random rand = new Random();
 
+	JFrame jf;
 	private boolean win;
 
 	private int timeFast = 0;
 	private int timeCount = 0;
 
 	private int heart;
-	private int userNumber;
+	private String userNumber;
 	private int moleCount = 8;
 
 	private int userScore;
@@ -58,18 +61,20 @@ public class CatchMoleGUI extends JFrame {
 
 	// 0이면 들어가있는거, 1이면 튀어나온거 2면 숨어있는거
 	int moleStatus[] = new int[moleCount];
-	Container c1 = getContentPane();
+	Container c1;
 
-	CatchMoleGUI(int heart, int userNumber) {
-		this.heart = heart;
+	public CatchMoleGUI(String userNumber) {
+		super(userNumber);
+		panJf.dispose();
+		jf = new JFrame();
+		c1 = jf.getContentPane();
 		this.userNumber = userNumber;
 		// 기본 Frame setting
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("두더지 잡기");
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jf.setTitle("두더지 잡기");
 		c1.setLayout(null);
-		setResizable(false);
-		setLocationRelativeTo(null);
-		setSize(1200, 900);
+		jf.setResizable(false);
+		jf.setSize(1200, 900);
 
 		// c1.setBackground(Color.black);
 
@@ -93,7 +98,7 @@ public class CatchMoleGUI extends JFrame {
 		cnt.setVisible(true);
 		c1.add(cnt);
 		
-		setVisible(true);
+		jf.setVisible(true);
 	}
 
 	static int countDown = 1;
@@ -343,6 +348,15 @@ public class CatchMoleGUI extends JFrame {
 				} else {
 					win = true;
 					resultText.setText("이겼습니다.");
+				}
+				try {
+					Thread.sleep(2000);
+					jf.dispose();
+					rspJf.setVisible(true);
+					
+					return;
+				}catch(Exception e) {
+					System.out.println(e);
 				}
 			}
 		}

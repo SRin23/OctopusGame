@@ -1,4 +1,4 @@
-package RPS;
+package RSP;
 
 import java.awt.Color;
 import java.awt.Container;
@@ -7,23 +7,27 @@ import java.awt.event.ActionListener;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-
+import java.awt.Image;
+import java.awt.Graphics;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class rps extends JFrame{
+import miniGame.connectAll;
+
+public class rspGame extends connectAll{
 	final int BTN_WIDTH = 400;
 	final int BTN_HEIGHT = 400;
 	final int BTN_CNT = 3; //가위바위보 버튼의 수
-
+	
+	JFrame jf;
 	JButton user_rps[] = new JButton[BTN_CNT];
 	JButton master_rps;
 	JLabel timerCnt;
 	JLabel gameOver;
 	JLabel score;
-	Container c1 = getContentPane();
+	
 
 	String user_sel=""; //유저가 고른 거
 	String master_sel=""; //com이 고른거
@@ -35,22 +39,26 @@ public class rps extends JFrame{
 	int turn = 0; //턴 수 세기
 	boolean timering = false; //timer가 실행 중인지 체크
 	boolean win;
-
-	ImageIcon rock = new ImageIcon(rpsMain.class.getResource("../img/rock.png"));
-	ImageIcon scissors = new ImageIcon(rpsMain.class.getResource("../img/scissors.png"));
-	ImageIcon paper = new ImageIcon(rpsMain.class.getResource("../img/paper.png"));
-
-	public rps(){
-		setTitle("가위바위보");
+	private Image back= new ImageIcon(rspGame.class.getResource("../img/rspBack.png")).getImage();
+	ImageIcon rock = new ImageIcon(rspGame.class.getResource("../img/rock.png"));
+	ImageIcon scissors = new ImageIcon(rspGame.class.getResource("../img/scissors.png"));
+	ImageIcon paper = new ImageIcon(rspGame.class.getResource("../img/paper.png"));
+	
+	public rspGame(String playerNo){
+		super(playerNo);
+		panJf.dispose();
+		jf = new JFrame();
+		Container c1 = jf.getContentPane();
+		
+		jf.setTitle("가위바위보");
 		//창을 닫을 시 프로그램 종료
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//프레임 창 고정
-		setResizable(false);
-		setSize(1200,900);
+		jf.setResizable(false);
+		jf.setSize(1200,900);
 		//프레임(위에 x 있는 거) 보이게 설정
-		setVisible(true);
-		c1.setBackground(Color.BLACK);
-
+		jf.setVisible(true);
+		
 		//컴 선택 버튼 세팅
 		master_rps = new JButton();
 		master_rps.setBounds(500, 50,BTN_WIDTH/2,BTN_HEIGHT/2);
@@ -217,6 +225,7 @@ public class rps extends JFrame{
 						else{
 							score.setText("후공");
 							win=false;
+
 						}
 						for(int i=0; i<BTN_CNT; i++)
 							user_rps[i].setVisible(false);
@@ -224,12 +233,22 @@ public class rps extends JFrame{
 
 						gameOver.setVisible(true);
 						score.setVisible(true);
+						try {
+							Thread.sleep(2000);
+							jf.dispose();
+							marbleJf.setVisible(true);
 
-						return;
+							return;
+						}catch(Exception e) {
+							System.out.println(e);
+						}
 					}
 				}
 			}	
 		};
 		timer.scheduleAtFixedRate(task, 0, 1000);
+	}
+	public void paint(Graphics g){
+		g.drawImage(back, 0, 0, null);
 	}
 }

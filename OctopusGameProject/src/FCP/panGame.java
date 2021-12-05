@@ -1,27 +1,32 @@
 package FCP;
-
+import miniGame.connectAll;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-
+import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-public class fcp extends JFrame{
+
+
+public class panGame extends connectAll{
+	
 		final int BTN_CNT = 32; //각 줄의 버튼 수
 		final int BTN_WIDTH = 100; //판의 가로
 		final int BTN_HEIGHT = 140; //판의 세로
 		static int count = 1; //타이머를 위한 전역변수
 		
+		JFrame jf;
 		String nowColor[]=new String[BTN_CNT]; //판의 색을 저장
 		JButton pan[]=new JButton[BTN_CNT]; //판
-		Container c1 = getContentPane();
+		
 		JLabel timeJl; //남은 시간을 알려줌
 		JLabel panCnt; //판의 수를 알려줌
 		JLabel playerNo; //플레이어 번호
@@ -37,23 +42,31 @@ public class fcp extends JFrame{
 		String masterColor = "black"; //컴퓨터의 판 색
 		
 		static boolean win; //게임 이겼는지 여부
-		ImageIcon whitePan = new ImageIcon(fcp.class.getResource("../img/whitePan.png"));
-		ImageIcon blackPan = new ImageIcon(fcp.class.getResource("../img/blackPan.png"));
-		ImageIcon background = new ImageIcon(fcp.class.getResource("../img/background.png"));
+		Image back = new ImageIcon(panGame.class.getResource("../img/fcpBack.png")).getImage();
+		ImageIcon whitePan = new ImageIcon(panGame.class.getResource("../img/whitePan.png"));
+		ImageIcon blackPan = new ImageIcon(panGame.class.getResource("../img/blackPan.png"));
 
 		String playerNum;
 		
+		public void paint(Graphics g){
+			g.drawImage(back, 0, 0, null);
+		}
+
 		//프레임 생성
-		public fcp(String pNum){
+		public panGame(String pNum){
+			super(pNum);
+			panJf.dispose();
+			jf = new JFrame();
+			Container c1 = jf.getContentPane();
 			playerNum=pNum;
 			Color soil = new Color(217, 171, 130);
-			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			setTitle("홀짝게임");
-			setLayout(null);
-			setResizable(false);	
-			setSize(1200, 900);
+			jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			jf.setTitle("홀짝게임");
+			jf.setLayout(null);
+			jf.setResizable(false);	
+			jf.setSize(1200, 900);
 			c1.setBackground(soil);
-			setVisible(true);
+			jf.setVisible(true);
 
 			//3..2..1..보여주는 라벨
 			cnt = new JLabel("3");
@@ -65,7 +78,7 @@ public class fcp extends JFrame{
 			
 			//player 번호 및 색을 알려주는 라벨
 			playerNo = new JLabel(playerNum+" : "+playerColor);
-			playerNo.setBounds(0,20,150,30);
+			playerNo.setBounds(0,20,500,30);
 			playerNo.setFont(playerNo.getFont().deriveFont(25.0f));
 			playerNo.setVisible(false);
 			c1.add(playerNo);
@@ -247,13 +260,23 @@ public class fcp extends JFrame{
 						panCnt.setText(playerNum+" : "+playerCnt+", 457 : "+masterCnt);
 						panCnt.setVisible(true);
 						
-						for(int i=0; i<BTN_CNT; i++) {
+						for(int i=0; i<BTN_CNT; i++) 
 							pan[i].setVisible(false);
+						
+						try {
+							Thread.sleep(2000);
+							jf.dispose();
+							catchMoleJf.setVisible(true);
+							
+							return;
+						}catch(Exception e) {
+							System.out.println(e);
 						}
 					}
 				}
 			};
 			timer.scheduleAtFixedRate(task, 1000, 1000);
+			
 		}
 		static int countDown=1;
 
@@ -271,15 +294,12 @@ public class fcp extends JFrame{
 				else {
 					t.cancel();
 					cnt.setVisible(false);
-					System.out.println("게임 스타트");
 					game();
 				}
 			}
 		};
 		t.scheduleAtFixedRate(tt, 1000,1000);
-
 		return win;
-
 		}
 	}
 		
