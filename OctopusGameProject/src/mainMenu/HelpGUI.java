@@ -11,7 +11,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import miniGame.connectAll;
-import miniGame.panStory;
 
 public class HelpGUI extends JFrame{
 	//bubble buffer를 위해서 설정한 변수
@@ -31,7 +30,7 @@ public class HelpGUI extends JFrame{
 	int bgIdx = 0;
 	
 	HelpGUI(String userNumber){
-		tihs.userNumber = userNumber;
+		this.userNumber = userNumber;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("게임 방법");
 		c1.setLayout(null);

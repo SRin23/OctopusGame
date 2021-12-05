@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 import miniGame.connectAll;
+
 public class GameMainGUI extends JFrame{
 	Random rand = new Random();
 	//텍스트 필드를 통해 얻은 string값
