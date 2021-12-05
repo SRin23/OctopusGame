@@ -52,10 +52,8 @@ public class GameMainGUI extends JFrame{
 		gameStart.setFocusPainted(false);
 		gameStart.setVisible(true);
 		gameStart.addMouseListener(new MouseAdapter(){
-			//踰꾪듉 �쐞�뿉 留덉슦�뒪
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				//而ㅼ꽌紐⑥뼇 �넀媛��씫
 				gameStart.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				gameStart.setIcon(gameStartEntered);
 			}
@@ -82,20 +80,19 @@ public class GameMainGUI extends JFrame{
 		gameHelp.setFocusPainted(false);
 		gameHelp.setVisible(true);
 		gameHelp.addMouseListener(new MouseAdapter(){
-			//踰꾪듉 �쐞�뿉 留덉슦�뒪
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				//而ㅼ꽌紐⑥뼇 �넀媛��씫
+
 				gameHelp.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				gameHelp.setIcon(gameHelpEntered);
 			}
-			//湲곕낯
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				gameHelp.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				gameHelp.setIcon(gameHelpDefault);
 			}
-			//踰꾪듉�쓣 留덉슦�뒪媛� �늻瑜쇰븣
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 				HelpGUI HG = new HelpGUI("111");
@@ -111,20 +108,20 @@ public class GameMainGUI extends JFrame{
 		ranking.setFocusPainted(false);
 		ranking.setVisible(true);
 		ranking.addMouseListener(new MouseAdapter(){
-			//踰꾪듉 �쐞�뿉 留덉슦�뒪
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				//而ㅼ꽌紐⑥뼇 �넀媛��씫
+
 				ranking.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				ranking.setIcon(rankingEntered);
 			}
-			//湲곕낯
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				ranking.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				ranking.setIcon(rankingDefault);
 			}
-			//踰꾪듉�쓣 留덉슦�뒪媛� �늻瑜쇰븣
+
 			@Override
 			public void mousePressed(MouseEvent e) {
 				RankingGUI RK = new RankingGUI();
@@ -136,8 +133,11 @@ public class GameMainGUI extends JFrame{
 		c1.add(gameStart);
 		c1.add(gameHelp);
 		c1.add(ranking);
+		
+		musicMain introMusic = new musicMain("squareGame.mp3", true);
+		introMusic.start();
 	}
-	// 媛��옣 泥섏쓬 �솕硫댁쓣 洹몃젮�깂
+
 		public void paint(Graphics g) {
 			g.drawImage(introBackground, 0, 0, null);
 		}
