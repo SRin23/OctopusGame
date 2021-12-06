@@ -142,7 +142,7 @@ public class panGame extends connectAll{
 
 			gameOver = new JLabel();
 			gameOver.setText("GAME OVER");
-			gameOver.setBounds(300,300,800,100);
+			gameOver.setBounds(350,300,800,100);
 			gameOver.setForeground(Color.BLACK);
 			gameOver.setVisible(false);
 			gameOver.setFont(font.deriveFont(100.0f));

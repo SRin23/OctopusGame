@@ -28,7 +28,7 @@ public class rspGame extends connectAll{
 	JLabel timerCnt;
 	JLabel gameOver;
 	JLabel score;
-	
+	JLabel heartLabel;
 
 	String user_sel=""; //유저가 고른 거
 	String master_sel=""; //com이 고른거
@@ -66,8 +66,10 @@ public class rspGame extends connectAll{
 		jf.setSize(1200,900);
 		//프레임(위에 x 있는 거) 보이게 설정
 		jf.setVisible(true);
+		
+		
 		c1.setBackground(Color.WHITE);
-		JLabel heartLabel = new JLabel("목숨 : " + heart + "개");
+		heartLabel = new JLabel("목숨 : " + heart + "개");
 		heartLabel.setLocation(1080, 10);
 		heartLabel.setSize(120, 20);
 		heartLabel.setFont(font.deriveFont(20.0f));
@@ -127,15 +129,15 @@ public class rspGame extends connectAll{
 		}
 		gameOver = new JLabel();
 		gameOver.setText("GAME OVER");
-		gameOver.setBounds(300,300,800,100);
-		gameOver.setForeground(Color.WHITE);
+		gameOver.setBounds(350,300,800,100);
+		gameOver.setForeground(Color.BLACK);
 		gameOver.setVisible(false);
 		gameOver.setFont(font.deriveFont(100.0f));
 		c1.add(gameOver);
 
 		score = new JLabel();
 		score.setBounds(560,450,200,80);
-		score.setForeground(Color.WHITE);
+		score.setForeground(Color.BLACK);
 		score.setVisible(false);
 		score.setFont(font.deriveFont(50.0f));
 		c1.add(score);
@@ -244,11 +246,14 @@ public class rspGame extends connectAll{
 						for(int i=0; i<BTN_CNT; i++)
 							user_rps[i].setVisible(false);
 						master_rps.setVisible(false);
-
+						heartLabel.setVisible(false);
+						
 						gameOver.setVisible(true);
 						score.setVisible(true);
+						
 						try {
-							Thread.sleep(2000);
+
+							Thread.sleep(7000);
 							jf.dispose();
 							marbleJf.setVisible(true);
 

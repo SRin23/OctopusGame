@@ -116,14 +116,14 @@ public class connectAll {
                     chkEnter = true;
                     if(chkEnter) {
                         marbleJf.dispose();
-                       new MarbleGameGUI(pNum).startGame(start);
+                        new MarbleGameGUI(pNum).startGame(start);
                         chkEnter =false;
-                    	
+                    	panJf.setVisible(false);         
                     }
                 }
             }
         });
-
+        
         catchMoleJf.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {

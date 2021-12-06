@@ -3,6 +3,7 @@ package catchMole;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
@@ -42,7 +43,7 @@ public class CatchMoleGUI extends connectAll {
 	// image를 담을 변수
 	private Image introBackground = new ImageIcon(CatchMoleGUI.class.getResource("../img/backgroundGreen.png"))
 			.getImage();
-
+	Font font;
 	private ImageIcon moleShowDefault = new ImageIcon(CatchMoleGUI.class.getResource("../img/showMoleDefault.png"));
 	private ImageIcon moleShowEntered = new ImageIcon(CatchMoleGUI.class.getResource("../img/showMoleEntered.png"));
 	private ImageIcon moleHideDefault = new ImageIcon(CatchMoleGUI.class.getResource("../img/HideMoleDefault.png"));
@@ -66,6 +67,8 @@ public class CatchMoleGUI extends connectAll {
 	public CatchMoleGUI(String userNumber) {
 		super(userNumber);
 
+		font = new Font("서울남산 장체B",Font.PLAIN,20);
+    	
 		panJf.dispose();
 		jf = new JFrame();
 		c1 = jf.getContentPane();
@@ -81,20 +84,20 @@ public class CatchMoleGUI extends connectAll {
 
 		score = new JLabel("점수 : " + userScore);
 		score.setBounds(10, 0, 200, 50);
-		score.setFont(score.getFont().deriveFont(20.0f));
+		score.setFont(font.deriveFont(20.0f));
 		score.setVisible(true);
 		c1.add(score);
 
 		heartLabel = new JLabel("목숨 : " + heart + "개");
 		heartLabel.setBounds(1050, 0, 100, 50);
-		heartLabel.setFont(heartLabel.getFont().deriveFont(20.0f));
+		heartLabel.setFont(font.deriveFont(20.0f));
 		heartLabel.setVisible(true);
 		c1.add(heartLabel);
 
 		// 3..2..1..보여주는 라벨
 		cnt = new JLabel("3");
 		cnt.setBounds(510, 250, 300, 300);
-		cnt.setFont(cnt.getFont().deriveFont(300.0f));
+		cnt.setFont(font.deriveFont(300.0f));
 		cnt.setForeground(Color.black);
 		cnt.setVisible(true);
 		c1.add(cnt);
@@ -135,7 +138,7 @@ public class CatchMoleGUI extends connectAll {
 		}
 		timeText = new JLabel("남은 시간 : " + timeCount + "초");
 		timeText.setBounds(350, 10, 500, 50);
-		timeText.setFont(timeText.getFont().deriveFont(30.0f));
+		timeText.setFont(font.deriveFont(30.0f));
 		timeText.setVisible(true);
 		timeText.setHorizontalAlignment(SwingConstants.CENTER);
 		timeText.setVerticalAlignment(SwingConstants.CENTER);
@@ -327,17 +330,19 @@ public class CatchMoleGUI extends connectAll {
 					moleBtn[i].setVisible(false);
 				}
 
-				gameOver = new JLabel("GAME OVER");
-				gameOver.setBounds(200, 300, 800, 150);
-				gameOver.setFont(gameOver.getFont().deriveFont(50.0f));
-				gameOver.setVisible(true);
-				gameOver.setHorizontalAlignment(SwingConstants.CENTER);
-				gameOver.setVerticalAlignment(SwingConstants.CENTER);
+				gameOver = new JLabel();
+				gameOver.setText("GAME OVER");
+				gameOver.setBounds(350,300,800,100);
+				gameOver.setForeground(Color.BLACK);
+				gameOver.setVisible(false);
+				gameOver.setFont(font.deriveFont(100.0f));
 				c1.add(gameOver);
 
+
 				resultText = new JLabel();
-				resultText.setBounds(450, 500, 300, 100);
-				resultText.setFont(resultText.getFont().deriveFont(20.0f));
+				resultText.setBounds(540,450,200,80);
+				resultText.setForeground(Color.BLACK);
+				resultText.setFont(font.deriveFont(50.0f));
 				resultText.setHorizontalAlignment(SwingConstants.CENTER);
 				resultText.setVerticalAlignment(SwingConstants.CENTER);
 				resultText.setVisible(true);
