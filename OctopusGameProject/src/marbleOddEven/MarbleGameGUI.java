@@ -550,7 +550,7 @@ public class MarbleGameGUI extends connectAll {
 			resultText.setText("ÀÌ°å½À´Ï´Ù.");
 			win = true;
 			System.out.println("win : " + win);
-			if(heart >= 0) {
+			if(heart > 0) {
 				jf.dispose();
 				new GameEnding_success(userNumber);
 				return;
