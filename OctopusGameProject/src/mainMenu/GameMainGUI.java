@@ -35,7 +35,7 @@ public class GameMainGUI extends JFrame{
 	public static boolean chkPlay = false;
 	
 	public GameMainGUI(){
-
+		
 		int userNumber = (int)(Math.random()*456+1);
 		System.out.println(userNumber);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

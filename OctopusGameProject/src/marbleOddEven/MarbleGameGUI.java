@@ -72,6 +72,7 @@ public class MarbleGameGUI extends connectAll {
 
 	public MarbleGameGUI(String pNum) {
 		super(pNum);
+		panJf.dispose();
 		Font font = new Font("서울남산 장체B", Font.PLAIN, 20);
 
 		this.userNumber = pNum;
@@ -494,14 +495,6 @@ public class MarbleGameGUI extends connectAll {
 				new GameEnding_success(userNumber);
 				return;
 			}
-		}
-		try {
-			Thread.sleep(2000);
-			jf.dispose();
-
-			return;
-		} catch (Exception e) {
-			System.out.println(e);
 		}
 	}
 

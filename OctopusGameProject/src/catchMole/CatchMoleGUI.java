@@ -82,7 +82,7 @@ public class CatchMoleGUI extends connectAll {
 
 		// c1.setBackground(Color.black);
 
-		score = new JLabel("점수 : " + userScore);
+		score = new JLabel("점수 : " + userScore+"/300");
 		score.setBounds(10, 0, 200, 50);
 		score.setFont(font.deriveFont(20.0f));
 		score.setVisible(true);
@@ -197,7 +197,7 @@ public class CatchMoleGUI extends connectAll {
 						userScore -= 10;
 						System.out.println("실 점수 : " + userScore);
 					}
-					score.setText("점수 : " + userScore);
+					score.setText("점수 : " + userScore+"/300");
 				}
 			});
 			moleBtn[i].setVisible(true);
@@ -334,7 +334,7 @@ public class CatchMoleGUI extends connectAll {
 				gameOver.setText("GAME OVER");
 				gameOver.setBounds(350,300,800,100);
 				gameOver.setForeground(Color.BLACK);
-				gameOver.setVisible(false);
+				gameOver.setVisible(true);
 				gameOver.setFont(font.deriveFont(100.0f));
 				c1.add(gameOver);
 
@@ -342,13 +342,13 @@ public class CatchMoleGUI extends connectAll {
 				resultText = new JLabel();
 				resultText.setBounds(540,450,200,80);
 				resultText.setForeground(Color.BLACK);
-				resultText.setFont(font.deriveFont(50.0f));
+				resultText.setFont(font.deriveFont(30.0f));
 				resultText.setHorizontalAlignment(SwingConstants.CENTER);
 				resultText.setVerticalAlignment(SwingConstants.CENTER);
 				resultText.setVisible(true);
 				c1.add(resultText);
 
-				if (userScore < 150) {
+				if (userScore < 300) {
 					resultText.setText("졌습니다.");
 					heart--;
 					if(heart<=0) {

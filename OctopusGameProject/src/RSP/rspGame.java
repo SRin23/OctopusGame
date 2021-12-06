@@ -253,7 +253,7 @@ public class rspGame extends connectAll{
 						
 						try {
 
-							Thread.sleep(7000);
+							Thread.sleep(2000);
 							jf.dispose();
 							marbleJf.setVisible(true);
 

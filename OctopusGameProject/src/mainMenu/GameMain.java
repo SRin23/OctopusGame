@@ -1,5 +1,8 @@
 package mainMenu;
 
+import RSP.rspGame;
+import marbleOddEven.MarbleGameGUI;
+
 public class GameMain {
 	public static final int SCREEN_WIDTH = 1200;
 	public static final int SCREEN_HEIGHT = 900;
