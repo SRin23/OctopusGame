@@ -28,7 +28,6 @@ import mainMenu.GameEnding_success;
 import miniGame.connectAll;
 
 public class MarbleGameGUI extends connectAll {
-	private static final long serialVersionUID = -7290086117028538892L;
 
 	// 기본 setting
 	Scanner sc = new Scanner(System.in);
@@ -54,7 +53,6 @@ public class MarbleGameGUI extends connectAll {
 	private JTextField marbleAmountUser;
 	private JLabel ComputerSelectOddEven;
 	private JLabel marbleAmountCheck;
-	private JLabel warning;
 	private JComboBox<String> intCombo;
 
 	private boolean win;
@@ -72,10 +70,9 @@ public class MarbleGameGUI extends connectAll {
 
 	Container c1;
 
-
 	public MarbleGameGUI(String pNum) {
 		super(pNum);
-    	Font font = new Font("서울남산 장체B",Font.PLAIN,20);
+		Font font = new Font("서울남산 장체B", Font.PLAIN, 20);
 
 		this.userNumber = pNum;
 
@@ -86,7 +83,7 @@ public class MarbleGameGUI extends connectAll {
 		c1.setLayout(null);
 		jf.setResizable(false);
 		jf.setSize(1200, 900);
-		//jf.setLocationRelativeTo(null);
+		// jf.setLocationRelativeTo(null);
 		c1.setBackground(Color.white);
 
 		// --------------기본 Layout---------------------
@@ -104,22 +101,22 @@ public class MarbleGameGUI extends connectAll {
 		scoreLabelComp.setFont(scoreLabelComp.getFont().deriveFont(20.0f));
 		scoreLabelComp.setSize(200, 20);
 		scoreLabelComp.setFont(font);
-		
+
 		// 목숨
 		JLabel heartLabel = new JLabel("목숨 : " + heart + "개");
 		heartLabel.setLocation(1080, 10);
 		heartLabel.setFont(heartLabel.getFont().deriveFont(20.0f));
 		heartLabel.setSize(120, 20);
 		heartLabel.setFont(font);
-		
+
 		// 3..2..1..보여주는 라벨
 		cnt = new JLabel("3");
 		cnt.setBounds(510, 250, 300, 300);
-		cnt.setFont(cnt.getFont().deriveFont(300.0f));
-		cnt.setForeground(Color.black);
 		cnt.setVisible(true);
-		cnt.setFont(font);
-		
+		cnt.setForeground(Color.black);
+		cnt.setFont(cnt.getFont().deriveFont(300.0f));
+		c1.add(cnt);
+
 		HowmanyMarble = new JLabel("몇개의 구슬을 사용하시겠습니까?");
 		HowmanyMarble.setLocation(350, 200);
 		HowmanyMarble.setFont(HowmanyMarble.getFont().deriveFont(30.0f));
@@ -128,14 +125,14 @@ public class MarbleGameGUI extends connectAll {
 		HowmanyMarble.setBackground(Color.black);
 		HowmanyMarble.setVisible(false);
 		HowmanyMarble.setFont(font);
-		
+
 		MaxMarble = new JLabel("(최대 구슬 개수 : 50개)");
 		MaxMarble.setLocation(500, 250);
 		MaxMarble.setFont(MaxMarble.getFont().deriveFont(18.0f));
-		MaxMarble.setSize(200, 50);
+		MaxMarble.setSize(400, 50);
 		MaxMarble.setVisible(false);
 		MaxMarble.setFont(font);
-		
+
 		marbleAmountUser = new JTextField(5);
 		TitledBorder oneTb = new TitledBorder(new LineBorder(Color.black), "입력");
 		marbleAmountUser.setLocation(500, 500);
@@ -146,7 +143,7 @@ public class MarbleGameGUI extends connectAll {
 		marbleAmountUser.setBorder(oneTb);
 		marbleAmountUser.setVisible(false);
 		marbleAmountUser.setFont(font);
-		
+
 		// 컨테이너에 추가(기본)
 		c1.add(scoreLabelUser);
 		c1.add(scoreLabelComp);
@@ -205,8 +202,8 @@ public class MarbleGameGUI extends connectAll {
 					HowmanyMarble.setText("입력이 완료되었습니다.");
 					computerScore = marbleCount;
 					userScore = marbleCount;
-					System.out.println("컴퓨터 구슬 개수 : " + computerScore);
-					System.out.println("사용자 구슬 개수 : " + userScore);
+//					System.out.println("컴퓨터 구슬 개수 : " + computerScore);
+//					System.out.println("사용자 구슬 개수 : " + userScore);
 					scoreLabelUser.setText(userNumber + "번 : " + userScore + "개(나)");
 					scoreLabelComp.setText("457번 : " + computerScore + "개");
 					HowmanyMarble.setVisible(false);
@@ -226,9 +223,18 @@ public class MarbleGameGUI extends connectAll {
 	}
 
 	void attact() {
+		int computerOddEven = rand.nextInt(2);
+
+		String rand_str;
+		if (computerOddEven == 0) {
+			rand_str = "짝";
+		} else {
+			rand_str = "홀";
+		}
+
 		// 컴퓨터가 고른 수
 		TitledBorder twoTb = new TitledBorder(new LineBorder(Color.black), "457번 구슬");
-		ComputerSelectOddEven = new JLabel();
+		ComputerSelectOddEven = new JLabel(rand_str);
 		ComputerSelectOddEven.setLocation(450, 200);
 		ComputerSelectOddEven.setFont(ComputerSelectOddEven.getFont().deriveFont(120.0f));
 		ComputerSelectOddEven.setSize(300, 200);
@@ -243,22 +249,11 @@ public class MarbleGameGUI extends connectAll {
 		marbleAmountCheck.setSize(100, 100);
 		marbleAmountCheck.setVisible(true);
 
-		// 경고창
-		warning = new JLabel();
-		warning.setLocation(400, 300);
-		warning.setSize(400, 100);
-		warning.setFont(warning.getFont().deriveFont(20.0f));
-		warning.setHorizontalAlignment(JLabel.CENTER);
-		warning.setForeground(Color.red);
-		warning.setVisible(false);
-
 		// 콤보박스(구슬 개수 고르는)
 		String[] ComboArr = new String[userScore + 1];
 		for (int i = 0; i <= userScore; i++) {
 			ComboArr[i] = Integer.toString(i);
 		}
-		System.out.println("구슬 개수 : " + userScore + ", " + ComboArr.length);
-
 		intCombo = new JComboBox<String>(ComboArr);
 		intCombo.setLocation(600, 530);
 		intCombo.setFont(intCombo.getFont().deriveFont(30.0f));
@@ -266,94 +261,42 @@ public class MarbleGameGUI extends connectAll {
 		intCombo.setVisible(true);
 		intCombo.addActionListener(new ActionListener() {
 			// start = false해야함!!
-			int check = 0;
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				start = false;
+				ComputerSelectOddEven.setVisible(true);
 				JComboBox<String> jb = (JComboBox) e.getSource();
 				int index = jb.getSelectedIndex();
-				System.out.println("인덱스 : " + index);
-				if (index < 0) {
-					warning.setText("구슬의 범위가 잘못되었습니다.");
-					warning.setVisible(true);
-					check++;
-					System.out.println("확인  : " + check);
-				} else if (index > userScore) {
-					warning.setText("구슬의 범위가 너무 큽니다.");
-					warning.setVisible(true);
-					System.out.println("범위가 큼");
-					check++;
-					System.out.println("확인  : " + check);
+
+				if ((index % 2 == 0 && rand_str.equals("짝")) || (index % 2 == 1 && rand_str.equals("홀"))) {
+					userScore -= index;
+					computerScore += index;
 				} else {
-					warning.setVisible(false);
-					int computerOddEven = rand.nextInt(2);
-
-					String rand_str;
-					if (computerOddEven == 0) {
-						rand_str = "짝";
-					} else {
-						rand_str = "홀";
-					}
-					System.out.println("컴퓨터값 : " + computerOddEven);
-					System.out.println("컴퓨터값 문자열 : " + rand_str);
-
-					ComputerSelectOddEven.setText(rand_str + "");
-					try {
-						Thread.sleep(1500);
-					} catch (InterruptedException e2) {
-						// TODO Auto-generated catch block
-						e2.printStackTrace();
-					}
-
-					if ((index % 2 == 0 && rand_str.equals("짝")) || (index % 2 == 1 && rand_str.equals("홀"))) {
-						System.out.println("당신의 구슬 개수 : " + index);
-						System.out.println("457번이 " + rand_str + "을 맞췄습니다.");
-						System.out.println("당신의 구슬이 " + index + "만큼 차감됩니다.");
-						userScore -= index;
-						computerScore += index;
-					} else {
-						System.out.println("당신의 구슬 개수 : " + index);
-						System.out.println("457번이 " + rand_str + "로, 틀렸습니다.");
-						System.out.println("당신의 구슬이 " + index + "만큼 증가됩니다.");
-						userScore += index;
-						computerScore -= index;
-					}
-
-					if (check >= 3) {
-						warning.setText("3번 틀렸습니다. 다음턴으로 넘어갑니다.");
-						try {
-							Thread.sleep(1000);
-						} catch (InterruptedException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-						defence();
-					}
-
-					if (userScore <= 0) {
-						userScore = 0;
-						computerScore = marbleCount * 2;
-						end();
-					} else if (computerScore <= 0) {
-						computerScore = 0;
-						userScore = marbleCount * 2;
-						end();
-					}
-
-					scoreLabelUser.setText(userNumber + "번 : " + userScore + "개(나)");
-					scoreLabelComp.setText("457번 : " + computerScore + "개");
-
-					if (start == false && endCheck != true) {
-						ComputerSelectOddEven.setVisible(false);
-						marbleAmountCheck.setVisible(false);
-						warning.setVisible(false);
-						intCombo.setVisible(false);
-
-						defence();
-					}
-
+					userScore += index;
+					computerScore -= index;
 				}
+
+				if (userScore <= 0) {
+					userScore = 0;
+					computerScore = marbleCount * 2;
+					end();
+				} else if (computerScore <= 0) {
+					computerScore = 0;
+					userScore = marbleCount * 2;
+					end();
+				}
+
+				scoreLabelUser.setText(userNumber + "번 : " + userScore + "개(나)");
+				scoreLabelComp.setText("457번 : " + computerScore + "개");
+
+				if (start == false && endCheck != true) {
+					ComputerSelectOddEven.setVisible(false);
+					marbleAmountCheck.setVisible(false);
+					intCombo.setVisible(false);
+
+					defence();
+				}
+
 			}
 		});
 		// 컨테이너에 추가(공격)
@@ -363,8 +306,11 @@ public class MarbleGameGUI extends connectAll {
 	}
 
 	void defence() {
+		int computerSelect = rand.nextInt(computerScore + 1);
+		// System.out.println("컴퓨터가 고른 구슬의 수 : " + computerSelect);
+		
 		// 컴퓨터가 고른 수
-		ComputerSelectUI = new JLabel("수비");
+		ComputerSelectUI = new JLabel(computerSelect + "개");
 		ComputerSelectUI.setLocation(450, 200);
 		ComputerSelectUI.setFont(ComputerSelectUI.getFont().deriveFont(120.0f));
 		ComputerSelectUI.setSize(300, 100);
@@ -398,10 +344,6 @@ public class MarbleGameGUI extends connectAll {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				start = true;
-
-				int computerSelect = rand.nextInt(computerScore + 1);
-				// System.out.println("컴퓨터가 고른 구슬의 수 : " + computerSelect);
-				ComputerSelectUI.setText(computerSelect + "개");
 
 				if (computerSelect % 2 == 0) {
 					userScore += computerSelect;
@@ -469,8 +411,6 @@ public class MarbleGameGUI extends connectAll {
 
 				check();
 
-				System.out.println("| 현재 구슬의 개수  | " + userNumber + "번(나) : " + userScore + "개 | 457번 : "
-						+ computerScore + "개 | ");
 				scoreLabelUser.setText(userNumber + "번 : " + userScore + "개(나)");
 				scoreLabelComp.setText("457번 : " + computerScore + "개");
 
@@ -504,7 +444,6 @@ public class MarbleGameGUI extends connectAll {
 			System.out.println("수비 없앰");
 			ComputerSelectOddEven.setVisible(false);
 			marbleAmountCheck.setVisible(false);
-			warning.setVisible(false);
 			intCombo.setVisible(false);
 
 		} else {
@@ -539,18 +478,18 @@ public class MarbleGameGUI extends connectAll {
 			resultText.setText("졌습니다.");
 			win = false;
 			heart--;
-			if(heart<=0) {
+			if (heart <= 0) {
 				jf.dispose();
 				new GameEnding_fail();
 				return;
-			} 
+			}
 			System.out.println("win : " + win);
 
 		} else {
 			resultText.setText("이겼습니다.");
 			win = true;
 			System.out.println("win : " + win);
-			if(heart > 0) {
+			if (heart > 0) {
 				jf.dispose();
 				new GameEnding_success(userNumber);
 				return;
@@ -560,8 +499,8 @@ public class MarbleGameGUI extends connectAll {
 			Thread.sleep(2000);
 			jf.dispose();
 
-			return ;
-		}catch(Exception e) {
+			return;
+		} catch (Exception e) {
 			System.out.println(e);
 		}
 	}
