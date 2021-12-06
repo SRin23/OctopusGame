@@ -254,10 +254,10 @@ public class panGame extends connectAll{
 						count++;
 					}
 					else {
-						timeJl.setVisible(false);
+						
 						timer.cancel();
 						win = countPan();
-						
+						timeJl.setVisible(false);
 						if(win) score.setText(playerNum+" ÀÌ±ט");
 						
 						else {

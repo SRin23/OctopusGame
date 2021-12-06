@@ -268,8 +268,6 @@ public class connectAll {
                     public void actionPerformed(ActionEvent e) {
                         marbleJf.dispose();
                         new MarbleGameGUI(pNum).startGame(start);
-
-                        System.out.println(heart);
                     }
                 });
                     c4.add(nextBtn[i]);

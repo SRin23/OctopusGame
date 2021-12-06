@@ -40,17 +40,21 @@ public class rspGame extends connectAll{
 	int turn = 0; //턴 수 세기
 	boolean timering = false; //timer가 실행 중인지 체크
 	boolean win;
-	private Image back= new ImageIcon(rspGame.class.getResource("../img/rspBack.png")).getImage();
+	Image back= new ImageIcon(rspGame.class.getResource("../img/rspBack.png")).getImage();
 	ImageIcon rock = new ImageIcon(rspGame.class.getResource("../img/rock.png"));
 	ImageIcon scissors = new ImageIcon(rspGame.class.getResource("../img/scissors.png"));
 	ImageIcon paper = new ImageIcon(rspGame.class.getResource("../img/paper.png"));
 	
+	public void paint(Graphics g){
+		g.drawImage(back, 0, 0, null);
+	}
+	
 	public rspGame(String playerNo){
 		super(playerNo);
+		panJf.dispose();
 		
     	Font font = new Font("서울남산 장체B",Font.PLAIN,20);
     	
-		panJf.dispose();
 		jf = new JFrame();
 		Container c1 = jf.getContentPane();
 		
@@ -62,7 +66,7 @@ public class rspGame extends connectAll{
 		jf.setSize(1200,900);
 		//프레임(위에 x 있는 거) 보이게 설정
 		jf.setVisible(true);
-		
+		c1.setBackground(Color.WHITE);
 		JLabel heartLabel = new JLabel("목숨 : " + heart + "개");
 		heartLabel.setLocation(1080, 10);
 		heartLabel.setSize(120, 20);
@@ -79,7 +83,7 @@ public class rspGame extends connectAll{
 		timerCnt = new JLabel("3");
 		timerCnt.setBounds(600,350,150,50);
 		timerCnt.setVisible(true);
-		timerCnt.setForeground(Color.WHITE);
+		timerCnt.setForeground(Color.BLACK);
 		timerCnt.setFont(font.deriveFont(50.0f));
 		c1.add(timerCnt);
 
@@ -257,8 +261,5 @@ public class rspGame extends connectAll{
 			}	
 		};
 		timer.scheduleAtFixedRate(task, 0, 1000);
-	}
-	public void paint(Graphics g){
-		g.drawImage(back, 0, 0, null);
 	}
 }
