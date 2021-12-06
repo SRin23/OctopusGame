@@ -2,6 +2,7 @@ package FCP;
 import miniGame.connectAll;
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,12 +30,11 @@ public class panGame extends connectAll{
 		
 		JLabel timeJl; //남은 시간을 알려줌
 		JLabel panCnt; //판의 수를 알려줌
-		JLabel playerNo; //플레이어 번호
-		JLabel masterNo; //master의 번호
+		JLabel info; //플레이어 번호
 		JLabel cnt; //3..2..1..
 		JLabel gameOver; //gameOver
 		JLabel score; //결과
-
+		JLabel heartLabel;
 		int playerCnt = 0; //player의 판 수(white)
 		int masterCnt = 0; //master의 판 수(black)
 		
@@ -48,6 +48,7 @@ public class panGame extends connectAll{
 
 		String playerNum;
 		
+
 		public void paint(Graphics g){
 			g.drawImage(back, 0, 0, null);
 		}
@@ -55,6 +56,8 @@ public class panGame extends connectAll{
 		//프레임 생성
 		public panGame(String pNum){
 			super(pNum);
+	    	Font font = new Font("서울남산 장체B",Font.PLAIN,20);
+	    	
 			panJf.dispose();
 			jf = new JFrame();
 			Container c1 = jf.getContentPane();
@@ -68,41 +71,45 @@ public class panGame extends connectAll{
 			c1.setBackground(soil);
 			jf.setVisible(true);
 
+			
 			//3..2..1..보여주는 라벨
 			cnt = new JLabel("3");
 			cnt.setBounds(510,250,300,300);
-			cnt.setFont(cnt.getFont().deriveFont(300.0f));
 			cnt.setForeground(Color.BLACK);
 			cnt.setVisible(true);
+			cnt.setFont(font.deriveFont(300.0f)); 
+			
 			c1.add(cnt);
 			
 			//player 번호 및 색을 알려주는 라벨
-			playerNo = new JLabel(playerNum+" : "+playerColor);
-			playerNo.setBounds(0,20,500,30);
-			playerNo.setFont(playerNo.getFont().deriveFont(25.0f));
-			playerNo.setVisible(false);
-			c1.add(playerNo);
-
-			//master 번호 및 색을 알려주는 라벨
-			masterNo = new JLabel("457 : "+masterColor);
-			masterNo.setBounds(1050,20,150,30);
-			masterNo.setFont(masterNo.getFont().deriveFont(25.0f));
-			masterNo.setVisible(false);
-			c1.add(masterNo);
-
+			info = new JLabel();
+			info.setText("<html>"+playerNum+" : "+playerColor+"<br> 457 : black");
+			info.setBounds(0,10,500,60);
+			info.setVisible(false);
+			info.setFont(font.deriveFont(25.0f));
+			c1.add(info);
+			
+			// 목숨
+			heartLabel	= new JLabel("목숨 : " + heart + "개");
+			heartLabel.setLocation(1080, 10);
+			heartLabel.setSize(120, 20);
+			heartLabel.setVisible(false);
+			heartLabel.setFont(font.deriveFont(20.0f));
+			c1.add(heartLabel);
+			
 			//남은 시간 보여주는 라벨
 			timeJl = new JLabel("남은 시간 : 20");
 			timeJl.setBounds(470,30,400,60);
-			timeJl.setFont(timeJl.getFont().deriveFont(40.0f));
 			timeJl.setVisible(false);
+			timeJl.setFont(font.deriveFont(40.0f));
 			c1.add(timeJl);
 			
 			//게임이 끝난 후 판의 개수를 보여주는 라벨
 			panCnt = new JLabel();
 			panCnt.setBounds(410,400,800,100);
-			panCnt.setFont(panCnt.getFont().deriveFont(50.0f));
 			panCnt.setForeground(Color.BLACK);
 			panCnt.setVisible(false);
+			panCnt.setFont(font.deriveFont(50.0f));
 			c1.add(panCnt);
 			
 			int i,a;        
@@ -137,15 +144,15 @@ public class panGame extends connectAll{
 			gameOver.setText("GAME OVER");
 			gameOver.setBounds(300,300,800,100);
 			gameOver.setForeground(Color.BLACK);
-			gameOver.setFont(gameOver.getFont().deriveFont(100.0f));
 			gameOver.setVisible(false);
+			gameOver.setFont(font.deriveFont(100.0f));
 			c1.add(gameOver);
 	
 			score = new JLabel();
 			score.setBounds(520,500,300,80);
-			score.setFont(score.getFont().deriveFont(50.0f));
 			score.setForeground(Color.BLACK);
 			score.setVisible(false);
+			score.setFont(font.deriveFont(50.0f));
 			c1.add(score);
 		}
 		
@@ -225,10 +232,10 @@ public class panGame extends connectAll{
 			timer.schedule(task, 0 , t);
 		}
 		void game(){
-			playerNo.setVisible(true);
-			masterNo.setVisible(true);
+			info.setVisible(true);
 			timeJl.setVisible(true);
-
+			heartLabel.setVisible(true);
+			
 			for(int i=0; i<BTN_CNT; i++) {
 				pan[i].setVisible(true);
 				if(nowColor[i].equals(playerColor)) pan[i].setIcon(whitePan);
@@ -252,7 +259,11 @@ public class panGame extends connectAll{
 						win = countPan();
 						
 						if(win) score.setText(playerNum+" 이김");
-						else score.setText("457 이김");
+						
+						else {
+							score.setText("457 이김");
+							heart--;
+						}
 
 						gameOver.setVisible(true);
 						score.setVisible(true);
@@ -281,7 +292,7 @@ public class panGame extends connectAll{
 		static int countDown=1;
 
 		//판 뒤집기 게임 시작
-		public boolean startGame() {
+		public int startGame() {
 			Timer t = new Timer();
 			TimerTask tt = new TimerTask() {
 
@@ -299,7 +310,7 @@ public class panGame extends connectAll{
 			}
 		};
 		t.scheduleAtFixedRate(tt, 1000,1000);
-		return win;
+		return heart;
 		}
 	}
 		

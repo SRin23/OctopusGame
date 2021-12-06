@@ -3,6 +3,7 @@ package marbleOddEven;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -22,7 +23,11 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
-public class MarbleGameGUI extends JFrame {
+import mainMenu.GameEnding_fail;
+import mainMenu.GameEnding_success;
+import miniGame.connectAll;
+
+public class MarbleGameGUI extends connectAll {
 	private static final long serialVersionUID = -7290086117028538892L;
 
 	// 기본 setting
@@ -31,8 +36,7 @@ public class MarbleGameGUI extends JFrame {
 
 	private boolean endCheck = false;
 	private static boolean start;
-	private int heart;
-	private int userNumber;
+	private String userNumber;
 
 	private JLabel gameOver;
 	private JLabel resultText;
@@ -44,6 +48,7 @@ public class MarbleGameGUI extends JFrame {
 	private JLabel scoreLabelUser;
 	private JLabel scoreLabelComp;
 
+	JFrame jf;
 	private JLabel HowmanyMarble;
 	private JLabel MaxMarble;
 	private JTextField marbleAmountUser;
@@ -54,27 +59,34 @@ public class MarbleGameGUI extends JFrame {
 
 	private boolean win;
 
-	private ImageIcon evenButtonDefault = new ImageIcon(MarbleGameMain.class.getResource("../img/evenButton.png"));
+	private ImageIcon evenButtonDefault = new ImageIcon(MarbleGameGUI.class.getResource("../img/evenButton.png"));
 	private ImageIcon evenButtonEntered = new ImageIcon(
-			MarbleGameMain.class.getResource("../img/evenButtonEntered.png"));
-	private ImageIcon oddButtonDefault = new ImageIcon(MarbleGameMain.class.getResource("../img/oddButton.png"));
-	private ImageIcon oddButtonEntered = new ImageIcon(MarbleGameMain.class.getResource("../img/oddButtonEntered.png"));
+			MarbleGameGUI.class.getResource("../img/evenButtonEntered.png"));
+	private ImageIcon oddButtonDefault = new ImageIcon(MarbleGameGUI.class.getResource("../img/oddButton.png"));
+	private ImageIcon oddButtonEntered = new ImageIcon(MarbleGameGUI.class.getResource("../img/oddButtonEntered.png"));
 	private JLabel ComputerSelectUI;
 	private JButton evenButton;
 	private JButton oddButton;
 
 	private JLabel cnt;
 
-	Container c1 = getContentPane();
+	Container c1;
 
-	public MarbleGameGUI() {
 
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("홀짝게임");
+	public MarbleGameGUI(String pNum) {
+		super(pNum);
+    	Font font = new Font("서울남산 장체B",Font.PLAIN,20);
+
+		this.userNumber = pNum;
+
+		jf = new JFrame();
+		c1 = jf.getContentPane();
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jf.setTitle("홀짝게임");
 		c1.setLayout(null);
-		setResizable(false);
-		setSize(1200, 900);
-		setLocationRelativeTo(null);
+		jf.setResizable(false);
+		jf.setSize(1200, 900);
+		//jf.setLocationRelativeTo(null);
 		c1.setBackground(Color.white);
 
 		// --------------기본 Layout---------------------
@@ -84,26 +96,30 @@ public class MarbleGameGUI extends JFrame {
 		scoreLabelUser.setLocation(10, 10);
 		scoreLabelUser.setSize(200, 20);
 		scoreLabelUser.setFont(scoreLabelUser.getFont().deriveFont(20.0f));
+		scoreLabelUser.setFont(font);
 
 		// 컴퓨터 점수
 		scoreLabelComp = new JLabel("457번 : " + computerScore + "개");
 		scoreLabelComp.setLocation(10, 30);
 		scoreLabelComp.setFont(scoreLabelComp.getFont().deriveFont(20.0f));
 		scoreLabelComp.setSize(200, 20);
-
+		scoreLabelComp.setFont(font);
+		
 		// 목숨
 		JLabel heartLabel = new JLabel("목숨 : " + heart + "개");
 		heartLabel.setLocation(1080, 10);
 		heartLabel.setFont(heartLabel.getFont().deriveFont(20.0f));
 		heartLabel.setSize(120, 20);
-
+		heartLabel.setFont(font);
+		
 		// 3..2..1..보여주는 라벨
 		cnt = new JLabel("3");
 		cnt.setBounds(510, 250, 300, 300);
 		cnt.setFont(cnt.getFont().deriveFont(300.0f));
 		cnt.setForeground(Color.black);
 		cnt.setVisible(true);
-
+		cnt.setFont(font);
+		
 		HowmanyMarble = new JLabel("몇개의 구슬을 사용하시겠습니까?");
 		HowmanyMarble.setLocation(350, 200);
 		HowmanyMarble.setFont(HowmanyMarble.getFont().deriveFont(30.0f));
@@ -111,13 +127,15 @@ public class MarbleGameGUI extends JFrame {
 		HowmanyMarble.setHorizontalAlignment(JLabel.CENTER);
 		HowmanyMarble.setBackground(Color.black);
 		HowmanyMarble.setVisible(false);
-
+		HowmanyMarble.setFont(font);
+		
 		MaxMarble = new JLabel("(최대 구슬 개수 : 50개)");
 		MaxMarble.setLocation(500, 250);
 		MaxMarble.setFont(MaxMarble.getFont().deriveFont(18.0f));
 		MaxMarble.setSize(200, 50);
 		MaxMarble.setVisible(false);
-
+		MaxMarble.setFont(font);
+		
 		marbleAmountUser = new JTextField(5);
 		TitledBorder oneTb = new TitledBorder(new LineBorder(Color.black), "입력");
 		marbleAmountUser.setLocation(500, 500);
@@ -127,7 +145,8 @@ public class MarbleGameGUI extends JFrame {
 		marbleAmountUser.setBackground(Color.white);
 		marbleAmountUser.setBorder(oneTb);
 		marbleAmountUser.setVisible(false);
-
+		marbleAmountUser.setFont(font);
+		
 		// 컨테이너에 추가(기본)
 		c1.add(scoreLabelUser);
 		c1.add(scoreLabelComp);
@@ -139,13 +158,13 @@ public class MarbleGameGUI extends JFrame {
 		c1.add(MaxMarble);
 		c1.add(marbleAmountUser);
 
-		setVisible(true);
+		jf.setVisible(true);
 	}
 
 	static int countDown = 1;
 
 	// 판 뒤집기 게임 시작
-	public boolean startGame(boolean start) {
+	public int startGame(boolean start) {
 		this.start = start;
 		Timer t = new Timer();
 		TimerTask tt = new TimerTask() {
@@ -166,7 +185,7 @@ public class MarbleGameGUI extends JFrame {
 		};
 		t.scheduleAtFixedRate(tt, 1000, 1000);
 
-		return win;
+		return heart;
 
 	}
 
@@ -478,7 +497,7 @@ public class MarbleGameGUI extends JFrame {
 
 	}
 
-	int end() {
+	void end() {
 		endCheck = true;
 		System.out.println("start : " + start);
 		if (start == false) {
@@ -519,15 +538,32 @@ public class MarbleGameGUI extends JFrame {
 		if (userScore == 0) {
 			resultText.setText("졌습니다.");
 			win = false;
+			heart--;
+			if(heart<=0) {
+				jf.dispose();
+				new GameEnding_fail();
+				return;
+			} 
 			System.out.println("win : " + win);
-			return heart - 1;
+
 		} else {
 			resultText.setText("이겼습니다.");
 			win = true;
 			System.out.println("win : " + win);
-			return heart;
+			if(heart >= 0) {
+				jf.dispose();
+				new GameEnding_success(userNumber);
+				return;
+			}
 		}
+		try {
+			Thread.sleep(2000);
+			jf.dispose();
 
+			return ;
+		}catch(Exception e) {
+			System.out.println(e);
+		}
 	}
 
 	void check() {

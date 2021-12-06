@@ -2,6 +2,7 @@ package RSP;
 
 import java.awt.Color;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
@@ -46,6 +47,9 @@ public class rspGame extends connectAll{
 	
 	public rspGame(String playerNo){
 		super(playerNo);
+		
+    	Font font = new Font("서울남산 장체B",Font.PLAIN,20);
+    	
 		panJf.dispose();
 		jf = new JFrame();
 		Container c1 = jf.getContentPane();
@@ -59,6 +63,12 @@ public class rspGame extends connectAll{
 		//프레임(위에 x 있는 거) 보이게 설정
 		jf.setVisible(true);
 		
+		JLabel heartLabel = new JLabel("목숨 : " + heart + "개");
+		heartLabel.setLocation(1080, 10);
+		heartLabel.setSize(120, 20);
+		heartLabel.setFont(font.deriveFont(20.0f));
+		c1.add(heartLabel);
+		
 		//컴 선택 버튼 세팅
 		master_rps = new JButton();
 		master_rps.setBounds(500, 50,BTN_WIDTH/2,BTN_HEIGHT/2);
@@ -68,9 +78,9 @@ public class rspGame extends connectAll{
 
 		timerCnt = new JLabel("3");
 		timerCnt.setBounds(600,350,150,50);
-		timerCnt.setFont(timerCnt.getFont().deriveFont(50.0f));
 		timerCnt.setVisible(true);
 		timerCnt.setForeground(Color.WHITE);
+		timerCnt.setFont(font.deriveFont(50.0f));
 		c1.add(timerCnt);
 
 		for(int i=0; i<BTN_CNT; i++) {
@@ -115,15 +125,15 @@ public class rspGame extends connectAll{
 		gameOver.setText("GAME OVER");
 		gameOver.setBounds(300,300,800,100);
 		gameOver.setForeground(Color.WHITE);
-		gameOver.setFont(gameOver.getFont().deriveFont(100.0f));
 		gameOver.setVisible(false);
+		gameOver.setFont(font.deriveFont(100.0f));
 		c1.add(gameOver);
 
 		score = new JLabel();
 		score.setBounds(560,450,200,80);
-		score.setFont(score.getFont().deriveFont(50.0f));
 		score.setForeground(Color.WHITE);
 		score.setVisible(false);
+		score.setFont(font.deriveFont(50.0f));
 		c1.add(score);
 
 		JLabel jl  = new JLabel();
