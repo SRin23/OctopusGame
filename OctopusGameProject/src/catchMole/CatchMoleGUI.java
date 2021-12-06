@@ -352,9 +352,15 @@ public class CatchMoleGUI extends connectAll {
 					resultText.setText("졌습니다.");
 					heart--;
 					if(heart<=0) {
-						jf.dispose();
-						new GameEnding_fail();
-						return;
+						
+						try {
+							Thread.sleep(2000);
+							jf.dispose();
+							new GameEnding_fail();
+							return;
+						}catch(Exception e) {
+							System.out.println(e);
+						}
 					} 
 				} else {
 
