@@ -32,13 +32,14 @@ public class GameMainGUI extends JFrame{
 	private JButton gameStart;
 	private JButton gameHelp;
 	private JButton ranking;
+	public static boolean chkPlay = false;
 	
 	public GameMainGUI(){
 
 		int userNumber = (int)(Math.random()*456+1);
 		System.out.println(userNumber);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setTitle("硫붿씤 �솕硫�");
+		setTitle("쭈꾸미 놀이");
 		c1.setLayout(null);
 		setResizable(false);	
 		setSize(1200, 900);
@@ -135,9 +136,10 @@ public class GameMainGUI extends JFrame{
 		c1.add(gameStart);
 		c1.add(gameHelp);
 		c1.add(ranking);
-		
+
 		musicMain introMusic = new musicMain("squareGame.mp3", true);
-		introMusic.start();
+		if(!chkPlay)
+			introMusic.start();
 	}
 
 		public void paint(Graphics g) {

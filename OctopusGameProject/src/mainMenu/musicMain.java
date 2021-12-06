@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 
 import javazoom.jl.player.Player;
 
-
+import mainMenu.GameMainGUI;
 
 class musicMain extends Thread{
 	private Player player;
@@ -14,6 +14,7 @@ class musicMain extends Thread{
 	private File file;
 	private FileInputStream fis;
 	private BufferedInputStream bis;
+
 	public musicMain(String name, boolean isLoop) {
 		try {
 			this.isLoop = isLoop;
@@ -43,10 +44,12 @@ class musicMain extends Thread{
 	public void run() {
 		try {
 			do {
-				player.play();
-				fis = new FileInputStream(file);
-				bis = new BufferedInputStream(fis);
-				player = new Player(bis);
+				GameMainGUI.chkPlay = true;
+					player.play();
+					fis = new FileInputStream(file);
+					bis = new BufferedInputStream(fis);
+					player = new Player(bis);
+
 			}while(isLoop);
 		}catch (Exception e) {
 			// TODO: handle exception
