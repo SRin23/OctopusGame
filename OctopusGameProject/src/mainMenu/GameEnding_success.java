@@ -35,7 +35,6 @@ public class GameEnding_success extends JFrame{
 	private ImageIcon rankingEntered = new ImageIcon(GameMain.class.getResource("../img/rankingEntered.png"));
 	private JButton ranking;
 	private JButton main;
-	private JLabel warning;
 	
 	private JTextField setName;
 	
