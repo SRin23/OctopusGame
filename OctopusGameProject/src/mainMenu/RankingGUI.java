@@ -71,6 +71,7 @@ public class RankingGUI extends JFrame{
     			@Override
 				public void keyPressed(KeyEvent e) {
 					setVisible(false);
+					dispose();
 					GameMainGUI gm = new GameMainGUI();
 				}
 			});
