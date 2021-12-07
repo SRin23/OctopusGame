@@ -6,16 +6,13 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Random;
-import java.util.Scanner;
+import java.awt.event.MouseListener;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -28,95 +25,168 @@ import mainMenu.GameEnding_success;
 import miniGame.connectAll;
 
 public class MarbleGameGUI extends connectAll {
-
-	// 기본 setting
-	Scanner sc = new Scanner(System.in);
-	Random rand = new Random();
-
-	private boolean endCheck = false;
-	private static boolean start;
-	private String userNumber;
-
-	private JLabel gameOver;
-	private JLabel resultText;
+	final int BTN_WIDTH = 400;
+	final int BTN_HEIGHT = 400;
+	final int BTN_CNT = 3; // 가위바위보 버튼의 수
 
 	private int marbleCount;
-
-	private int userScore;
-	private int computerScore;
-	private JLabel scoreLabelUser;
-	private JLabel scoreLabelComp;
-
+	private boolean start;
 	JFrame jf;
+	private JLabel showResult;
+	private JLabel timerCnt;
+	private JLabel gameOver;
+	private JLabel computerScoreText;
+	private JLabel userScoreText;
+	int computerScore;
+	int userScore;
+	private JLabel heartLabel;
+
+	private String playerNo;
+	int count = 0; // 3초 카운트
+
+	boolean timering = false; // timer가 실행 중인지 체크
+	boolean win;
+
+	int computerMarblePick;
+	private String computerOddEvenPick;
+	int userMarblePick;
+	private String userOddEvenPick;
+	
 	private JLabel HowmanyMarble;
 	private JLabel MaxMarble;
 	private JTextField marbleAmountUser;
-	private JLabel ComputerSelectOddEven;
-	private JLabel marbleAmountCheck;
-	private JComboBox<String> intCombo;
-
-	private boolean win;
-
-	private ImageIcon evenButtonDefault = new ImageIcon(MarbleGameGUI.class.getResource("../img/evenButton.png"));
-	private ImageIcon evenButtonEntered = new ImageIcon(
-			MarbleGameGUI.class.getResource("../img/evenButtonEntered.png"));
-	private ImageIcon oddButtonDefault = new ImageIcon(MarbleGameGUI.class.getResource("../img/oddButton.png"));
-	private ImageIcon oddButtonEntered = new ImageIcon(MarbleGameGUI.class.getResource("../img/oddButtonEntered.png"));
-	private JLabel ComputerSelectUI;
-	private JButton evenButton;
+	private JLabel resultText;
+	// Image back = new
+	// ImageIcon(mableGameFinal.class.getResource("../img/rspBack.png")).getImage();
+	ImageIcon oddButtonDefault = new ImageIcon(MarbleGameGUI.class.getResource("../img/oddButton.png"));
+	ImageIcon oddButtonEntered = new ImageIcon(MarbleGameGUI.class.getResource("../img/oddButtonEntered.png"));
+	ImageIcon evenButtonDefault = new ImageIcon(MarbleGameGUI.class.getResource("../img/evenButton.png"));
+	ImageIcon evenButtonEntered = new ImageIcon(MarbleGameGUI.class.getResource("../img/evenButtonEntered.png"));
 	private JButton oddButton;
+	private JButton evenButton;
 
-	private JLabel cnt;
+	/*
+	 * public void paint(Graphics g) { g.drawImage(back, 0, 0, null); }
+	 */
 
-	Container c1;
-
-	public MarbleGameGUI(String pNum) {
-		super(pNum);
+	public MarbleGameGUI(String playerNo) {
+		super(playerNo);
+		this.playerNo = playerNo;
 		panJf.dispose();
+
 		Font font = new Font("서울남산 장체B", Font.PLAIN, 20);
 
-		this.userNumber = pNum;
-
 		jf = new JFrame();
-		c1 = jf.getContentPane();
+		Container c1 = jf.getContentPane();
+
+		jf.setTitle("홀짝맞추기");
+		// 창을 닫을 시 프로그램 종료
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		jf.setTitle("홀짝게임");
-		c1.setLayout(null);
+		// 프레임 창 고정
 		jf.setResizable(false);
 		jf.setSize(1200, 900);
-		// jf.setLocationRelativeTo(null);
-		c1.setBackground(Color.white);
+		// 프레임(위에 x 있는 거) 보이게 설정
+		jf.setVisible(true);
 
-		// --------------기본 Layout---------------------
-
-		// 사용자 점수
-		scoreLabelUser = new JLabel(userNumber + "번 : " + userScore + "개(나)");
-		scoreLabelUser.setLocation(10, 10);
-		scoreLabelUser.setSize(200, 20);
-		scoreLabelUser.setFont(scoreLabelUser.getFont().deriveFont(20.0f));
-		scoreLabelUser.setFont(font);
-
-		// 컴퓨터 점수
-		scoreLabelComp = new JLabel("457번 : " + computerScore + "개");
-		scoreLabelComp.setLocation(10, 30);
-		scoreLabelComp.setFont(scoreLabelComp.getFont().deriveFont(20.0f));
-		scoreLabelComp.setSize(200, 20);
-		scoreLabelComp.setFont(font);
-
-		// 목숨
-		JLabel heartLabel = new JLabel("목숨 : " + heart + "개");
+		c1.setBackground(Color.WHITE);
+		heartLabel = new JLabel("목숨 : " + heart + "개");
 		heartLabel.setLocation(1080, 10);
-		heartLabel.setFont(heartLabel.getFont().deriveFont(20.0f));
 		heartLabel.setSize(120, 20);
-		heartLabel.setFont(font);
+		heartLabel.setFont(font.deriveFont(20.0f));
+		heartLabel.setVisible(true);
+		
+		// 컴 선택 버튼 세팅
+		showResult = new JLabel();
+		showResult.setBounds(400, 100, BTN_WIDTH, BTN_HEIGHT);
+		showResult.setFont(font.deriveFont(150.0f));
+		showResult.setHorizontalAlignment(JLabel.CENTER);
+		showResult.setVerticalAlignment(JLabel.CENTER);
+		showResult.setVisible(false);
+		
+		timerCnt = new JLabel("3");
+		timerCnt.setBounds(400, 0, 400, 100);
+		timerCnt.setVisible(false);
+		timerCnt.setHorizontalAlignment(JLabel.CENTER);
+		timerCnt.setVerticalAlignment(JLabel.CENTER);
+		timerCnt.setForeground(Color.RED);
+		timerCnt.setFont(font.deriveFont(50.0f));
+		
 
-		// 3..2..1..보여주는 라벨
-		cnt = new JLabel("3");
-		cnt.setBounds(510, 250, 300, 300);
-		cnt.setVisible(true);
-		cnt.setForeground(Color.black);
-		cnt.setFont(cnt.getFont().deriveFont(300.0f));
-		c1.add(cnt);
+		oddButton = new JButton();
+		oddButton.setBounds(150, 450, BTN_WIDTH, BTN_HEIGHT);
+		oddButton.setBorderPainted(false);
+		oddButton.setContentAreaFilled(false);
+		oddButton.setFocusPainted(false);
+		oddButton.setVisible(false);
+		oddButton.addMouseListener(new MouseListener() {
+			@Override
+			public void mousePressed(MouseEvent e) {
+				userOddEvenPick = "홀";
+				System.out.println(userOddEvenPick);
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				oddButton.setIcon(oddButtonDefault);
+				oddButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				oddButton.setIcon(oddButtonEntered);
+				oddButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				count = 0;
+				Attack();
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				
+			}
+		});
+
+		evenButton = new JButton();
+		evenButton.setBounds(650, 450, BTN_WIDTH, BTN_HEIGHT);
+		evenButton.setBorderPainted(false);
+		evenButton.setContentAreaFilled(false);
+		evenButton.setFocusPainted(false);
+		evenButton.setVisible(false);
+		evenButton.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				userOddEvenPick = "짝";
+				System.out.println(userOddEvenPick);
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				evenButton.setIcon(evenButtonDefault);
+				evenButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				evenButton.setIcon(evenButtonEntered);
+				evenButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+			}
+
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				count = 0;
+				Attack();
+			}
+
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				
+			}
+		});
+
 
 		HowmanyMarble = new JLabel("몇개의 구슬을 사용하시겠습니까?");
 		HowmanyMarble.setLocation(350, 200);
@@ -145,48 +215,62 @@ public class MarbleGameGUI extends connectAll {
 		marbleAmountUser.setVisible(false);
 		marbleAmountUser.setFont(font);
 
-		// 컨테이너에 추가(기본)
-		c1.add(scoreLabelUser);
-		c1.add(scoreLabelComp);
-		c1.add(heartLabel);
-		c1.add(cnt);
+		
+		gameOver = new JLabel();
+		gameOver.setText("GAME OVER");
+		gameOver.setBounds(200, 300, 800, 100);
+		gameOver.setForeground(Color.BLACK);
+		gameOver.setVisible(false);
+		gameOver.setHorizontalAlignment(JLabel.CENTER);
+		gameOver.setVerticalAlignment(JLabel.CENTER);
+		gameOver.setFont(font.deriveFont(100.0f));
+		
+		resultText = new JLabel();
+		resultText.setBounds(450, 500, 300, 100);
+		resultText.setFont(resultText.getFont().deriveFont(20.0f));
+		resultText.setHorizontalAlignment(SwingConstants.CENTER);
+		resultText.setVerticalAlignment(SwingConstants.CENTER);
+		resultText.setVisible(true);
+		c1.add(resultText);
 
-		// 컨테이너에 추가(초기)
+		computerScoreText = new JLabel("457번 : 0점");
+		computerScoreText.setBounds(0, 0, 200, 30);
+		computerScoreText.setForeground(Color.BLACK);
+		computerScoreText.setVisible(true);
+		computerScoreText.setFont(font.deriveFont(20.0f));
+		
+		
+		userScoreText = new JLabel(playerNo + "번 : 0점");
+		userScoreText.setBounds(0, 30, 200, 30);
+		userScoreText.setForeground(Color.BLACK);
+		userScoreText.setVisible(true);
+		userScoreText.setFont(font.deriveFont(20.0f));
+
+		JLabel jl = new JLabel();
+		
+		c1.add(heartLabel);
+		c1.add(showResult);
+		c1.add(timerCnt);
+		c1.add(oddButton);
+		c1.add(evenButton);
+		c1.add(gameOver);
+		c1.add(computerScoreText);
+		c1.add(userScoreText);
 		c1.add(HowmanyMarble);
 		c1.add(MaxMarble);
 		c1.add(marbleAmountUser);
+		c1.add(jl);
 
-		jf.setVisible(true);
 	}
 
-	static int countDown = 1;
-
-	// 판 뒤집기 게임 시작
+	
 	public int startGame(boolean start) {
-		this.start = start;
-		Timer t = new Timer();
-		TimerTask tt = new TimerTask() {
-
-			@Override
-			public void run() {
-				if (countDown < 3) {
-					cnt.setText("" + (3 - countDown));
-					countDown++;
-				} else {
-					t.cancel();
-					System.out.println("타이머가 종료되었습니다.");
-					cnt.setVisible(false);
-					System.out.println("게임 스타트");
-					basic();
-				}
-			}
-		};
-		t.scheduleAtFixedRate(tt, 1000, 1000);
-
+		this.start = true;
+		basic();
 		return heart;
-
 	}
 
+	
 	void basic() {
 		HowmanyMarble.setVisible(true);
 		MaxMarble.setVisible(true);
@@ -203,18 +287,18 @@ public class MarbleGameGUI extends connectAll {
 					HowmanyMarble.setText("입력이 완료되었습니다.");
 					computerScore = marbleCount;
 					userScore = marbleCount;
-//					System.out.println("컴퓨터 구슬 개수 : " + computerScore);
-//					System.out.println("사용자 구슬 개수 : " + userScore);
-					scoreLabelUser.setText(userNumber + "번 : " + userScore + "개(나)");
-					scoreLabelComp.setText("457번 : " + computerScore + "개");
+					userScoreText.setText(playerNo + "번 : " + userScore + "개(나)");
+					computerScoreText.setText("457번 : " + computerScore + "개");
 					HowmanyMarble.setVisible(false);
 					MaxMarble.setVisible(false);
 					marbleAmountUser.setVisible(false);
 
 					if (start == false) { // 수비(홀짝)
-						defence();
+						//defence();
 					} else { // 공격(구슬쥐기)
-						attact();
+						oddButton.setVisible(true);
+						evenButton.setVisible(true);
+						timerCnt.setVisible(true);
 					}
 
 				}
@@ -222,293 +306,145 @@ public class MarbleGameGUI extends connectAll {
 		});
 
 	}
-
-	void attact() {
-		int computerOddEven = rand.nextInt(2);
-
-		String rand_str;
-		if (computerOddEven == 0) {
-			rand_str = "짝";
-		} else {
-			rand_str = "홀";
+	
+	// 컴이 홀, 짝 중 랜덤으로 하나 고름
+	private void computerOddEvenSelect() {
+		int tmp = (int)(Math.random()*2);
+		if(tmp==0) {
+			computerOddEvenPick = "짝";
+		}else {
+			computerOddEvenPick = "홀";
 		}
-
-		// 컴퓨터가 고른 수
-		TitledBorder twoTb = new TitledBorder(new LineBorder(Color.black), "457번 구슬");
-		ComputerSelectOddEven = new JLabel(rand_str);
-		ComputerSelectOddEven.setLocation(450, 200);
-		ComputerSelectOddEven.setFont(ComputerSelectOddEven.getFont().deriveFont(120.0f));
-		ComputerSelectOddEven.setSize(300, 200);
-		ComputerSelectOddEven.setHorizontalAlignment(JLabel.CENTER);
-		ComputerSelectOddEven.setVisible(true);
-		ComputerSelectOddEven.setBorder(twoTb);
-
-		// 구슬 라벨
-		marbleAmountCheck = new JLabel("구슬 : ");
-		marbleAmountCheck.setLocation(500, 500);
-		marbleAmountCheck.setFont(marbleAmountCheck.getFont().deriveFont(30.0f));
-		marbleAmountCheck.setSize(100, 100);
-		marbleAmountCheck.setVisible(true);
-
-		// 콤보박스(구슬 개수 고르는)
-		String[] ComboArr = new String[userScore + 1];
-		for (int i = 0; i <= userScore; i++) {
-			ComboArr[i] = Integer.toString(i);
-		}
-		intCombo = new JComboBox<String>(ComboArr);
-		intCombo.setLocation(600, 530);
-		intCombo.setFont(intCombo.getFont().deriveFont(30.0f));
-		intCombo.setSize(100, 50);
-		intCombo.setVisible(true);
-		intCombo.addActionListener(new ActionListener() {
-			// start = false해야함!!
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				start = false;
-				ComputerSelectOddEven.setVisible(true);
-				JComboBox<String> jb = (JComboBox) e.getSource();
-				int index = jb.getSelectedIndex();
-
-				if ((index % 2 == 0 && rand_str.equals("짝")) || (index % 2 == 1 && rand_str.equals("홀"))) {
-					userScore -= index;
-					computerScore += index;
-				} else {
-					userScore += index;
-					computerScore -= index;
-				}
-
-				if (userScore <= 0) {
-					userScore = 0;
-					computerScore = marbleCount * 2;
-					end();
-				} else if (computerScore <= 0) {
-					computerScore = 0;
-					userScore = marbleCount * 2;
-					end();
-				}
-
-				scoreLabelUser.setText(userNumber + "번 : " + userScore + "개(나)");
-				scoreLabelComp.setText("457번 : " + computerScore + "개");
-
-				if (start == false && endCheck != true) {
-					ComputerSelectOddEven.setVisible(false);
-					marbleAmountCheck.setVisible(false);
-					intCombo.setVisible(false);
-
-					defence();
-				}
-
-			}
-		});
-		// 컨테이너에 추가(공격)
-		c1.add(ComputerSelectOddEven);
-		c1.add(marbleAmountCheck);
-		c1.add(intCombo);
-	}
-
-	void defence() {
-		int computerSelect = rand.nextInt(computerScore + 1);
-		// System.out.println("컴퓨터가 고른 구슬의 수 : " + computerSelect);
 		
-		// 컴퓨터가 고른 수
-		ComputerSelectUI = new JLabel(computerSelect + "개");
-		ComputerSelectUI.setLocation(450, 200);
-		ComputerSelectUI.setFont(ComputerSelectUI.getFont().deriveFont(120.0f));
-		ComputerSelectUI.setSize(300, 100);
-		ComputerSelectUI.setHorizontalAlignment(JLabel.CENTER);
-		ComputerSelectUI.setVisible(true);
-
-		// 홀 버튼
-		evenButton = new JButton(evenButtonDefault);
-		evenButton.setBounds(700, 500, 300, 300);
-		evenButton.setBorderPainted(false);
-		evenButton.setContentAreaFilled(false);
-		evenButton.setFocusPainted(false);
-		evenButton.setVisible(true);
-		evenButton.addMouseListener(new MouseAdapter() {
-			// 버튼 위에 마우스
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// 커서모양 손가락
-				evenButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-				evenButton.setIcon(evenButtonEntered);
-			}
-
-			// 기본
-			@Override
-			public void mouseExited(MouseEvent e) {
-				evenButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-				evenButton.setIcon(evenButtonDefault);
-			}
-
-			// 버튼을 마우스가 누를때
-			@Override
-			public void mousePressed(MouseEvent e) {
-				start = true;
-
-				if (computerSelect % 2 == 0) {
-					userScore += computerSelect;
-					computerScore -= computerSelect;
-				} else {
-					userScore -= computerSelect;
-					computerScore += computerSelect;
-				}
-
-				check();
-
-				scoreLabelUser.setText(userNumber + "번 : " + userScore + "개(나)");
-				scoreLabelComp.setText("457번 : " + computerScore + "개");
-				System.out.println(start);
-				if (start == true && endCheck != true) {
-					ComputerSelectUI.setVisible(false);
-					evenButton.setVisible(false);
-					oddButton.setVisible(false);
-
-					attact();
-				}
-			}
-		});
-
-		// 짝 버튼
-		oddButton = new JButton(oddButtonDefault);
-		oddButton.setBounds(200, 500, 300, 300);
-		oddButton.setBorderPainted(false);
-		oddButton.setContentAreaFilled(false);
-		oddButton.setFocusPainted(false);
-		oddButton.setVisible(true);
-		oddButton.addMouseListener(new MouseAdapter() {
-			// 버튼 위에 마우스
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				// 커서모양 손가락
-				oddButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
-				oddButton.setIcon(oddButtonEntered);
-			}
-
-			// 기본
-			@Override
-			public void mouseExited(MouseEvent e) {
-				oddButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-				oddButton.setIcon(oddButtonDefault);
-			}
-
-			// 버튼을 마우스가 누를때
-			@Override
-			public void mousePressed(MouseEvent e) {
-				start = true;
-				int computerSelect = rand.nextInt(computerScore + 1);
-				System.out.println("컴퓨터가 고른 구슬의 수 : " + computerSelect);
-				ComputerSelectUI.setText(computerSelect + "개");
-
-				if (computerSelect % 2 == 1) {
-					userScore += computerSelect;
-					computerScore -= computerSelect;
-
-				} else {
-					userScore -= computerSelect;
-					computerScore += computerSelect;
-
-				}
-
-				check();
-
-				scoreLabelUser.setText(userNumber + "번 : " + userScore + "개(나)");
-				scoreLabelComp.setText("457번 : " + computerScore + "개");
-
-				if (start == true && endCheck != true) {
-					try {
-						Thread.sleep(1500);
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					ComputerSelectUI.setVisible(false);
-					evenButton.setVisible(false);
-					oddButton.setVisible(false);
-
-					attact();
-				}
-			}
-		});
-
-		// 컨테이너에 추가(수비)
-		c1.add(ComputerSelectUI);
-		c1.add(evenButton);
-		c1.add(oddButton);
-
+	}
+	
+	// 컴이 자신이 가진 구슬의 개수중 랜덤으로 고름
+	private void computerMarbleSelect() {
+		computerMarblePick = (int)(Math.random()*(computerScore+1));
+		System.out.println(computerMarblePick);
 	}
 
-	void end() {
-		endCheck = true;
-		System.out.println("start : " + start);
-		if (start == false) {
-			System.out.println("수비 없앰");
-			ComputerSelectOddEven.setVisible(false);
-			marbleAmountCheck.setVisible(false);
-			intCombo.setVisible(false);
+	private void checkAttack() {
+		if ((userOddEvenPick.equals("짝") && computerMarblePick%2==0)||(userOddEvenPick.equals("홀") && computerMarblePick%2==1)) {
+			userScore+=computerMarblePick;
+			computerScore -= computerMarblePick;
 
-		} else {
-			System.out.println("공격 없앰");
-			ComputerSelectUI.setVisible(false);
-			evenButton.setVisible(false);
+			if(userScore>=marbleCount*2) {
+				userScore = marbleCount*2;
+				computerScore = 0;
+			}else if(computerScore>=marbleCount*2) {
+				userScore = 0;
+				computerScore = marbleCount*2;
+			}
+		}else {
+			userScore-=computerMarblePick;
+			computerScore += computerMarblePick;
+
+			if(userScore>=marbleCount*2) {
+				userScore = marbleCount*2;
+				computerScore = 0;
+			}else if(computerScore>=marbleCount*2) {
+				userScore = 0;
+				computerScore = marbleCount*2;
+			}
+		}
+		
+		userScoreText.setText(playerNo + "번  : " + userScore + "점");
+		computerScoreText.setText("457번 : " + computerScore + "점");
+		
+		if(computerScore==0||userScore==0) {
 			oddButton.setVisible(false);
+			evenButton.setVisible(false);
+			timerCnt.setVisible(false);
+			showResult.setVisible(false);
+			
+			gameOver.setVisible(true);
+			
 
-		}
+			System.out.println("end 도착");
+			System.out.println("유저 점수 : " + userScore);
+			System.out.println("컴퓨터 점수 : " + computerScore);
 
-		gameOver = new JLabel("GAME OVER");
-		gameOver.setBounds(200, 300, 800, 150);
-		gameOver.setFont(gameOver.getFont().deriveFont(50.0f));
-		gameOver.setVisible(true);
-		gameOver.setHorizontalAlignment(SwingConstants.CENTER);
-		gameOver.setVerticalAlignment(SwingConstants.CENTER);
-		c1.add(gameOver);
+			if (userScore == 0) {
+				resultText.setText("졌습니다.");
+				win = false;
+				heart--;
+				if (heart <= 0) {
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					jf.dispose();
+					new GameEnding_fail();
+					return;
+				}if (heart > 0) {
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					jf.dispose();
+					new GameEnding_success(playerNo);
+					return;
+				}
+				System.out.println("win : " + win);
 
-		resultText = new JLabel();
-		resultText.setBounds(450, 500, 300, 100);
-		resultText.setFont(resultText.getFont().deriveFont(20.0f));
-		resultText.setHorizontalAlignment(SwingConstants.CENTER);
-		resultText.setVerticalAlignment(SwingConstants.CENTER);
-		resultText.setVisible(true);
-		c1.add(resultText);
-
-		System.out.println("end 도착");
-		System.out.println("유저 점수 : " + userScore);
-		System.out.println("컴퓨터 점수 : " + computerScore);
-
-		if (userScore == 0) {
-			resultText.setText("졌습니다.");
-			win = false;
-			heart--;
-			if (heart <= 0) {
-				jf.dispose();
-				new GameEnding_fail();
-				return;
-			}
-			System.out.println("win : " + win);
-
-		} else {
-			resultText.setText("이겼습니다.");
-			win = true;
-			System.out.println("win : " + win);
-			if (heart > 0) {
-				jf.dispose();
-				new GameEnding_success(userNumber);
-				return;
+			} else {
+				resultText.setText("이겼습니다.");
+				win = true;
+				System.out.println("win : " + win);
+				if (heart > 0) {
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					jf.dispose();
+					new GameEnding_success(playerNo);
+					return;
+				}
 			}
 		}
 	}
+	
+	// 3초 세고 컴이 고른거 보여줌
+	private void Attack() {
+		evenButton.setVisible(true);
+		oddButton.setVisible(true);
+		computerMarbleSelect();
+		
+		Timer timer = new Timer();
+		TimerTask task = new TimerTask() {
 
-	void check() {
-		if (userScore <= 0) {
-			System.out.println("유저는 0");
-			userScore = 0;
-			computerScore = marbleCount * 2;
-			end();
-		} else if (computerScore <= 0) {
-			System.out.println("컴퓨터는 0");
-			computerScore = 0;
-			userScore = marbleCount * 2;
-			end();
-		}
+			@Override
+			public void run() {
+				if (count < 3) {
+					timering = true;
+					showResult.setVisible(false);
+					timerCnt.setVisible(true);
+					timerCnt.setText(3 - count + "");
+					//System.out.println(3-count);
+					count++;
+				}
+
+				else {
+					timer.cancel();
+					timerCnt.setVisible(false);
+					timering = false;
+					
+					showResult.setText(computerMarblePick + "");
+					showResult.setVisible(true);
+					
+					checkAttack();
+					
+
+				}
+			}
+		};
+		timer.scheduleAtFixedRate(task, 0, 1000);
 	}
 }

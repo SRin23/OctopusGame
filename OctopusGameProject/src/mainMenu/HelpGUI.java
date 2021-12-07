@@ -24,8 +24,9 @@ public class HelpGUI extends JFrame{
 	private Image explain1 = new ImageIcon(GameMain.class.getResource("../img/explain1.png")).getImage();
 	private Image explain2 = new ImageIcon(GameMain.class.getResource("../img/explain2.png")).getImage();
 	private Image explain3 = new ImageIcon(GameMain.class.getResource("../img/explain3.png")).getImage();
-	private Image explain4 = new ImageIcon(GameMain.class.getResource("../img/explain4.png")).getImage();
-	private Image explain5 = new ImageIcon(GameMain.class.getResource("../img/explain5.png")).getImage();
+	private Image explain4 = new ImageIcon(GameMain.class.getResource("../img/explain4-1.png")).getImage();
+//	private Image explain4 = new ImageIcon(GameMain.class.getResource("../img/explain4.png")).getImage();
+//	private Image explain5 = new ImageIcon(GameMain.class.getResource("../img/explain5.png")).getImage();
 	
 	int bgIdx = 0;
 	
@@ -78,7 +79,7 @@ public class HelpGUI extends JFrame{
 				case 2: g.drawImage(explain2, 0, 0, null); break;
 				case 3: g.drawImage(explain3, 0, 0, null); break;
 				case 4: g.drawImage(explain4, 0, 0, null); break;
-				case 5: g.drawImage(explain5, 0, 0, null); break;
+				//case 5: g.drawImage(explain5, 0, 0, null); break;
 				default: setVisible(false); connectAll mg = new connectAll(userNumber); break;
 			}
 			this.repaint();	//다시 paint함수를 불러냄(계속해서 화면을 그림)
